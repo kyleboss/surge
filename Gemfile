@@ -1,5 +1,7 @@
 source 'https://rubygems.org'
 
+# Add Rspec for BDD
+gem "rspec"
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '4.2.4'
