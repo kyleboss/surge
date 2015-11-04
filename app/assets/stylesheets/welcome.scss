@@ -358,7 +358,7 @@
     .video-blur-background {
       @extend .blur;
       z-index: -1;
-      background-image: url('/assets/vidBg.jpg');
+      background-image: url(asset-path('vidBg.jpg'));
       -webkit-background-size: cover;
       -moz-background-size: cover;
       -o-background-size: cover;
