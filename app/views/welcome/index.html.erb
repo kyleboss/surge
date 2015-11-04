@@ -13,7 +13,7 @@
         <%= image_tag("surge-logo.png", class:"logo") %>
     </div>
     <div class="menu">
-      <a href="#" class="menu-button special">
+      <a href="#" class="menu-button emphasized_button">
         SIGN UP
       </a>
       <a href="#" class="menu-button">
@@ -27,8 +27,36 @@
       </a>
     </div>
   </div>
-  <div class="section">
-    <h1>Surge keeps track of your pharmaceutical inventory so you don't have to</h1>
+  <div class="drive-thru-section">
+    <div class="drive-thru-title">Surge keeps track of your pharmaceutical inventory so you don't have to</div>
     <video class="computer-drive-thru" muted autoplay loop src="https://cdn.tubemogul.com/wp-content/themes/tubemogul/_video/tubemogul_platform.mp4"></video>
+    <div>
+      <a href="#" class="platform-button">Explore the platform</a>
+    </div>
+  </div>
+  <div class="solutions-section">
+    <div class="solution-box-container">
+        <div class="solution-box" id="inventory-solution">
+          <%= image_tag("inventory-solution-icon.png", class:"solution-icon") %>
+          <div class="solution-text">Keep Inventory</div>
+        </div>
+        <div class="solution-box" id="time-solution">
+          <%= image_tag("stopwatch-solution-icon.png", class:"solution-icon") %>
+          <div class="solution-text">Save Time</div>
+        </div>
+        <div class="solution-box" id="location-solution">
+          <%= image_tag("map-solution-icon.png", class:"solution-icon") %>
+          <div class="solution-text">Track Location</div>
+        </div>
+      <div class="solution-explanation" id="solution-explanation"></div>
+      <a href="#" class="solution-button">How Surge works</a>
+    </div>
+  </div>
+  <div class="video-section">
+    <div class="video-blur-background"></div>
+    <div class="video-play-container">
+      <%= image_tag("play-icon.png", class:"play-icon", id:"play-story-video") %>
+      <div class="play-text">Surge's Success</div>
+    </div>
   </div>
 </div>
