@@ -78,7 +78,7 @@
   .section {
     text-align: center;
     margin: auto;
-    padding: 100px 10px 50px 10px;
+    padding: 60px 10px 50px 10px;
     width: 100%;
   }
 
@@ -220,7 +220,7 @@
     .computer-drive-thru {
       margin: 50px auto;
       width: 90%;
-      max-height: 75vh
+      max-height: 70vh
     }
 
     .platform-button {
@@ -398,6 +398,35 @@
 
     &:hover * .play-icon {
       width: 70px;
+    }
+  }
+
+  .footer-section {
+    @extend .section;
+    position: relative;
+
+    .follow-us-container {
+      @extend .text;
+      height: 60px;
+
+      .follow-us-text {
+        font-weight: 100;
+        font-size: 30px;
+        display: inline-block;
+        position: relative;
+        margin: -25px 20px 0 0;
+        vertical-align: text-top;
+      }
+
+      .follow-icon {
+        width: 40px;
+        margin: 5px;
+
+        &:hover {
+          @extend .smooth-transition;
+          @extend  .rotate-hue-270;
+        }
+      }
     }
   }
 }
