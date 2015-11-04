@@ -246,14 +246,14 @@
         @extend .fast-transition;
         @extend .border-box;
         border: 1px solid #C6CCC8;
-        width: 22%;
+        width: 25%;
         margin: 1%;
         display: inline-block;
         height: 20vw;
         min-height: 99px;
         vertical-align: middle;
         min-width: 150px;
-        max-height: 200px;
+        max-height: 250px;
         position: relative;
         cursor: pointer;
 
@@ -279,7 +279,7 @@
           bottom: 10%;
           left: 0;
           right: 0;
-          margin: 10px auto 0 auto;
+          margin: 10px auto 5% auto;
 
           &:hover {
             color: #666;
@@ -354,6 +354,7 @@
     @extend .section;
     position: relative;
     padding: 0;
+    cursor: pointer;
 
     .video-blur-background {
       @extend .blur;
@@ -371,28 +372,32 @@
 
     .video-play-container {
       @extend .absolute-center;
-      width: 130px;
+      width: 200px;
       height: 130px;
+
       .play-icon {
         @extend .fast-transition;
         @extend .absolute-center;
-        cursor: pointer;
-        width: 75px;
+        width: 60px;
         margin: auto;
 
         &:hover {
-          width: 80px;
+          width: 70px;
         }
       }
 
       .play-text {
         @extend .text;
-        font-size: 15px;
-        font-weight: 400;
+        font-size: 25px;
+        font-weight: 200;
         vertical-align: bottom;
         position: absolute;
-        bottom: 0;
+        bottom: -20px;
       }
+    }
+
+    &:hover * .play-icon {
+      width: 70px;
     }
   }
 }

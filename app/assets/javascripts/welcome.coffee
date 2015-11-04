@@ -42,7 +42,7 @@ $(window).load ->
   locationSolutionBox.addEventListener 'click', ->
     toggleSelect locationSolutionBox
 
-  $('#play-story-video').magnificPopup
+  $('#video-section').magnificPopup
     items: src: 'http://www.youtube.com/watch?v=rrlJiKFJSQY'
     type: 'iframe'
 
