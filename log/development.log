@@ -22447,3 +22447,318 @@ Started GET "/assets/map-solution-icon-c16c97c58059e9eea3695d810afdefd9a217666c0
 
 
 Started GET "/assets/vidBg.jpg" for ::1 at 2015-11-03 18:41:39 -0800
+
+
+Started GET "/" for ::1 at 2015-11-03 18:51:52 -0800
+Processing by WelcomeController#index as HTML
+  Rendered welcome/index.html.erb within layouts/application (164.0ms)
+Completed 200 OK in 567ms (Views: 557.4ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/assets/application.self-49b98d6cf3d4fa070f5c7b25a915354a7f5c1a8f2dd9cd297c70255bb29cb98e.css?body=1" for ::1 at 2015-11-03 18:51:53 -0800
+
+
+Started GET "/assets/magnific-popup.self-76a74811139316a4444073e2d3ecbe3858b5f866575e8cca7e93e45e90495fca.css?body=1" for ::1 at 2015-11-03 18:51:53 -0800
+
+
+Started GET "/assets/turbolinks.self-c37727e9bd6b2735da5c311aa83fead54ed0be6cc8bd9a65309e9c5abe2cbfff.js?body=1" for ::1 at 2015-11-03 18:51:53 -0800
+
+
+Started GET "/assets/jquery.self-a714331225dda820228db323939889f149aec0127aeb06255646b616ba1ca419.js?body=1" for ::1 at 2015-11-03 18:51:53 -0800
+
+
+Started GET "/assets/welcome.self-eced72ed820ce9c7b7b90c661785c6de21fad4c4c8fc9829f57a0daedd343c4a.css?body=1" for ::1 at 2015-11-03 18:51:53 -0800
+
+
+Started GET "/assets/jquery_ujs.self-d456baa54c1fa6be2ec3711f0a72ddf7a5b2f34a6b4f515f33767d6207b7d4b3.js?body=1" for ::1 at 2015-11-03 18:51:53 -0800
+
+
+Started GET "/assets/magnific-popup/jquery.magnific-popup.self-2de30e04b81296918ced1253f65e46fad892aa0f663c62f490f4d62319374d8d.js?body=1" for ::1 at 2015-11-03 18:51:53 -0800
+
+
+Started GET "/assets/magnific-popup/index.self-e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855.js?body=1" for ::1 at 2015-11-03 18:51:53 -0800
+
+
+Started GET "/assets/welcome.self-baaa424ecadaebd2b8d07f375589cbefac127b9793ea50a6132ee8cec4924cd2.js?body=1" for ::1 at 2015-11-03 18:51:53 -0800
+
+
+Started GET "/assets/application.self-f8806224e027f3e3f0138ea9ce99319e298dfdb323304d1f1be6eae8e8c74724.js?body=1" for ::1 at 2015-11-03 18:51:53 -0800
+
+
+Started GET "/assets/surge-logo-464a78a1a45487ab03f1f89ba1526d443b0071e20b5a53856539e62730906544.png" for ::1 at 2015-11-03 18:51:53 -0800
+
+
+Started GET "/assets/stopwatch-solution-icon-7f5413fad8e4757c57ed419e3a0e81854be9437593097e19536011f9085e1422.png" for ::1 at 2015-11-03 18:51:53 -0800
+
+
+Started GET "/assets/inventory-solution-icon-76674c88a11850cc049ca6cb6d9c1d742ab8613cd629babaa8030e4fc156a254.png" for ::1 at 2015-11-03 18:51:53 -0800
+
+
+Started GET "/assets/map-solution-icon-c16c97c58059e9eea3695d810afdefd9a217666c06f9a0d0e18c04ec2086fbea.png" for ::1 at 2015-11-03 18:51:53 -0800
+
+
+Started GET "/assets/play-icon-c60a07a01968ff1bf74e89797b0f5302d1bf519f2121e5e73458b62ab8f9b8c6.png" for ::1 at 2015-11-03 18:51:53 -0800
+
+
+Started GET "/assets/vidBg.jpg" for ::1 at 2015-11-03 18:51:53 -0800
+
+
+Started GET "/" for ::1 at 2015-11-03 19:07:51 -0800
+Processing by WelcomeController#index as HTML
+  Rendered welcome/index.html.erb within layouts/application (34.7ms)
+Completed 200 OK in 128ms (Views: 127.8ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/assets/welcome.self-eced72ed820ce9c7b7b90c661785c6de21fad4c4c8fc9829f57a0daedd343c4a.css?body=1" for ::1 at 2015-11-03 19:07:52 -0800
+
+
+Started GET "/assets/jquery.self-a714331225dda820228db323939889f149aec0127aeb06255646b616ba1ca419.js?body=1" for ::1 at 2015-11-03 19:07:52 -0800
+
+
+Started GET "/assets/application.self-49b98d6cf3d4fa070f5c7b25a915354a7f5c1a8f2dd9cd297c70255bb29cb98e.css?body=1" for ::1 at 2015-11-03 19:07:52 -0800
+
+
+Started GET "/assets/magnific-popup.self-76a74811139316a4444073e2d3ecbe3858b5f866575e8cca7e93e45e90495fca.css?body=1" for ::1 at 2015-11-03 19:07:52 -0800
+
+
+Started GET "/assets/jquery_ujs.self-d456baa54c1fa6be2ec3711f0a72ddf7a5b2f34a6b4f515f33767d6207b7d4b3.js?body=1" for ::1 at 2015-11-03 19:07:52 -0800
+
+
+Started GET "/assets/turbolinks.self-c37727e9bd6b2735da5c311aa83fead54ed0be6cc8bd9a65309e9c5abe2cbfff.js?body=1" for ::1 at 2015-11-03 19:07:52 -0800
+
+
+Started GET "/assets/magnific-popup/jquery.magnific-popup.self-2de30e04b81296918ced1253f65e46fad892aa0f663c62f490f4d62319374d8d.js?body=1" for ::1 at 2015-11-03 19:07:52 -0800
+
+
+Started GET "/assets/magnific-popup/index.self-e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855.js?body=1" for ::1 at 2015-11-03 19:07:52 -0800
+
+
+Started GET "/assets/welcome.self-baaa424ecadaebd2b8d07f375589cbefac127b9793ea50a6132ee8cec4924cd2.js?body=1" for ::1 at 2015-11-03 19:07:52 -0800
+
+
+Started GET "/assets/application.self-f8806224e027f3e3f0138ea9ce99319e298dfdb323304d1f1be6eae8e8c74724.js?body=1" for ::1 at 2015-11-03 19:07:52 -0800
+
+
+Started GET "/assets/surge-logo-464a78a1a45487ab03f1f89ba1526d443b0071e20b5a53856539e62730906544.png" for ::1 at 2015-11-03 19:07:52 -0800
+
+
+Started GET "/assets/inventory-solution-icon-76674c88a11850cc049ca6cb6d9c1d742ab8613cd629babaa8030e4fc156a254.png" for ::1 at 2015-11-03 19:07:52 -0800
+
+
+Started GET "/assets/stopwatch-solution-icon-7f5413fad8e4757c57ed419e3a0e81854be9437593097e19536011f9085e1422.png" for ::1 at 2015-11-03 19:07:52 -0800
+
+
+Started GET "/assets/map-solution-icon-c16c97c58059e9eea3695d810afdefd9a217666c06f9a0d0e18c04ec2086fbea.png" for ::1 at 2015-11-03 19:07:52 -0800
+
+
+Started GET "/assets/play-icon-c60a07a01968ff1bf74e89797b0f5302d1bf519f2121e5e73458b62ab8f9b8c6.png" for ::1 at 2015-11-03 19:07:52 -0800
+
+
+Started GET "/" for ::1 at 2015-11-03 19:08:43 -0800
+Processing by WelcomeController#index as HTML
+  Rendered welcome/index.html.erb within layouts/application (24.7ms)
+Completed 200 OK in 359ms (Views: 358.4ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/assets/welcome.self-471c7f9c49d4a23b4e5e7395690f13eb45a6e234d6464a6ece26757c8aa9aca6.css?body=1" for ::1 at 2015-11-03 19:08:43 -0800
+
+
+Started GET "/assets/application.self-49b98d6cf3d4fa070f5c7b25a915354a7f5c1a8f2dd9cd297c70255bb29cb98e.css?body=1" for ::1 at 2015-11-03 19:08:43 -0800
+
+
+Started GET "/assets/magnific-popup.self-76a74811139316a4444073e2d3ecbe3858b5f866575e8cca7e93e45e90495fca.css?body=1" for ::1 at 2015-11-03 19:08:43 -0800
+
+
+Started GET "/assets/turbolinks.self-c37727e9bd6b2735da5c311aa83fead54ed0be6cc8bd9a65309e9c5abe2cbfff.js?body=1" for ::1 at 2015-11-03 19:08:43 -0800
+
+
+Started GET "/assets/jquery.self-a714331225dda820228db323939889f149aec0127aeb06255646b616ba1ca419.js?body=1" for ::1 at 2015-11-03 19:08:43 -0800
+
+
+Started GET "/assets/jquery_ujs.self-d456baa54c1fa6be2ec3711f0a72ddf7a5b2f34a6b4f515f33767d6207b7d4b3.js?body=1" for ::1 at 2015-11-03 19:08:43 -0800
+
+
+Started GET "/assets/magnific-popup/index.self-e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855.js?body=1" for ::1 at 2015-11-03 19:08:43 -0800
+
+
+Started GET "/assets/magnific-popup/jquery.magnific-popup.self-2de30e04b81296918ced1253f65e46fad892aa0f663c62f490f4d62319374d8d.js?body=1" for ::1 at 2015-11-03 19:08:43 -0800
+
+
+Started GET "/assets/welcome.self-baaa424ecadaebd2b8d07f375589cbefac127b9793ea50a6132ee8cec4924cd2.js?body=1" for ::1 at 2015-11-03 19:08:43 -0800
+
+
+Started GET "/assets/application.self-f8806224e027f3e3f0138ea9ce99319e298dfdb323304d1f1be6eae8e8c74724.js?body=1" for ::1 at 2015-11-03 19:08:43 -0800
+
+
+Started GET "/assets/surge-logo-464a78a1a45487ab03f1f89ba1526d443b0071e20b5a53856539e62730906544.png" for ::1 at 2015-11-03 19:08:43 -0800
+
+
+Started GET "/assets/stopwatch-solution-icon-7f5413fad8e4757c57ed419e3a0e81854be9437593097e19536011f9085e1422.png" for ::1 at 2015-11-03 19:08:43 -0800
+
+
+Started GET "/assets/inventory-solution-icon-76674c88a11850cc049ca6cb6d9c1d742ab8613cd629babaa8030e4fc156a254.png" for ::1 at 2015-11-03 19:08:43 -0800
+
+
+Started GET "/assets/map-solution-icon-c16c97c58059e9eea3695d810afdefd9a217666c06f9a0d0e18c04ec2086fbea.png" for ::1 at 2015-11-03 19:08:43 -0800
+
+
+Started GET "/assets/play-icon-c60a07a01968ff1bf74e89797b0f5302d1bf519f2121e5e73458b62ab8f9b8c6.png" for ::1 at 2015-11-03 19:08:43 -0800
+
+
+Started GET "/assets/vidBg.jpg" for ::1 at 2015-11-03 19:08:43 -0800
+
+
+Started GET "/" for ::1 at 2015-11-03 19:14:12 -0800
+Processing by WelcomeController#index as HTML
+  Rendered welcome/index.html.erb within layouts/application (15.5ms)
+Completed 200 OK in 65ms (Views: 64.6ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/assets/welcome.self-471c7f9c49d4a23b4e5e7395690f13eb45a6e234d6464a6ece26757c8aa9aca6.css?body=1" for ::1 at 2015-11-03 19:14:12 -0800
+
+
+Started GET "/assets/magnific-popup/jquery.magnific-popup.self-2de30e04b81296918ced1253f65e46fad892aa0f663c62f490f4d62319374d8d.js?body=1" for ::1 at 2015-11-03 19:14:13 -0800
+
+
+Started GET "/assets/magnific-popup.self-76a74811139316a4444073e2d3ecbe3858b5f866575e8cca7e93e45e90495fca.css?body=1" for ::1 at 2015-11-03 19:14:13 -0800
+
+
+Started GET "/assets/jquery.self-a714331225dda820228db323939889f149aec0127aeb06255646b616ba1ca419.js?body=1" for ::1 at 2015-11-03 19:14:13 -0800
+
+
+Started GET "/assets/turbolinks.self-c37727e9bd6b2735da5c311aa83fead54ed0be6cc8bd9a65309e9c5abe2cbfff.js?body=1" for ::1 at 2015-11-03 19:14:22 -0800
+
+
+Started GET "/assets/application.self-49b98d6cf3d4fa070f5c7b25a915354a7f5c1a8f2dd9cd297c70255bb29cb98e.css?body=1" for ::1 at 2015-11-03 19:14:22 -0800
+
+
+Started GET "/assets/jquery_ujs.self-d456baa54c1fa6be2ec3711f0a72ddf7a5b2f34a6b4f515f33767d6207b7d4b3.js?body=1" for ::1 at 2015-11-03 19:14:22 -0800
+
+
+Started GET "/assets/magnific-popup/index.self-e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855.js?body=1" for ::1 at 2015-11-03 19:14:22 -0800
+
+
+Started GET "/assets/welcome.self-baaa424ecadaebd2b8d07f375589cbefac127b9793ea50a6132ee8cec4924cd2.js?body=1" for ::1 at 2015-11-03 19:14:22 -0800
+
+
+Started GET "/assets/application.self-f8806224e027f3e3f0138ea9ce99319e298dfdb323304d1f1be6eae8e8c74724.js?body=1" for ::1 at 2015-11-03 19:14:22 -0800
+
+
+Started GET "/assets/surge-logo-464a78a1a45487ab03f1f89ba1526d443b0071e20b5a53856539e62730906544.png" for ::1 at 2015-11-03 19:14:22 -0800
+
+
+Started GET "/assets/stopwatch-solution-icon-7f5413fad8e4757c57ed419e3a0e81854be9437593097e19536011f9085e1422.png" for ::1 at 2015-11-03 19:14:22 -0800
+
+
+Started GET "/assets/inventory-solution-icon-76674c88a11850cc049ca6cb6d9c1d742ab8613cd629babaa8030e4fc156a254.png" for ::1 at 2015-11-03 19:14:22 -0800
+
+
+Started GET "/assets/play-icon-c60a07a01968ff1bf74e89797b0f5302d1bf519f2121e5e73458b62ab8f9b8c6.png" for ::1 at 2015-11-03 19:14:22 -0800
+
+
+Started GET "/assets/map-solution-icon-c16c97c58059e9eea3695d810afdefd9a217666c06f9a0d0e18c04ec2086fbea.png" for ::1 at 2015-11-03 19:14:22 -0800
+
+
+Started GET "/assets/vidBg.jpg" for ::1 at 2015-11-03 19:14:22 -0800
+
+
+Started GET "/" for ::1 at 2015-11-03 19:22:40 -0800
+Processing by WelcomeController#index as HTML
+  Rendered welcome/index.html.erb within layouts/application (67.2ms)
+Completed 200 OK in 983ms (Views: 972.9ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/assets/application.self-49b98d6cf3d4fa070f5c7b25a915354a7f5c1a8f2dd9cd297c70255bb29cb98e.css?body=1" for ::1 at 2015-11-03 19:22:41 -0800
+
+
+Started GET "/assets/magnific-popup.self-76a74811139316a4444073e2d3ecbe3858b5f866575e8cca7e93e45e90495fca.css?body=1" for ::1 at 2015-11-03 19:22:41 -0800
+
+
+Started GET "/assets/turbolinks.self-c37727e9bd6b2735da5c311aa83fead54ed0be6cc8bd9a65309e9c5abe2cbfff.js?body=1" for ::1 at 2015-11-03 19:22:41 -0800
+
+
+Started GET "/assets/jquery_ujs.self-d456baa54c1fa6be2ec3711f0a72ddf7a5b2f34a6b4f515f33767d6207b7d4b3.js?body=1" for ::1 at 2015-11-03 19:22:41 -0800
+
+
+Started GET "/assets/jquery.self-a714331225dda820228db323939889f149aec0127aeb06255646b616ba1ca419.js?body=1" for ::1 at 2015-11-03 19:22:41 -0800
+
+
+Started GET "/assets/magnific-popup/jquery.magnific-popup.self-2de30e04b81296918ced1253f65e46fad892aa0f663c62f490f4d62319374d8d.js?body=1" for ::1 at 2015-11-03 19:22:41 -0800
+
+
+Started GET "/assets/magnific-popup/index.self-e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855.js?body=1" for ::1 at 2015-11-03 19:22:41 -0800
+
+
+Started GET "/assets/welcome.self-baaa424ecadaebd2b8d07f375589cbefac127b9793ea50a6132ee8cec4924cd2.js?body=1" for ::1 at 2015-11-03 19:22:41 -0800
+
+
+Started GET "/assets/welcome.self-471c7f9c49d4a23b4e5e7395690f13eb45a6e234d6464a6ece26757c8aa9aca6.css?body=1" for ::1 at 2015-11-03 19:22:41 -0800
+
+
+Started GET "/assets/application.self-f8806224e027f3e3f0138ea9ce99319e298dfdb323304d1f1be6eae8e8c74724.js?body=1" for ::1 at 2015-11-03 19:22:41 -0800
+
+
+Started GET "/assets/surge-logo-464a78a1a45487ab03f1f89ba1526d443b0071e20b5a53856539e62730906544.png" for ::1 at 2015-11-03 19:22:41 -0800
+
+
+Started GET "/assets/inventory-solution-icon-76674c88a11850cc049ca6cb6d9c1d742ab8613cd629babaa8030e4fc156a254.png" for ::1 at 2015-11-03 19:22:41 -0800
+
+
+Started GET "/assets/map-solution-icon-c16c97c58059e9eea3695d810afdefd9a217666c06f9a0d0e18c04ec2086fbea.png" for ::1 at 2015-11-03 19:22:41 -0800
+
+
+Started GET "/assets/play-icon-c60a07a01968ff1bf74e89797b0f5302d1bf519f2121e5e73458b62ab8f9b8c6.png" for ::1 at 2015-11-03 19:22:41 -0800
+
+
+Started GET "/assets/stopwatch-solution-icon-7f5413fad8e4757c57ed419e3a0e81854be9437593097e19536011f9085e1422.png" for ::1 at 2015-11-03 19:22:41 -0800
+
+
+Started GET "/" for ::1 at 2015-11-03 19:22:50 -0800
+Processing by WelcomeController#index as HTML
+  Rendered welcome/index.html.erb within layouts/application (103.2ms)
+Completed 200 OK in 504ms (Views: 494.9ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/assets/application.self-49b98d6cf3d4fa070f5c7b25a915354a7f5c1a8f2dd9cd297c70255bb29cb98e.css?body=1" for ::1 at 2015-11-03 19:22:51 -0800
+
+
+Started GET "/assets/jquery_ujs.self-d456baa54c1fa6be2ec3711f0a72ddf7a5b2f34a6b4f515f33767d6207b7d4b3.js?body=1" for ::1 at 2015-11-03 19:22:51 -0800
+
+
+Started GET "/assets/turbolinks.self-c37727e9bd6b2735da5c311aa83fead54ed0be6cc8bd9a65309e9c5abe2cbfff.js?body=1" for ::1 at 2015-11-03 19:22:51 -0800
+
+
+Started GET "/assets/magnific-popup.self-76a74811139316a4444073e2d3ecbe3858b5f866575e8cca7e93e45e90495fca.css?body=1" for ::1 at 2015-11-03 19:22:51 -0800
+
+
+Started GET "/assets/jquery.self-a714331225dda820228db323939889f149aec0127aeb06255646b616ba1ca419.js?body=1" for ::1 at 2015-11-03 19:22:51 -0800
+
+
+Started GET "/assets/magnific-popup/jquery.magnific-popup.self-2de30e04b81296918ced1253f65e46fad892aa0f663c62f490f4d62319374d8d.js?body=1" for ::1 at 2015-11-03 19:22:51 -0800
+
+
+Started GET "/assets/welcome.self-471c7f9c49d4a23b4e5e7395690f13eb45a6e234d6464a6ece26757c8aa9aca6.css?body=1" for ::1 at 2015-11-03 19:22:51 -0800
+
+
+Started GET "/assets/magnific-popup/index.self-e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855.js?body=1" for ::1 at 2015-11-03 19:22:51 -0800
+
+
+Started GET "/assets/welcome.self-baaa424ecadaebd2b8d07f375589cbefac127b9793ea50a6132ee8cec4924cd2.js?body=1" for ::1 at 2015-11-03 19:22:51 -0800
+
+
+Started GET "/assets/application.self-f8806224e027f3e3f0138ea9ce99319e298dfdb323304d1f1be6eae8e8c74724.js?body=1" for ::1 at 2015-11-03 19:22:51 -0800
+
+
+Started GET "/assets/surge-logo-464a78a1a45487ab03f1f89ba1526d443b0071e20b5a53856539e62730906544.png" for ::1 at 2015-11-03 19:22:53 -0800
+
+
+Started GET "/assets/stopwatch-solution-icon-7f5413fad8e4757c57ed419e3a0e81854be9437593097e19536011f9085e1422.png" for ::1 at 2015-11-03 19:22:53 -0800
+
+
+Started GET "/assets/map-solution-icon-c16c97c58059e9eea3695d810afdefd9a217666c06f9a0d0e18c04ec2086fbea.png" for ::1 at 2015-11-03 19:22:53 -0800
+
+
+Started GET "/assets/play-icon-c60a07a01968ff1bf74e89797b0f5302d1bf519f2121e5e73458b62ab8f9b8c6.png" for ::1 at 2015-11-03 19:22:53 -0800
+
+
+Started GET "/assets/inventory-solution-icon-76674c88a11850cc049ca6cb6d9c1d742ab8613cd629babaa8030e4fc156a254.png" for ::1 at 2015-11-03 19:22:53 -0800

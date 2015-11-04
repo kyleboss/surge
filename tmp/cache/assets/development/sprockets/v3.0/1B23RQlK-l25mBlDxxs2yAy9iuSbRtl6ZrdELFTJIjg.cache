@@ -1,0 +1,38 @@
+I"„(function() {
+  $(window).load(function() {
+    var inventorySolutionBox, inventorySolutionText, locationSolutionBox, locationSolutionText, solutionBoxes, solutionExplanation, solutionTexts, timeSolutionBox, timeSolutionText, toggleSelect;
+    solutionExplanation = document.getElementById('solution-explanation');
+    inventorySolutionBox = document.getElementById('inventory-solution');
+    timeSolutionBox = document.getElementById('time-solution');
+    locationSolutionBox = document.getElementById('location-solution');
+    solutionBoxes = [inventorySolutionBox, timeSolutionBox, locationSolutionBox];
+    inventorySolutionText = "Never run out of medicine again! Know when a particular drug is running low in real-time.";
+    timeSolutionText = "Surge's real-time and accurate readings save hospitals resources, time, and money.";
+    locationSolutionText = "Know precisely where any patient's drug is located at any time without the hassle.";
+    solutionTexts = [inventorySolutionText, timeSolutionText, locationSolutionText];
+    toggleSelect = function(currentSolutionBox) {
+      var boxUnselect, i, j, len;
+      for (i = j = 0, len = solutionBoxes.length; j < len; i = ++j) {
+        boxUnselect = solutionBoxes[i];
+        if (boxUnselect !== currentSolutionBox) {
+          boxUnselect.classList.remove('selected-solution-box');
+        } else {
+          boxUnselect.classList.add('selected-solution-box');
+        }
+      }
+      solutionExplanation.innerHTML = solutionTexts[i];
+    };
+    inventorySolutionBox.addEventListener('click', function() {
+      return toggleSelect(inventorySolutionBox);
+    });
+    timeSolutionBox.addEventListener('click', function() {
+      return toggleSelect(timeSolutionBox);
+    });
+    locationSolutionBox.addEventListener('click', function() {
+      return toggleSelect(locationSolutionBox);
+    });
+    return toggleSelect(inventorySolutionBox);
+  });
+
+}).call(this);
+:ET

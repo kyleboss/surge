@@ -1,0 +1,29 @@
+I" (function() {
+  $(window).load(function() {
+    var boxClicked, i, iClicked, inventorySolutionBox, len, locationSolutionBox, results, solutionBoxes, timeSolutionBox;
+    inventorySolutionBox = document.getElementById('inventory-solution');
+    timeSolutionBox = document.getElementById('time-solution');
+    locationSolutionBox = document.getElementById('location-solution');
+    solutionBoxes = [inventorySolutionBox, timeSolutionBox, locationSolutionBox];
+    results = [];
+    for (iClicked = i = 0, len = solutionBoxes.length; i < len; iClicked = ++i) {
+      boxClicked = solutionBoxes[iClicked];
+      results.push(boxClicked.addEventListener('click', function() {
+        var boxUnselect, iUnselect, j, len1;
+        for (iUnselect = j = 0, len1 = solutionBoxes.length; j < len1; iUnselect = ++j) {
+          boxUnselect = solutionBoxes[iUnselect];
+          if (boxUnselect !== boxClicked) {
+            alert("hi");
+            boxUnselect.classList.remove('selected-solution-box');
+          } else {
+            alert("hello");
+            boxUnselect.classList.add('selected-solution-box');
+          }
+        }
+      }));
+    }
+    return results;
+  });
+
+}).call(this);
+:ET
