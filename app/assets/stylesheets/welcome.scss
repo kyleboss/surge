@@ -110,7 +110,8 @@
     max-width: 100%;
     position: relative;
     height: 85vh;
-    overflow-y: hidden;
+    min-height: 500px;
+    overflow: hidden;
 
     .hero-video-container {
       z-index: -1;
@@ -157,6 +158,7 @@
       @extend .text;
       font-size: 72px;
       font-weight: 600;
+      margin: 0 10px;
     }
 
     .hero-subtext {
@@ -176,6 +178,7 @@
       position: absolute;
       top: 10px;
       right: 10px;
+      white-space: nowrap;
 
       .menu-button {
         @extend .text;
@@ -202,6 +205,7 @@
     }
 
     .logo {
+      @extend .smooth-transition;
       width: 200px;
       margin: 10px 15px;
       position: absolute;
@@ -252,7 +256,6 @@
         height: 20vw;
         min-height: 99px;
         vertical-align: middle;
-        min-width: 150px;
         max-height: 250px;
         position: relative;
         cursor: pointer;
@@ -408,6 +411,7 @@
     .follow-us-container {
       @extend .text;
       height: 60px;
+      white-space: nowrap;
 
       .follow-us-text {
         font-weight: 100;
@@ -427,6 +431,30 @@
           @extend  .rotate-hue-270;
         }
       }
+    }
+  }
+
+  @media (max-width: 650px) {
+    .logo {
+      display: none;
+    }
+  }
+
+  @media (max-width: 550px) {
+    .menu {
+      left: 0;
+      right: 0;
+      margin: auto;
+      text-align: center;
+    }
+  }
+
+  @media (max-width: 450px) {
+    .menu {
+      left: 0;
+      right: 0;
+      margin: auto;
+      text-align: center;
     }
   }
 }

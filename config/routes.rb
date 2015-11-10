@@ -1,4 +1,12 @@
 Rails.application.routes.draw do
+  resources :pills
+  resources :locations
+  resources :hospitals
+  resources :users
+  resources :credit_cards
+  resources :addresses
+  resources :brands
+  resources :drugs
   get 'welcome/index'
 
   # The priority is based upon order of creation: first created -> highest priority.
