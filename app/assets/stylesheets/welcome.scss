@@ -165,6 +165,7 @@
       @extend .text;
       font-size: 38px;
       font-weight: 100;
+      margin: 50px 0 0 0;
     }
 
     .hero-button {
@@ -219,6 +220,7 @@
     .drive-thru-title {
       @extend h1;
       width: 80%;
+      line-height: 50px;
     }
 
     .computer-drive-thru {
