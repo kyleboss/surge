@@ -2,3 +2,4 @@
 .rspec/
 .git/
 .DS_STORE/
+.tmp/
