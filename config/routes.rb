@@ -1,4 +1,7 @@
 Rails.application.routes.draw do
+  get 'admin_panel/home'
+  post 'admin_panel/make_spotlight_search'
+
   resources :pills
   resources :locations
   resources :hospitals

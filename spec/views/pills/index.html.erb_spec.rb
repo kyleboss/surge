@@ -22,10 +22,10 @@ RSpec.describe "pills/index", type: :view do
 
   it "renders a list of pills" do
     render
-    assert_select "tr>td", :text => nil.to_s, :count => 2
-    assert_select "tr>td", :text => nil.to_s, :count => 2
-    assert_select "tr>td", :text => nil.to_s, :count => 2
-    assert_select "tr>td", :text => nil.to_s, :count => 2
+    assert_select "tr>td", :text => nil.to_s, :count => 8
+    assert_select "tr>td", :text => nil.to_s, :count => 8
+    assert_select "tr>td", :text => nil.to_s, :count => 8
+    assert_select "tr>td", :text => nil.to_s, :count => 8
     assert_select "tr>td", :text => 1.to_s, :count => 2
   end
 end

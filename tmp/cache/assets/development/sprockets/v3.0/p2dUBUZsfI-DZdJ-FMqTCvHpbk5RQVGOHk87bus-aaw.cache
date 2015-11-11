@@ -1,0 +1,39 @@
+I" (function() {
+  $("#spotlight-search-query").on("keyup", function(e) {
+    console.log("hi");
+    if ($.trim($(this).val()).length > 2) {
+      $("form#spotlight-search").submit();
+    } else {
+      $(".search-results-popover").hide();
+    }
+    return $("form#spotlight-search").on("submit", function(e) {
+      e.preventDefault();
+      return $.post($(this).attr("action"), {
+        query: $("#spotlight-search-query").val()
+      }, function(data) {
+        var content, i, len, receiver, ref, result, searchResults;
+        content = $("<div class='search-results'>");
+        receiver = $(".search-results-popover");
+        searchResults = $("#spotlight-search-query");
+        if (data != null) {
+          ref = ['posts', 'comments'];
+          for (i = 0, len = ref.length; i < len; i++) {
+            result = ref[i];
+            if (data[result] != null) {
+              content.append(JST['search_results']({
+                results: data[result],
+                _type: result
+              }));
+            }
+          }
+        } else {
+          content.append("<p class='no-results'>No results found.</p>");
+        }
+        receiver.html(content);
+        return receiver.show();
+      }, "json").done(function() {}).fail(function() {}).always(function() {});
+    });
+  });
+
+}).call(this);
+:ET

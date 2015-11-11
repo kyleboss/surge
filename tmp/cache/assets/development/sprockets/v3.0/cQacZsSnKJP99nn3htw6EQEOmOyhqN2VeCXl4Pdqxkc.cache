@@ -1,0 +1,41 @@
+I"Ñ(function() {
+  $(window).load(function() {
+    if (window.currentController === "admin_panel") {
+      return $("#spotlight-search-query").on("keyup", function(e) {
+        if ($.trim($(this).val()).length > 2) {
+          $("form#spotlight-search").submit();
+        } else {
+          $(".search-results-popover").hide();
+        }
+        return $("form#spotlight-search").on("submit", function(e) {
+          e.preventDefault();
+          return $.post($(this).attr("action"), {
+            query: $("#spotlight-search-query").val()
+          }, function(data) {
+            var content, i, len, receiver, result, searchResults;
+            console.log(data);
+            content = $("<div class='search-results'>");
+            receiver = $(".search-results-popover");
+            searchResults = $("#spotlight-search-query");
+            if (data != null) {
+              for (i = 0, len = data.length; i < len; i++) {
+                result = data[i];
+                if (result != null) {
+                  content.append(JSON.stringify(result) + "<br>");
+                }
+              }
+            } else {
+              content.append("<p class='no-results'>No results found.</p>");
+            }
+            content.append("</div>");
+            console.log(content);
+            receiver.html(content);
+            return receiver.show();
+          }, "json").done(function() {}).fail(function() {}).always(function() {});
+        });
+      });
+    }
+  });
+
+}).call(this);
+:ET

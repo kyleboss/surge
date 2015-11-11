@@ -20,6 +20,6 @@ RSpec.describe "credit_cards/index", type: :view do
     render
     assert_select "tr>td", :text => "Number".to_s, :count => 2
     assert_select "tr>td", :text => 1.to_s, :count => 2
-    assert_select "tr>td", :text => nil.to_s, :count => 2
+    assert_select "tr>td", :text => nil.to_s, :count => 4
   end
 end
