@@ -32,6 +32,9 @@ gem 'textacular'
 # a Ruby binding for the OpenBSD bcrypt() password hashing algorithm, allowing you to easily store a secure hash of your users' passwords.
 gem 'bcrypt'
 
+# enables serving assets in production and setting your logger to standard out
+gem 'rails_12factor'
+
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
 
