@@ -1,12 +1,23 @@
 Rails.application.routes.draw do
+  get 'sessions/new'
+
+  get 'sessions/create'
+
+  get 'sessions/destroy'
+
   get 'admin_panel/home'
   post 'admin_panel/make_spotlight_search'
 
+  get 'signup', to: 'users#new', as: 'signup'
+  get 'login', to: 'sessions#new', as: 'login'
+  get 'logout', to: 'sessions#destroy', as: 'logout'
+  get 'admin', to: 'hospitals#show', as: 'admin'
+
+  resources :sessions, only: [:new, :create, :destroy]
   resources :pills
   resources :locations
   resources :hospitals
   resources :users
-  resources :credit_cards
   resources :addresses
   resources :brands
   resources :drugs

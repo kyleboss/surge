@@ -10,6 +10,8 @@ class HospitalsController < ApplicationController
   # GET /hospitals/1
   # GET /hospitals/1.json
   def show
+    hospital_id = @hospital.id
+    @locations  = Location.where(:hospital_id => hospital_id)
   end
 
   # GET /hospitals/new
@@ -64,7 +66,13 @@ class HospitalsController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_hospital
-      @hospital = Hospital.find(params[:id])
+      if (session[:user_id])
+        user        = User.find(session[:user_id])
+        hospital_id = user.hospital_id
+        @hospital   = Hospital.find(hospital_id)
+      else
+        redirect_to root_url
+      end
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.

@@ -10,6 +10,12 @@ class BrandsController < ApplicationController
   # GET /brands/1
   # GET /brands/1.json
   def show
+    drug_brand_qry  = "pills.brand_id=#{@brand.id} AND pills.drug_id=drugs.id"
+    loc_brand_qry   = "pills.brand_id=#{@brand.id} AND pills.location_id=locations.id"
+    drug_select_qry = "drugs.id AS drug_id, drugs.name AS drug_name, SUM(qty) AS drug_qty"
+    loc_select_qry  = "locations.id AS location_id, locations.name AS location_name, SUM(qty) AS location_qty"
+    @drugs          = Pill.joins(:drug).select(drug_select_qry).where(drug_brand_qry).group("drugs.id")
+    @locations      = Pill.joins(:location).select(loc_select_qry).where(loc_brand_qry).group("locations.id")
   end
 
   # GET /brands/new

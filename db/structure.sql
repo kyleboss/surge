@@ -120,7 +120,10 @@ CREATE TABLE credit_cards (
     address_id integer,
     expiration_date date,
     created_at timestamp without time zone NOT NULL,
-    updated_at timestamp without time zone NOT NULL
+    updated_at timestamp without time zone NOT NULL,
+    first_name character varying,
+    middle_initial character varying,
+    last_name character varying
 );
 
 
@@ -182,7 +185,7 @@ CREATE TABLE hospitals (
     id integer NOT NULL,
     name character varying,
     address_id integer,
-    user_id integer,
+    administrator_id integer,
     created_at timestamp without time zone NOT NULL,
     updated_at timestamp without time zone NOT NULL
 );
@@ -318,7 +321,9 @@ CREATE TABLE users (
     password character varying,
     credit_card_id integer,
     created_at timestamp without time zone NOT NULL,
-    updated_at timestamp without time zone NOT NULL
+    updated_at timestamp without time zone NOT NULL,
+    middle_initial character varying,
+    hospital_id integer
 );
 
 
@@ -476,10 +481,10 @@ CREATE INDEX index_hospitals_on_address_id ON hospitals USING btree (address_id)
 
 
 --
--- Name: index_hospitals_on_user_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+-- Name: index_hospitals_on_administrator_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
-CREATE INDEX index_hospitals_on_user_id ON hospitals USING btree (user_id);
+CREATE INDEX index_hospitals_on_administrator_id ON hospitals USING btree (administrator_id);
 
 
 --
@@ -529,6 +534,13 @@ CREATE INDEX index_users_on_address_id ON users USING btree (address_id);
 --
 
 CREATE INDEX index_users_on_credit_card_id ON users USING btree (credit_card_id);
+
+
+--
+-- Name: index_users_on_hospital_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE INDEX index_users_on_hospital_id ON users USING btree (hospital_id);
 
 
 --
@@ -587,6 +599,14 @@ ALTER TABLE ONLY pills
 
 
 --
+-- Name: fk_rails_a8ceccb51e; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY users
+    ADD CONSTRAINT fk_rails_a8ceccb51e FOREIGN KEY (hospital_id) REFERENCES hospitals(id);
+
+
+--
 -- Name: fk_rails_ba8b23249a; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -607,7 +627,7 @@ ALTER TABLE ONLY pills
 --
 
 ALTER TABLE ONLY hospitals
-    ADD CONSTRAINT fk_rails_d7d780c6ca FOREIGN KEY (user_id) REFERENCES users(id);
+    ADD CONSTRAINT fk_rails_d7d780c6ca FOREIGN KEY (administrator_id) REFERENCES users(id);
 
 
 --
@@ -643,4 +663,12 @@ INSERT INTO schema_migrations (version) VALUES ('20151110234040');
 INSERT INTO schema_migrations (version) VALUES ('20151111013313');
 
 INSERT INTO schema_migrations (version) VALUES ('20151111034228');
+
+INSERT INTO schema_migrations (version) VALUES ('20151111193627');
+
+INSERT INTO schema_migrations (version) VALUES ('20151111195249');
+
+INSERT INTO schema_migrations (version) VALUES ('20151111213000');
+
+INSERT INTO schema_migrations (version) VALUES ('20151111213616');
 
