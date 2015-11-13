@@ -4,3 +4,7 @@
 .DS_STORE/
 .tmp/
 .vendor/
+.vendor/*
+*.cache
+.log/
+idea/*

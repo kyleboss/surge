@@ -110,43 +110,6 @@ ALTER SEQUENCE brands_id_seq OWNED BY brands.id;
 
 
 --
--- Name: credit_cards; Type: TABLE; Schema: public; Owner: -; Tablespace: 
---
-
-CREATE TABLE credit_cards (
-    id integer NOT NULL,
-    number character varying,
-    cvv integer,
-    address_id integer,
-    expiration_date date,
-    created_at timestamp without time zone NOT NULL,
-    updated_at timestamp without time zone NOT NULL,
-    first_name character varying,
-    middle_initial character varying,
-    last_name character varying
-);
-
-
---
--- Name: credit_cards_id_seq; Type: SEQUENCE; Schema: public; Owner: -
---
-
-CREATE SEQUENCE credit_cards_id_seq
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
-
-
---
--- Name: credit_cards_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
---
-
-ALTER SEQUENCE credit_cards_id_seq OWNED BY credit_cards.id;
-
-
---
 -- Name: drugs; Type: TABLE; Schema: public; Owner: -; Tablespace: 
 --
 
@@ -324,7 +287,6 @@ CREATE TABLE users (
     address_id integer,
     email character varying,
     password character varying,
-    credit_card_id integer,
     created_at timestamp without time zone NOT NULL,
     updated_at timestamp without time zone NOT NULL,
     middle_initial character varying,
@@ -363,13 +325,6 @@ ALTER TABLE ONLY addresses ALTER COLUMN id SET DEFAULT nextval('addresses_id_seq
 --
 
 ALTER TABLE ONLY brands ALTER COLUMN id SET DEFAULT nextval('brands_id_seq'::regclass);
-
-
---
--- Name: id; Type: DEFAULT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY credit_cards ALTER COLUMN id SET DEFAULT nextval('credit_cards_id_seq'::regclass);
 
 
 --
@@ -424,14 +379,6 @@ ALTER TABLE ONLY brands
 
 
 --
--- Name: credit_cards_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
---
-
-ALTER TABLE ONLY credit_cards
-    ADD CONSTRAINT credit_cards_pkey PRIMARY KEY (id);
-
-
---
 -- Name: drugs_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
 --
 
@@ -472,6 +419,7 @@ ALTER TABLE ONLY users
 
 
 --
+<<<<<<< HEAD
 -- Name: index_brands_on_name; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
@@ -493,6 +441,8 @@ CREATE INDEX index_drugs_on_name ON drugs USING gin (to_tsvector('english'::regc
 
 
 --
+=======
+>>>>>>> 27ef1eedac8b138f4138d8bbe4a4c5e9f804f0a6
 -- Name: index_hospitals_on_address_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
@@ -556,13 +506,6 @@ CREATE INDEX index_users_on_address_id ON users USING btree (address_id);
 
 
 --
--- Name: index_users_on_credit_card_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
---
-
-CREATE INDEX index_users_on_credit_card_id ON users USING btree (credit_card_id);
-
-
---
 -- Name: index_users_on_hospital_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
@@ -590,14 +533,6 @@ ALTER TABLE ONLY pills
 
 ALTER TABLE ONLY pills
     ADD CONSTRAINT fk_rails_14262c267c FOREIGN KEY (drug_id) REFERENCES drugs(id);
-
-
---
--- Name: fk_rails_1625c741bd; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY users
-    ADD CONSTRAINT fk_rails_1625c741bd FOREIGN KEY (credit_card_id) REFERENCES credit_cards(id);
 
 
 --
@@ -630,14 +565,6 @@ ALTER TABLE ONLY pills
 
 ALTER TABLE ONLY users
     ADD CONSTRAINT fk_rails_a8ceccb51e FOREIGN KEY (hospital_id) REFERENCES hospitals(id);
-
-
---
--- Name: fk_rails_ba8b23249a; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY credit_cards
-    ADD CONSTRAINT fk_rails_ba8b23249a FOREIGN KEY (address_id) REFERENCES addresses(id);
 
 
 --
@@ -676,8 +603,6 @@ INSERT INTO schema_migrations (version) VALUES ('20151110230758');
 
 INSERT INTO schema_migrations (version) VALUES ('20151110231626');
 
-INSERT INTO schema_migrations (version) VALUES ('20151110233636');
-
 INSERT INTO schema_migrations (version) VALUES ('20151110233848');
 
 INSERT INTO schema_migrations (version) VALUES ('20151110233916');
@@ -691,8 +616,6 @@ INSERT INTO schema_migrations (version) VALUES ('20151111013313');
 INSERT INTO schema_migrations (version) VALUES ('20151111034228');
 
 INSERT INTO schema_migrations (version) VALUES ('20151111193627');
-
-INSERT INTO schema_migrations (version) VALUES ('20151111195249');
 
 INSERT INTO schema_migrations (version) VALUES ('20151111213000');
 

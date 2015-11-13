@@ -7,7 +7,6 @@ class CreateUsers < ActiveRecord::Migration
       t.references :address, index: true, foreign_key: true
       t.string :email
       t.string :password
-      t.references :credit_card, index: true, foreign_key: true
 
       t.timestamps null: false
     end
