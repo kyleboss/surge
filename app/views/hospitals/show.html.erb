@@ -15,12 +15,12 @@
   <%= @hospital.user %>
 </p>
 
-<p>
-    <strong>Locations:</strong><br>
-    <% @locations.each do |location| %>
-      <%= link_to location.name, location_path(location.id) %><br>
-    <% end %>
-</p>
+<form id="spotlight-search" action="/hospitals/make_spotlight_search">
+  <input id="spotlight-search-query" type="text" autocomplete="off">
+</form>
+<div class="search-results-popover">
+
+</div>
 
 <%= link_to 'Edit', edit_hospital_path(@hospital) %> |
 <%= link_to 'Back', hospitals_path %>

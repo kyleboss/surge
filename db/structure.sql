@@ -293,18 +293,23 @@ CREATE TABLE schema_migrations (
 CREATE VIEW searches AS
  SELECT locations.id AS searchable_id,
     locations.name AS term,
+    locations.hospital_id,
     'Location'::character varying AS searchable_type
    FROM locations
 UNION
  SELECT brands.id AS searchable_id,
     brands.name AS term,
+    pills.hospital_id,
     'Brand'::character varying AS searchable_type
-   FROM brands
+   FROM (brands
+     LEFT JOIN pills ON ((pills.brand_id = brands.id)))
 UNION
  SELECT drugs.id AS searchable_id,
     drugs.name AS term,
+    pills.hospital_id,
     'Drug'::character varying AS searchable_type
-   FROM drugs;
+   FROM (drugs
+     LEFT JOIN pills ON ((pills.drug_id = drugs.id)));
 
 
 --
@@ -467,10 +472,24 @@ ALTER TABLE ONLY users
 
 
 --
+-- Name: index_brands_on_name; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE INDEX index_brands_on_name ON brands USING gin (to_tsvector('english'::regconfig, (name)::text));
+
+
+--
 -- Name: index_credit_cards_on_address_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE INDEX index_credit_cards_on_address_id ON credit_cards USING btree (address_id);
+
+
+--
+-- Name: index_drugs_on_name; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE INDEX index_drugs_on_name ON drugs USING gin (to_tsvector('english'::regconfig, (name)::text));
 
 
 --
@@ -492,6 +511,13 @@ CREATE INDEX index_hospitals_on_administrator_id ON hospitals USING btree (admin
 --
 
 CREATE INDEX index_locations_on_hospital_id ON locations USING btree (hospital_id);
+
+
+--
+-- Name: index_locations_on_name; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE INDEX index_locations_on_name ON locations USING gin (to_tsvector('english'::regconfig, (name)::text));
 
 
 --
@@ -671,4 +697,6 @@ INSERT INTO schema_migrations (version) VALUES ('20151111195249');
 INSERT INTO schema_migrations (version) VALUES ('20151111213000');
 
 INSERT INTO schema_migrations (version) VALUES ('20151111213616');
+
+INSERT INTO schema_migrations (version) VALUES ('20151113203908');
 

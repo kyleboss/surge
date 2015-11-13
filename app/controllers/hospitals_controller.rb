@@ -63,6 +63,12 @@ class HospitalsController < ApplicationController
     end
   end
 
+  def make_spotlight_search()
+    query             = params["query"]
+    current_hospital  = session[:hospital_id].to_s
+    render json: Search.new(query, current_hospital)
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_hospital

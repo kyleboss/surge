@@ -6,7 +6,7 @@ Rails.application.routes.draw do
   get 'sessions/destroy'
 
   get 'admin_panel/home'
-  post 'admin_panel/make_spotlight_search'
+  post 'hospitals/make_spotlight_search'
 
   get 'signup', to: 'users#new', as: 'signup'
   get 'login', to: 'sessions#new', as: 'login'

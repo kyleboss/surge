@@ -415,6 +415,14 @@
       height: 60px;
       white-space: nowrap;
 
+      a {
+        &:hover {
+          @extend .smooth-transition;
+          @extend .rotate-hue-270;
+          background-color: rgba(1, 1, 1, 0);
+        }
+      }
+
       .follow-us-text {
         font-weight: 100;
         font-size: 30px;
@@ -427,11 +435,6 @@
       .follow-icon {
         width: 40px;
         margin: 5px;
-
-        &:hover {
-          @extend .smooth-transition;
-          @extend  .rotate-hue-270;
-        }
       }
     }
   }
