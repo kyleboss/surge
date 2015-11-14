@@ -1,26 +1,43 @@
-<p id="notice"><%= notice %></p>
+<div class="hospitals-container">
+  <div class="header">
+    <a href="#" class="header-logo-link">
+      <img class="header-logo" src="/assets/s-logo.png">
+    </a>
+    <form class="header-search-form" id="spotlight-search" action="/hospitals/make_spotlight_search">
+      <div class="header-search-container">
+        <img src="/assets/search-icon.png" class="search-icon">
+        <div class="spotlight-container">
+            <input type="text" class="header-search" placeholder="What are you looking for?" id="spotlight-search-query" autocomplete="off">
+            <div class="search-results-popover"></div>
+        </div>
+      </div>
+    </form>
+    <div class="header-buttons-container">
+      <div class="header-button emphasized-button">Search Externally</div>
+      <div class="header-button">Main Panel</div>
+      <div class="header-button profile-button">
+        <%= @user.first_name %>
+        <img src="/assets/profile-icon.png" class="profile-icon">
+      </div>
+    </div>
+  </div>
+  <p id="notice"><%= notice %></p>
 
-<p>
-  <strong>Name:</strong>
-  <%= @hospital.name %>
-</p>
+    <p>
+      <strong>Name:</strong>
+      <%= @hospital.name %>
+    </p>
 
-<p>
-  <strong>Address:</strong>
-  <%= @hospital.address %>
-</p>
+    <p>
+      <strong>Address:</strong>
+      <%= @hospital.address %>
+    </p>
 
-<p>
-  <strong>User:</strong>
-  <%= @hospital.user %>
-</p>
+    <p>
+      <strong>User:</strong>
+      <%= @hospital.user %>
+    </p>
 
-<form id="spotlight-search" action="/hospitals/make_spotlight_search">
-  <input id="spotlight-search-query" type="text" autocomplete="off">
-</form>
-<div class="search-results-popover">
-
+    <%= link_to 'Edit', edit_hospital_path(@hospital) %> |
+    <%= link_to 'Back', hospitals_path %>
 </div>
-
-<%= link_to 'Edit', edit_hospital_path(@hospital) %> |
-<%= link_to 'Back', hospitals_path %>

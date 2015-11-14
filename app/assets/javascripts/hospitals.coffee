@@ -24,7 +24,7 @@ formatSearchResults = (searchData) ->
     for result in searchData
       if result?
         resultType = result.searchable_type.toLowerCase() + "s"
-        content.append("<a href='/" + resultType + "/" + result.searchable_id + "'>" + result.term + "</a>" + "<br>")
+        content.append("<a class='popover-result' href='/" + resultType + "/" + result.searchable_id + "'>" + result.term + " <span class='popover-result-type'>(" + result.searchable_type + ")</span></a>" + "<br>")
   else
     content.append("<p class='no-results'>No results found.</p>")
   content.append("</div>")

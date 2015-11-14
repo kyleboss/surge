@@ -6,6 +6,7 @@ class SessionsController < ApplicationController
     if user && user.authenticate(params[:password])
       session[:user_id]     = user.id
       session[:hospital_id] = user.hospital_id
+      session[:user_name]   = user.first_name
       redirect_to root_url, notice: 'Logged in!'
     else
       render :new

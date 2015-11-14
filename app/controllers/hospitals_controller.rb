@@ -73,9 +73,9 @@ class HospitalsController < ApplicationController
     # Use callbacks to share common setup or constraints between actions.
     def set_hospital
       if (session[:user_id])
-        user        = User.find(session[:user_id])
-        hospital_id = user.hospital_id
-        @hospital   = Hospital.find(hospital_id)
+        @user         = User.find(session[:user_id])
+        hospital_id   = @user.hospital_id
+        @hospital     = Hospital.find(hospital_id)
       else
         redirect_to root_url
       end
