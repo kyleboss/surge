@@ -1,3 +1,7 @@
+<%= javascript_tag do %>
+    window.locationId = '<%= j @location.id.to_s %>';
+<% end %>
+
 <p id="notice"><%= notice %></p>
 
 <p>
@@ -10,18 +14,19 @@
   <%= @location.hospital %>
 </p>
 
-<p>
-  <strong>Drug:</strong><br>
-  <% @drugs.each do |drug| %>
-      <%= link_to drug.drug_name, drug_path(drug.drug_id) %> QTY: <%= drug.drug_qty %> <br>
-  <% end %>
+<p id="drug_partial">
+  <%= render 'drug_list' %>
 </p>
 
 <p>
   <strong>Brand:</strong><br>
-  <% @brands.each do |brand| %>
-      <%= link_to brand.brand_name, brand_path(brand.brand_id) %> QTY: <%= brand.brand_qty %><br>
-  <% end %>
+  <%= form_tag("/locations/filter_drugs_by_brand", method: "post", id: "brand_selector") %>
+      <% @brands.each do |brand| %>
+        <%= check_box_tag 'brand_ids[]', brand.brand_id, false, class: "brand_id_selector" -%>
+        <%= h brand.brand_name -%>
+        (<%= h brand.brand_qty -%>)
+      <br>
+      <% end %>
 </p>
 
 <%= link_to 'Edit', edit_location_path(@location) %> |
