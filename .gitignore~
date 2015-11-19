@@ -3,8 +3,8 @@
 /.git/
 /.DS_STORE/
 /.tmp/
-/.vendor/
-/.vendor/*
+/vendor/
+/vendor/*
 *.cache
 .log/
 /idea/*

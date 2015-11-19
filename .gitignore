@@ -1,7 +1,7 @@
 /.idea/
 /.rspec/
 /.git/
-/.DS_STORE/
+*.DS_STORE
 /.tmp/
 /vendor/
 /vendor/*
