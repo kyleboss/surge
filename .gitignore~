@@ -3,7 +3,7 @@
 .rspec/
 .git/
 .DS_STORE/
-tmp/
+.tmp/
 vendor/
 vendor/*
 *.cache
