@@ -1,9 +1,0 @@
-/usr/local/opt/ruby/bin/ruby -r ./siteconf20151110-85718-ze2pnk.rb extconf.rb
-creating Makefile
-
-make "DESTDIR=" clean
-
-make "DESTDIR="
-make: Nothing to be done for `all'.
-
-make "DESTDIR=" install
