@@ -1,11 +1,11 @@
 <div class="hospitals-container">
   <div class="header">
     <a href="#" class="header-logo-link">
-      <img class="header-logo" src="/assets/s-logo.png">
+      <%= image_tag("s-logo.png", :class => "header-logo") %>
     </a>
     <form class="header-search-form" id="spotlight-search" action="/hospitals/make_spotlight_search">
       <div class="header-search-container">
-        <img src="/assets/search-icon.png" class="search-icon">
+        <%= image_tag("search-icon.png", :class => "search-icon") %>
         <div class="spotlight-container">
             <input type="text" class="header-search" placeholder="What are you looking for?" id="spotlight-search-query" autocomplete="off">
             <div class="search-results-popover"></div>
@@ -17,7 +17,7 @@
       <div class="header-button">Main Panel</div>
       <div class="header-button profile-button">
         <%= @user.first_name %>
-        <img src="/assets/profile-icon.png" class="profile-icon">
+        <%= image_tag("profile-icon.png", :class => "profile-logo") %>
       </div>
     </div>
   </div>
