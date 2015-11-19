@@ -10,3 +10,4 @@ vendor/*
 .log/
 /idea/*
 *server.pid*
+.gitignore~
