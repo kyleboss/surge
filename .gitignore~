@@ -1,11 +1,10 @@
-.idea/
-.rspec/
-.git/
-.DS_STORE/
-.tmp/
-<<<<<<< HEAD
-.vendor/
-=======
-.vendor/*
+/.idea/
+/.rspec/
+/.git/
+/.DS_STORE/
+/.tmp/
+/.vendor/
+/.vendor/*
 *.cache
->>>>>>> 27ef1eedac8b138f4138d8bbe4a4c5e9f804f0a6
+.log/
+/idea/*
