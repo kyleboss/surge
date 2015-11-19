@@ -1,6 +1,6 @@
 <div class="hospitals-container">
   <div class="header">
-    <a href="#" class="header-logo-link">
+    <a href="/" class="header-logo-link">
       <%= image_tag("s-logo.png", :class => "header-logo") %>
     </a>
     <form class="header-search-form" id="spotlight-search" action="/hospitals/make_spotlight_search">
@@ -44,17 +44,19 @@
         </div>
       </div>
       <% @locations.each do |location| %>
-          <div class="row location-row">
-            <div class="col-md-8 location-cell">
-              <%= location.name %>
+          <a href="/locations/<%=location.id%>" class="location-link">
+            <div class="row location-row">
+              <div class="col-md-8 location-cell">
+                <%= location.name %>
+              </div>
+              <div class="col-md-2 location-cell">
+                <%= 5 %>
+              </div>
+              <div class="col-md-2 location-cell">
+                <%= 1 %>
+              </div>
             </div>
-            <div class="col-md-2 location-cell">
-              <%= 5 %>
-            </div>
-            <div class="col-md-2 location-cell">
-              <%= 1 %>
-            </div>
-          </div>
+          </a>
       <% end %>
     </div>
   </div>

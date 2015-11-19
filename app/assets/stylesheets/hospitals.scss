@@ -266,18 +266,22 @@
         margin: auto;
       }
 
-      .location-row {
-        cursor: pointer;
-        padding: 10px;
-        border-bottom: 1px #eee solid;
-        width: 90%;
-        margin: auto;
+      .location-link {
+        color: #000;
 
-        &:hover {
-          background-color: #CCFFCC;
-        }
+        .location-row {
+          cursor: pointer;
+          padding: 10px;
+          border-bottom: 1px #eee solid;
+          width: 90%;
+          margin: auto;
 
-        .location-cell {
+          &:hover {
+            background-color: #CCFFCC;
+          }
+
+          .location-cell {
+          }
         }
       }
     }
