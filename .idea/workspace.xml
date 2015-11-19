@@ -2,7 +2,6 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="9d97c59c-1dac-421a-8148-771b6a5b9720" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/assets/stylesheets/hospitals.scss" afterPath="$PROJECT_DIR$/app/assets/stylesheets/hospitals.scss" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/views/hospitals/show.html.erb" afterPath="$PROJECT_DIR$/app/views/hospitals/show.html.erb" />
     </list>
     <ignored path="surge.iws" />
@@ -49,11 +48,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="hospitals.scss" pinned="false" current-in-tab="true">
+      <file leaf-file-name="hospitals.scss" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/assets/stylesheets/hospitals.scss">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.5714286">
-              <caret line="266" column="7" selection-start-line="266" selection-start-column="7" selection-end-line="266" selection-end-column="7" />
+            <state vertical-scroll-proportion="-4.5686274">
+              <caret line="200" column="17" selection-start-line="200" selection-start-column="9" selection-end-line="200" selection-end-column="17" />
               <folding />
             </state>
           </provider>
@@ -69,11 +68,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="show.html.erb" pinned="false" current-in-tab="false">
+      <file leaf-file-name="show.html.erb" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app/views/hospitals/show.html.erb">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-7.352941">
-              <caret line="46" column="68" selection-start-line="46" selection-start-column="68" selection-end-line="46" selection-end-column="68" />
+            <state vertical-scroll-proportion="0.40714285">
+              <caret line="19" column="65" selection-start-line="19" selection-start-column="65" selection-end-line="19" selection-end-column="65" />
               <folding />
             </state>
           </provider>
@@ -188,8 +187,8 @@
         <option value="$PROJECT_DIR$/app/assets/stylesheets/welcome.scss" />
         <option value="$PROJECT_DIR$/lib/password_digester.rb" />
         <option value="$PROJECT_DIR$/Gemfile" />
-        <option value="$PROJECT_DIR$/app/views/hospitals/show.html.erb" />
         <option value="$PROJECT_DIR$/app/assets/stylesheets/hospitals.scss" />
+        <option value="$PROJECT_DIR$/app/views/hospitals/show.html.erb" />
       </list>
     </option>
   </component>
@@ -962,18 +961,18 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/views/hospitals/show.html.erb">
+    <entry file="file://$PROJECT_DIR$/app/assets/stylesheets/hospitals.scss">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-7.352941">
-          <caret line="46" column="68" selection-start-line="46" selection-start-column="68" selection-end-line="46" selection-end-column="68" />
+        <state vertical-scroll-proportion="-4.5686274">
+          <caret line="200" column="17" selection-start-line="200" selection-start-column="9" selection-end-line="200" selection-end-column="17" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/assets/stylesheets/hospitals.scss">
+    <entry file="file://$PROJECT_DIR$/app/views/hospitals/show.html.erb">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.5714286">
-          <caret line="266" column="7" selection-start-line="266" selection-start-column="7" selection-end-line="266" selection-end-column="7" />
+        <state vertical-scroll-proportion="0.40714285">
+          <caret line="19" column="65" selection-start-line="19" selection-start-column="65" selection-end-line="19" selection-end-column="65" />
           <folding />
         </state>
       </provider>
