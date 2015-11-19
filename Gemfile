@@ -38,7 +38,7 @@ gem 'rails_12factor'
 # a Sass-powered version of Bootstrap, ready to drop right into your Sass powered applications.
 gem 'bootstrap-sass'
 
-# Use ActiveModel has_secure_password
+# Simple Ruby encryption module
 gem 'gibberish'
 
 # Use Unicorn as the app server

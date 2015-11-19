@@ -145,6 +145,7 @@
           border: 1px #eee solid;
           width: 250px;
           background-color: #fff;
+          z-index: 1;
 
           .popover-result {
             @extend .fast-transition;
