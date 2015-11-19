@@ -1,7 +1,6 @@
 class CreateSearches < ActiveRecord::Migration
   def self.up
     ActiveRecord::Base.connection.execute <<-SQL
-    DROP VIEW searches;
     CREATE VIEW searches AS
       SELECT  locations.id AS searchable_id, locations.name AS term,
               CAST ('Location' AS varchar) AS searchable_type

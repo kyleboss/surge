@@ -1,4 +1,5 @@
 .idea/
+.idea/*
 .rspec/
 .git/
 .DS_STORE/
@@ -7,4 +8,4 @@ vendor/
 vendor/*
 *.cache
 .log/
-idea/*
+/idea/*
