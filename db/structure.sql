@@ -419,18 +419,10 @@ ALTER TABLE ONLY users
 
 
 --
-<<<<<<< HEAD
 -- Name: index_brands_on_name; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE INDEX index_brands_on_name ON brands USING gin (to_tsvector('english'::regconfig, (name)::text));
-
-
---
--- Name: index_credit_cards_on_address_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
---
-
-CREATE INDEX index_credit_cards_on_address_id ON credit_cards USING btree (address_id);
 
 
 --
@@ -441,8 +433,6 @@ CREATE INDEX index_drugs_on_name ON drugs USING gin (to_tsvector('english'::regc
 
 
 --
-=======
->>>>>>> 27ef1eedac8b138f4138d8bbe4a4c5e9f804f0a6
 -- Name: index_hospitals_on_address_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
