@@ -21,8 +21,43 @@
       </div>
     </div>
   </div>
+  <div class="hero-section">
+    <div class="hero-background"></div>
+    <div class="hero-shade"></div>
+    <div class="hero-text">
+      <%= @hospital.name %>
+    </div>
+  </div>
   <p id="notice"><%= notice %></p>
-
+  <div class="location-section">
+    <h2 class="centered-header">Locations</h2>
+    <div class="location-list">
+      <div class="row location-header-row">
+        <div class="col-md-8 location-cell">
+          Location
+        </div>
+        <div class="col-md-2 location-cell">
+          # brands
+        </div>
+        <div class="col-md-2 location-cell">
+          # pills
+        </div>
+      </div>
+      <% @locations.each do |location| %>
+          <div class="row location-row">
+            <div class="col-md-8 location-cell">
+              <%= location.name %>
+            </div>
+            <div class="col-md-2 location-cell">
+              <%= 5 %>
+            </div>
+            <div class="col-md-2 location-cell">
+              <%= 1 %>
+            </div>
+          </div>
+      <% end %>
+    </div>
+  </div>
     <p>
       <strong>Name:</strong>
       <%= @hospital.name %>

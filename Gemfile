@@ -35,6 +35,9 @@ gem 'bcrypt'
 # enables serving assets in production and setting your logger to standard out
 gem 'rails_12factor'
 
+# a Sass-powered version of Bootstrap, ready to drop right into your Sass powered applications.
+gem 'bootstrap-sass'
+
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
 

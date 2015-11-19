@@ -1,8 +1,26 @@
 // Place all the styles related to the Hospitals controller here.
-// They will automatically be included in application.css.
+// They will automatically be included in application.scss.
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
 .hospitals-container {
+
+  .absolute-center {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    margin: auto;
+    vertical-align: center;
+  }
+
+  .blur {
+    -webkit-filter: blur(5px);
+    -moz-filter: blur(5px);
+    -o-filter: blur(5px);
+    -ms-filter: blur(5px);
+    filter: blur(5px);
+  }
 
   .rotate-hue-270 {
     -webkit-filter: hue-rotate(270deg);
@@ -189,7 +207,7 @@
       .emphasized-button {
         border: solid 2px #aaa;
         color: #000;
-        height: 25px;
+        height: 40px;
         line-height: 25px;
         padding: 5px 10px;
         margin: 0 30px 0 0;
@@ -197,4 +215,70 @@
     }
   }
 
+  .hero-section {
+    position: relative;
+    width: 100%;
+    height: 25vw;
+    margin: 0 0 25px 0;
+
+    .hero-shade {
+      position: absolute;
+      width: 100%;
+      height: 25vw;
+      background-color: rgba(0, 0, 0, .5);
+    }
+
+    .hero-text {
+      @extend .absolute-center;
+      font-size: 5vw;
+      color: #fff;
+      text-align: center;
+      height: 7vw;
+    }
+
+    .hero-background {
+      background: url(asset-path('kaiser-header.png')) fixed no-repeat;
+      background-size: cover;
+      position: absolute;
+      width: 100%;
+      height: 25vw;
+    }
+  }
+
+  .location-section {
+
+    width: 100%;
+    padding: 30px;
+
+    .centered-header {
+      text-align: center;
+    }
+
+    .location-list {
+      width: 100%;
+      margin: auto;
+
+      .location-header-row {
+        padding: 10px;
+        border-bottom: 3px #eee solid;
+        width: 90%;
+        margin: auto;
+      }
+
+      .location-row {
+        cursor: pointer;
+        padding: 10px;
+        border-bottom: 1px #eee solid;
+        width: 90%;
+        margin: auto;
+
+        &:hover {
+          background-color: #CCFFCC;
+        }
+
+        .location-cell {
+        }
+      }
+    }
+  }
 }
