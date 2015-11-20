@@ -1,7 +1,0 @@
-.idea/
-.rspec/
-.git/
-.DS_STORE/
-.tmp/
-.vendor/*
-*.cache

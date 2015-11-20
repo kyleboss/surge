@@ -1,11 +1,15 @@
-require 'bcrypt'
+require 'gibberish'
 
 module PasswordDigester
   def self.encrypt(password)
-    BCrypt::Password.create(password)
+    Gibberish::SHA1(password)
   end
 
   def self.check?(password, encrypted_password)
-    BCrypt::Password.new(encrypted_password) == password
+    print "PASSWORD: "
+    print Gibberish::SHA1(password)
+    print "ENCRYPTED: "
+    print Gibberish::SHA1(encrypted_password)
+    encrypted_password == Gibberish::SHA1(password)
   end
 end

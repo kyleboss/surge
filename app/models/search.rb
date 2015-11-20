@@ -1,18 +1,16 @@
+require 'textacular/searchable'
 class Search < ActiveRecord::Base
 
   # We want to reference various models
   belongs_to :searchable, :polymorphic => true
-  # Wish we could eliminate n + 1 query problems,
-  # but we can't include polymorphic models when
-  # using scopes to search in Rails 3
-  # default_scope :include => :searchable
 
   # Search.new('query') to search for 'query'
   # across searchable models
-  def self.new(query)
+  def self.new(query, hospital_id)
     query = query.to_s
     return [] if query.empty?
-    self.fuzzy_search(query).preload(:searchable).to_a.map!(&:searchable)
+    search_results = self.fuzzy_search(query).preload(:searchable).where("hospital_id = " + hospital_id)
+    return search_results
   end
 
   # Search records are never modified

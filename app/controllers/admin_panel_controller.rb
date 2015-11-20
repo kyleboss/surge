@@ -5,6 +5,6 @@ class AdminPanelController < ApplicationController
 
   def make_spotlight_search()
     query = params["query"]
-    render json: Search.new(query)
+    render json: Search.new(query, session[:hospital_id].to_s)
   end
 end

@@ -1,0 +1,4 @@
+<strong>Drug:</strong><br>
+<% @drugs.each do |drug| %>
+    <%= link_to drug.drug_name, drug_path(drug.drug_id) %> QTY: <%= drug.drug_qty %> <br>
+<% end %>

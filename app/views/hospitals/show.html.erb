@@ -1,26 +1,80 @@
-<p id="notice"><%= notice %></p>
+<div class="hospitals-container">
+  <div class="header">
+    <a href="/" class="header-logo-link">
+      <%= image_tag("s-logo.png", :class => "header-logo") %>
+    </a>
+    <form class="header-search-form" id="spotlight-search" action="/hospitals/make_spotlight_search">
+      <div class="header-search-container">
+        <%= image_tag("search-icon.png", :class => "search-icon") %>
+        <div class="spotlight-container">
+            <input type="text" class="header-search" placeholder="What are you looking for?" id="spotlight-search-query" autocomplete="off">
+            <div class="search-results-popover"></div>
+        </div>
+      </div>
+    </form>
+    <div class="header-buttons-container">
+      <div class="header-button emphasized-button">Search Externally</div>
+      <div class="header-button">Main Panel</div>
+      <div class="header-button profile-button">
+        <%= @user.first_name %>
+        <%= image_tag("profile-icon.png", :class => "profile-icon") %>
+      </div>
+    </div>
+  </div>
+  <div class="hero-section">
+    <div class="hero-background"></div>
+    <div class="hero-shade"></div>
+    <div class="hero-text">
+      <%= @hospital.name %>
+    </div>
+  </div>
+  <p id="notice"><%= notice %></p>
+  <div class="location-section">
+    <h2 class="centered-header">Locations</h2>
+    <div class="location-list">
+      <div class="row location-header-row">
+        <div class="col-md-8 location-cell">
+          Location
+        </div>
+        <div class="col-md-2 location-cell">
+          # brands
+        </div>
+        <div class="col-md-2 location-cell">
+          # pills
+        </div>
+      </div>
+      <% @locations.each do |location| %>
+          <a href="/locations/<%=location.id%>" class="location-link">
+            <div class="row location-row">
+              <div class="col-md-8 location-cell">
+                <%= location.name %>
+              </div>
+              <div class="col-md-2 location-cell">
+                <%= 5 %>
+              </div>
+              <div class="col-md-2 location-cell">
+                <%= 1 %>
+              </div>
+            </div>
+          </a>
+      <% end %>
+    </div>
+  </div>
+    <p>
+      <strong>Name:</strong>
+      <%= @hospital.name %>
+    </p>
 
-<p>
-  <strong>Name:</strong>
-  <%= @hospital.name %>
-</p>
+    <p>
+      <strong>Address:</strong>
+      <%= @hospital.address %>
+    </p>
 
-<p>
-  <strong>Address:</strong>
-  <%= @hospital.address %>
-</p>
+    <p>
+      <strong>User:</strong>
+      <%= @hospital.user %>
+    </p>
 
-<p>
-  <strong>User:</strong>
-  <%= @hospital.user %>
-</p>
-
-<p>
-    <strong>Locations:</strong><br>
-    <% @locations.each do |location| %>
-      <%= link_to location.name, location_path(location.id) %><br>
-    <% end %>
-</p>
-
-<%= link_to 'Edit', edit_hospital_path(@hospital) %> |
-<%= link_to 'Back', hospitals_path %>
+    <%= link_to 'Edit', edit_hospital_path(@hospital) %> |
+    <%= link_to 'Back', hospitals_path %>
+</div>

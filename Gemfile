@@ -30,10 +30,16 @@ gem 'magnific-popup-rails'
 gem 'textacular'
 
 # a Ruby binding for the OpenBSD bcrypt() password hashing algorithm, allowing you to easily store a secure hash of your users' passwords.
-gem 'bcrypt'
+# gem 'bcrypt-ruby', :require => 'bcrypt'
 
-# Use ActiveModel has_secure_password
-# gem 'bcrypt', '~> 3.1.7'
+# enables serving assets in production and setting your logger to standard out
+gem 'rails_12factor'
+
+# a Sass-powered version of Bootstrap, ready to drop right into your Sass powered applications.
+gem 'bootstrap-sass'
+
+# Simple Ruby encryption module
+gem 'gibberish'
 
 # Use Unicorn as the app server
 # gem 'unicorn'
