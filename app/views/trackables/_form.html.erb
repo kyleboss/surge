@@ -1,0 +1,49 @@
+<%= form_for(@trackable) do |f| %>
+  <% if @trackable.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@trackable.errors.count, "error") %> prohibited this trackable from being saved:</h2>
+
+      <ul>
+      <% @trackable.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :patient_id %><br>
+    <%= f.text_field :patient_id %>
+  </div>
+  <div class="field">
+    <%= f.label :admin_dose %><br>
+    <%= f.text_field :admin_dose %>
+  </div>
+  <div class="field">
+    <%= f.label :drug_name %><br>
+    <%= f.text_field :drug_name %>
+  </div>
+  <div class="field">
+    <%= f.label :brand_name %><br>
+    <%= f.text_field :brand_name %>
+  </div>
+    <div class="field">
+      <%= f.label :order_id %><br>
+      <%= f.text_field :order_id %>
+    </div>
+    <div class="field">
+      <%= f.label :med_id %><br>
+      <%= f.text_field :med_id %>
+    </div>
+    <div class="field">
+      <%= f.label :sig %><br>
+      <%= f.text_field :sig %>
+    </div>
+    <div class="field">
+      <%= f.label :admin %><br>
+      <%= f.text_field :admin %>
+    </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

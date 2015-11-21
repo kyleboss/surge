@@ -9,7 +9,8 @@ class Search < ActiveRecord::Base
   def self.new(query, hospital_id)
     query = query.to_s
     return [] if query.empty?
-    search_results = self.fuzzy_search(query).preload(:searchable).where("hospital_id = " + hospital_id)
+    search_results = self.fuzzy_search(query).preload(:searchable).where("hospital_id = " + hospital_id).uniq
+    print search_results.inspect()
     return search_results
   end
 
@@ -20,10 +21,9 @@ class Search < ActiveRecord::Base
   # to be explicit about how to tell different search
   # results apart; without this, we can't use :include
   # to avoid n + 1 query problems
-  def hash; [searchable_id, searchable_type].hash; end
+  def hash; [searchable_id].hash; end
   def eql?(result)
-    searchable_id == result.searchable_id and
-        searchable_type == result.searchable_type
+    searchable_id == result.searchable_id
   end
 
 end

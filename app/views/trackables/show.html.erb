@@ -1,0 +1,66 @@
+<div class="trackables-container">
+  <h2 class="centered-header">Tracking Record</h2>
+  <div class="row arrival-header-row">
+    <div class="col-md-5 col-sm-5 col-xs-5 arrival-cell">
+      Time Arrived
+    </div>
+    <div class="col-md-5 col-sm-5 col-xs-5 arrival-cell">
+      Location
+    </div>
+  </div>
+  <% @arrivals_of_trackable.each do |arrival| %>
+      <div class="row arrival-row">
+        <div class="col-md-5 col-sm-5 col-xs-5 arrival-cell">
+          <%= arrival.arrival_time.strftime('%m/%d/%y %l:%M %p') %>
+        </div>
+        <div class="col-md-5 col-sm-5 col-xs-5 arrival-cell">
+          <%= arrival.location_name %>
+        </div>
+      </div>
+  <% end %>
+
+  <p id="notice"><%= notice %></p>
+
+  <p>
+    <strong>Patient ID:</strong>
+    <%= @trackable.patient_id %>
+  </p>
+
+  <p>
+    <strong>Admin dose:</strong>
+    <%= @trackable.admin_dose %>
+  </p>
+
+  <p>
+    <strong>Drug name:</strong>
+    <%= @trackable.drug_name %>
+  </p>
+
+  <p>
+    <strong>Brand name:</strong>
+    <%= @trackable.brand_name %>
+  </p>
+
+<p>
+  <strong>Order:</strong>
+  <%= @trackable.order_id %>
+</p>
+
+<p>
+  <strong>SIG:</strong>
+  <%= @trackable.sig %>
+</p>
+
+<p>
+  <strong>Admin:</strong>
+  <%= @trackable.admin %>
+</p>
+
+<p>
+  <strong>Med:</strong>
+  <%= @trackable.med_id %>
+</p>
+
+  <%= link_to 'Edit', edit_trackable_path(@trackable) %> |
+  <%= link_to 'Back', trackables_path %>
+</div>

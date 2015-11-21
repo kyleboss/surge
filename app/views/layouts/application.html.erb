@@ -6,11 +6,12 @@
   <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
   <%= csrf_meta_tags %>
   <%= javascript_tag do %>
-      window.currentController = '<%= j controller.controller_name %>';
+      window.currentController  = '<%= j controller.controller_name %>';
+      window.showHeader         = '<%= @show_header %>';
   <% end %>
 </head>
 <body>
-
+<%= render(partial: "/header", locals: {header_title: @header_title}) if @show_header %>
 <%= yield %>
 
 </body>

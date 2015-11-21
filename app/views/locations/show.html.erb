@@ -14,20 +14,5 @@
   <%= @location.hospital %>
 </p>
 
-<p id="drug_partial">
-  <%= render 'drug_list' %>
-</p>
-
-<p>
-  <strong>Brand:</strong><br>
-  <%= form_tag("/locations/filter_drugs_by_brand", method: "post", id: "brand_selector") %>
-      <% @brands.each do |brand| %>
-        <%= check_box_tag 'brand_ids[]', brand.brand_id, false, class: "brand_id_selector" -%>
-        <%= h brand.brand_name -%>
-        (<%= h brand.brand_qty -%>)
-      <br>
-      <% end %>
-</p>
-
 <%= link_to 'Edit', edit_location_path(@location) %> |
 <%= link_to 'Back', locations_path %>

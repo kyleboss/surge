@@ -11,7 +11,6 @@ class LocationsController < ApplicationController
   # GET /locations/1
   # GET /locations/1.json
   def show
-    get_drugs_and_brands_in_location()
   end
 
   # GET /locations/new
@@ -61,30 +60,6 @@ class LocationsController < ApplicationController
       format.html { redirect_to locations_url, notice: 'Location was successfully destroyed.' }
       format.json { head :no_content }
     end
-  end
-
-  def filter_drugs_by_brand()
-    brands            = params[:brands]
-    location_id       = params[:location_id]
-    drug_location_qry = "pills.location_id=#{location_id} AND pills.drug_id=drugs.id"
-    drug_select_qry   = "drugs.id AS drug_id, drugs.name AS drug_name, SUM(qty) AS drug_qty"
-    if (brands)
-      brands.map(&:to_i)
-      @drugs = Pill.joins(:drug).select(drug_select_qry).where(drug_location_qry).where("pills.brand_id IN (?)", brands)
-                   .group("drugs.id")
-    else
-      @drugs = Pill.joins(:drug).select(drug_select_qry).where(drug_location_qry).group("drugs.id")
-    end
-    render :partial => "drug_list"
-  end
-
-  def get_drugs_and_brands_in_location()
-    brand_location_qry  = "pills.location_id=#{@location.id} AND pills.brand_id=brands.id"
-    brand_select_qry    = "brands.id AS brand_id, brands.name AS brand_name, SUM(qty) AS brand_qty"
-    drug_location_qry   = "pills.location_id=#{@location.id} AND pills.drug_id=drugs.id"
-    drug_select_qry     = "drugs.id AS drug_id, drugs.name AS drug_name, SUM(qty) AS drug_qty"
-    @drugs              = Pill.joins(:drug).select(drug_select_qry).where(drug_location_qry).group("drugs.id")
-    @brands             = Pill.joins(:brand).select(brand_select_qry).where(brand_location_qry).group("brands.id")
   end
 
   private

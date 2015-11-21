@@ -1,0 +1,21 @@
+// Place all the styles related to the Trackables controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+
+.trackables-container {
+  .centered-header {
+    text-align: center;
+  }
+
+  .arrival-header-row {
+    width: 500px;
+    margin: auto;
+    align: center;
+  }
+
+  .arrival-row {
+    width: 500px;
+    margin: auto;
+    align: center;
+  }
+}

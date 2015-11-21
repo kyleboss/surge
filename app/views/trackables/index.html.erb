@@ -1,0 +1,37 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Listing Trackables</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Patient ID</th>
+      <th>Admin dose</th>
+      <th>Drug name</th>
+      <th>Brand name</th>
+      <th>Order</th>
+      <th>Med</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @trackables.each do |trackable| %>
+      <tr>
+        <td><%= trackable.patient_id %></td>
+        <td><%= trackable.admin_dose %></td>
+        <td><%= trackable.drug_name %></td>
+        <td><%= trackable.brand_name %></td>
+        <td><%= trackable.order_id %></td>
+        <td><%= trackable.med_id %></td>
+        <td><%= link_to 'Show', trackable %></td>
+        <td><%= link_to 'Edit', edit_trackable_path(trackable) %></td>
+        <td><%= link_to 'Destroy', trackable, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Trackable', new_trackable_path %>

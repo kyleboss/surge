@@ -1,0 +1,14 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Location:</strong>
+  <%= @arrival.location %>
+</p>
+
+<p>
+  <strong>Trackable:</strong>
+  <%= @arrival.trackable %>
+</p>
+
+<%= link_to 'Edit', edit_arrival_path(@arrival) %> |
+<%= link_to 'Back', arrivals_path %>

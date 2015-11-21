@@ -63,12 +63,6 @@ class HospitalsController < ApplicationController
     end
   end
 
-  def make_spotlight_search()
-    query             = params["query"]
-    current_hospital  = session[:hospital_id].to_s
-    render json: Search.new(query, current_hospital)
-  end
-
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_hospital
@@ -76,10 +70,16 @@ class HospitalsController < ApplicationController
         @user         = User.find(session[:user_id])
         hospital_id   = @user.hospital_id
         @hospital     = Hospital.find(hospital_id)
+        set_header()
       else
         redirect_to root_url
       end
     end
+
+  def set_header
+    @show_header  = true
+    @header_title = @hospital.name
+  end
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def hospital_params

@@ -1,0 +1,29 @@
+<div class="header">
+  <a href="/" class="header-logo-link">
+    <%= image_tag("s-logo.png", :class => "header-logo") %>
+  </a>
+  <form class="header-search-form" id="spotlight-search" action="/patients/make_spotlight_search">
+    <div class="header-search-container">
+      <%= image_tag("search-icon.png", :class => "search-icon") %>
+      <div class="spotlight-container">
+        <input type="text" class="header-search" placeholder="What are you looking for?" id="spotlight-search-query" autocomplete="off">
+        <div class="search-results-popover"></div>
+      </div>
+    </div>
+  </form>
+  <div class="header-buttons-container">
+    <div class="header-button emphasized-button">Search Externally</div>
+    <div class="header-button">Main Panel</div>
+    <div class="header-button profile-button">
+      <%= @user.first_name %>
+      <%= image_tag("profile-icon.png", :class => "profile-icon") %>
+    </div>
+  </div>
+</div>
+<div class="hero-section">
+  <div class="hero-background"></div>
+  <div class="hero-shade"></div>
+  <div class="hero-text">
+    <%= @header_title %>
+  </div>
+</div>

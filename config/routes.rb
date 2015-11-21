@@ -1,4 +1,7 @@
 Rails.application.routes.draw do
+  resources :arrivals
+  resources :trackables
+  resources :patients
   get 'sessions/new'
 
   get 'sessions/create'
@@ -6,7 +9,7 @@ Rails.application.routes.draw do
   get 'sessions/destroy'
 
   get 'admin_panel/home'
-  post 'hospitals/make_spotlight_search'
+  post 'patients/make_spotlight_search'
   post 'locations/filter_drugs_by_brand'
 
   get 'signup', to: 'users#new', as: 'signup'
@@ -15,13 +18,10 @@ Rails.application.routes.draw do
   get 'admin', to: 'hospitals#show', as: 'admin'
 
   resources :sessions, only: [:new, :create, :destroy]
-  resources :pills
   resources :locations
   resources :hospitals
   resources :users
   resources :addresses
-  resources :brands
-  resources :drugs
   get 'welcome/index'
 
   # The priority is based upon order of creation: first created -> highest priority.

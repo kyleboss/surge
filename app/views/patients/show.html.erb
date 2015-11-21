@@ -1,0 +1,55 @@
+<div class="patients-container">
+  <h2 class="centered-header">Patient's in-transit medicine</h2>
+  <div class="trackable-list">
+    <div class="row trackable-header-row">
+      <div class="col-md-3 col-sm-3 col-xs-3 trackable-cell">
+        Drug Name
+      </div>
+      <div class="col-md-3 col-sm-3 col-xs-3 trackable-cell">
+        Brand Name
+      </div>
+      <div class="col-md-3 col-sm-3 col-xs-3 trackable-cell">
+        Current Location
+      </div>
+      <div class="col-md-2 col-sm-2 col-xs-2 trackable-cell">
+        Time of last update
+      </div>
+    </div>
+    <% @trackables_of_patient.each do |trackable| %>
+        <a href="/trackables/<%=trackable.trackable_id%>" class="trackable-link">
+          <div class="row trackable-row">
+            <div class="col-md-3 col-sm-3 col-xs-3 trackable-cell">
+              <%= trackable.drug_name %>
+            </div>
+            <div class="col-md-3 col-sm-3 col-xs-3 trackable-cell">
+              <%= trackable.brand_name %>
+            </div>
+            <div class="col-md-3 col-sm-3 col-xs-3 trackable-cell">
+              <%= trackable.location_name %>
+            </div>
+            <div class="col-md-2 col-sm-2 col-xs-2 trackable-cell">
+              <%= trackable.last_arrival_time.strftime('%m/%d/%y %l:%M %p') %>
+            </div>
+          </div>
+        </a>
+    <% end %>
+  <p id="notice"><%= notice %></p>
+
+  <p>
+    <strong>Mrn:</strong>
+    <%= @patient.mrn %>
+  </p>
+
+  <p>
+    <strong>Name:</strong>
+    <%= @patient.name %>
+  </p>
+
+  <p>
+    <strong>Hospital:</strong>
+    <%= @patient.hospital_id %>
+  </p>
+
+  <%= link_to 'Edit', edit_patient_path(@patient) %> |
+  <%= link_to 'Back', patients_path %>
+</div>
