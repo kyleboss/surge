@@ -1,6 +1,7 @@
 class MigrateToTrackableFuzzySearch < ActiveRecord::Migration
   def self.up
     ActiveRecord::Base.connection.execute <<-SQL
+    DROP VIEW IF EXISTS searches;
     CREATE VIEW searches AS
       SELECT  patients.id AS searchable_id, patients.name AS term, patients.hospital_id AS hospital_id,
               CAST('PatientName' AS varchar) AS searchable_type
