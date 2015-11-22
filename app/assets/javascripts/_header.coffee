@@ -2,7 +2,7 @@
 # All this logic will automatically be available in application.js.
 # You can use CoffeeScript in this file: http://coffeescript.org/
 
-$(window).load ->
+ready = ->
   if window.showHeader
     $("#spotlight-search-query").on "keyup", (e) ->
       if $.trim($(this).val()).length > 2
@@ -17,6 +17,10 @@ $(window).load ->
           receiver.html(content)
           receiver.show()
         , "json")
+
+
+$(document).ready(ready)
+$(document).on('page:load', ready)
 
 formatSearchResults = (searchData) ->
   content = $("<div class='search-results'>")

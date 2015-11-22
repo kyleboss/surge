@@ -111,6 +111,38 @@ ALTER SEQUENCE arrivals_id_seq OWNED BY arrivals.id;
 
 
 --
+-- Name: departures; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE TABLE departures (
+    id integer NOT NULL,
+    location_id integer,
+    trackable_id integer,
+    created_at timestamp without time zone NOT NULL,
+    updated_at timestamp without time zone NOT NULL
+);
+
+
+--
+-- Name: departures_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE departures_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: departures_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE departures_id_seq OWNED BY departures.id;
+
+
+--
 -- Name: hospitals; Type: TABLE; Schema: public; Owner: -; Tablespace: 
 --
 
@@ -324,6 +356,13 @@ ALTER TABLE ONLY arrivals ALTER COLUMN id SET DEFAULT nextval('arrivals_id_seq':
 -- Name: id; Type: DEFAULT; Schema: public; Owner: -
 --
 
+ALTER TABLE ONLY departures ALTER COLUMN id SET DEFAULT nextval('departures_id_seq'::regclass);
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: -
+--
+
 ALTER TABLE ONLY hospitals ALTER COLUMN id SET DEFAULT nextval('hospitals_id_seq'::regclass);
 
 
@@ -369,6 +408,14 @@ ALTER TABLE ONLY addresses
 
 ALTER TABLE ONLY arrivals
     ADD CONSTRAINT arrivals_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: departures_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+--
+
+ALTER TABLE ONLY departures
+    ADD CONSTRAINT departures_pkey PRIMARY KEY (id);
 
 
 --
@@ -423,6 +470,20 @@ CREATE INDEX index_arrivals_on_location_id ON arrivals USING btree (location_id)
 --
 
 CREATE INDEX index_arrivals_on_trackable_id ON arrivals USING btree (trackable_id);
+
+
+--
+-- Name: index_departures_on_location_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE INDEX index_departures_on_location_id ON departures USING btree (location_id);
+
+
+--
+-- Name: index_departures_on_trackable_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE INDEX index_departures_on_trackable_id ON departures USING btree (trackable_id);
 
 
 --
@@ -512,6 +573,14 @@ ALTER TABLE ONLY locations
 
 
 --
+-- Name: fk_rails_50e269ebe4; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY departures
+    ADD CONSTRAINT fk_rails_50e269ebe4 FOREIGN KEY (location_id) REFERENCES locations(id);
+
+
+--
 -- Name: fk_rails_67f5ab1fa5; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -549,6 +618,14 @@ ALTER TABLE ONLY users
 
 ALTER TABLE ONLY arrivals
     ADD CONSTRAINT fk_rails_bac677e259 FOREIGN KEY (trackable_id) REFERENCES trackables(id);
+
+
+--
+-- Name: fk_rails_c3a12a5f74; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY departures
+    ADD CONSTRAINT fk_rails_c3a12a5f74 FOREIGN KEY (trackable_id) REFERENCES trackables(id);
 
 
 --
@@ -604,4 +681,14 @@ INSERT INTO schema_migrations (version) VALUES ('20151120225358');
 INSERT INTO schema_migrations (version) VALUES ('20151121001748');
 
 INSERT INTO schema_migrations (version) VALUES ('20151121162015');
+
+INSERT INTO schema_migrations (version) VALUES ('20151121234521');
+
+INSERT INTO schema_migrations (version) VALUES ('20151122015017');
+
+INSERT INTO schema_migrations (version) VALUES ('20151122020710');
+
+INSERT INTO schema_migrations (version) VALUES ('20151122024031');
+
+INSERT INTO schema_migrations (version) VALUES ('20151122025558');
 

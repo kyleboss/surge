@@ -77,9 +77,21 @@ class TrackablesController < ApplicationController
     end
 
   def get_all_arrivals_of_trackable()
-    arrivals_selections     = "locations.name AS location_name, arrivals.updated_at AS arrival_time"
-    @arrivals_of_trackable  = Arrival.select(arrivals_selections).where(:trackable_id => @trackable.id).joins(:location)
-                                  .order("arrivals.updated_at DESC")
+    @trackable_updates = Arrival.find_by_sql("SELECT * FROM
+      (
+          SELECT 'is_arrival' AS update_type, arrivals.*, locations.name AS location_name,
+          arrivals.updated_at AS update_time
+          FROM arrivals
+          INNER JOIN locations ON arrivals.location_id = locations.id
+          WHERE arrivals.trackable_id = #{@trackable.id}
+          UNION ALL
+          SELECT 'is_departure' AS update_type, departures.*, locations.name AS location_name,
+          departures.updated_at AS update_time
+          FROM departures
+          INNER JOIN locations ON departures.location_id = locations.id
+          WHERE departures.trackable_id = #{@trackable.id}
+      ) T1
+      ORDER BY update_time DESC")
   end
 
   def set_header

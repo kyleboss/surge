@@ -3,16 +3,31 @@
   <div class="trackable-list">
     <div class="row trackable-header-row">
       <div class="col-md-3 col-sm-3 col-xs-3 trackable-cell">
-        Drug Name
+        <span>
+          <%= link_to "Drug Name", {:sorting_column => "t.drug_name"} %>
+          <% if @sorting_column == "t.drug_name" %>
+            <div class="<%= @sorting_order == 'ASC' ? 'arrow-up' : 'arrow-down' %>"></div>
+          <% end %>
+        </span>
       </div>
       <div class="col-md-3 col-sm-3 col-xs-3 trackable-cell">
-        Brand Name
+        <span>
+          <%= link_to "Brand Name", {:sorting_column => "t.brand_name"} %>
+          <% if @sorting_column == "t.brand_name" %>
+              <span class="<%= @sorting_order == 'ASC' ? 'arrow-up' : 'arrow-down' %>"></span>
+          <% end %>
+        </span>
       </div>
       <div class="col-md-3 col-sm-3 col-xs-3 trackable-cell">
-        Current Location
+        Recent Activity
       </div>
       <div class="col-md-2 col-sm-2 col-xs-2 trackable-cell">
-        Time of last update
+        <span>
+          <%= link_to "Time of last update", {:sorting_column => "last_update_time"} %>
+          <% if @sorting_column == "last_update_time" %>
+              <div class="<%= @sorting_order == 'ASC' ? 'arrow-up' : 'arrow-down' %>"></div>
+          <% end %>
+        </span>
       </div>
     </div>
     <% @trackables_of_patient.each do |trackable| %>
@@ -25,31 +40,17 @@
               <%= trackable.brand_name %>
             </div>
             <div class="col-md-3 col-sm-3 col-xs-3 trackable-cell">
+              <% if trackable.update_type == "is_arrival" %>
+                  Arrived at
+              <% else %>
+                  Departed
+              <% end %>
               <%= trackable.location_name %>
             </div>
             <div class="col-md-2 col-sm-2 col-xs-2 trackable-cell">
-              <%= trackable.last_arrival_time.strftime('%m/%d/%y %l:%M %p') %>
+              <%= trackable.last_update_time.strftime('%m/%d/%y %l:%M %p') %>
             </div>
           </div>
         </a>
     <% end %>
-  <p id="notice"><%= notice %></p>
-
-  <p>
-    <strong>Mrn:</strong>
-    <%= @patient.mrn %>
-  </p>
-
-  <p>
-    <strong>Name:</strong>
-    <%= @patient.name %>
-  </p>
-
-  <p>
-    <strong>Hospital:</strong>
-    <%= @patient.hospital_id %>
-  </p>
-
-  <%= link_to 'Edit', edit_patient_path(@patient) %> |
-  <%= link_to 'Back', patients_path %>
 </div>

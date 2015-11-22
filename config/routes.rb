@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  resources :departures
+  resources :departures
   resources :arrivals
   resources :trackables
   resources :patients

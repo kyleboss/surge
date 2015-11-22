@@ -17,6 +17,39 @@
       border-bottom: 3px #eee solid;
       width: 90%;
       margin: auto;
+      color: #666;
+      font-size: 12px;
+      font-weight: 600;
+
+      .arrow-up {
+        display: inline-block;
+        margin: 0 0 2px 3px;
+        width: 0;
+        height: 0;
+        border-left: 5px solid transparent;
+        border-right: 5px solid transparent;
+        border-bottom: 5px solid #666;
+      }
+
+      .arrow-down {
+        display: inline-block;
+        margin: 0 0 2px 3px;
+        width: 0;
+        height: 0;
+        border-left: 5px solid transparent;
+        border-right: 5px solid transparent;
+        border-top: 5px solid #666;
+      }
+
+      a {
+        color: #666;
+        &:hover {
+          text-decoration: none;
+          border: none;
+          background: none;
+          color: #666;
+        }
+      }
     }
 
     .trackable-link {
@@ -34,6 +67,7 @@
         }
 
         .trackable-cell {
+
         }
       }
     }
