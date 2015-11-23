@@ -89,7 +89,7 @@ class PatientsController < ApplicationController
     @@sorting_column ||= "last_update_time"
     @@sorting_order  ||= "DESC"
     @trackables_of_patient = Trackable.find_by_sql("SELECT t.*, t.id AS trackable_id, a1.*, l.name AS location_name,
-      a1.updated_at AS last_arrival_time, d.updated_at AS last_departure_time,
+      a1.updated_at AS last_arrival_time, d.updated_at AS last_departure_time, t.patient_id AS patient_id,
       COALESCE(d.updated_at, a1.updated_at) AS last_update_time,
       CASE WHEN d.updated_at IS NULL THEN 'is_arrival' ELSE 'is_departure' END AS update_type
       FROM trackables t
@@ -99,7 +99,7 @@ class PatientsController < ApplicationController
       LEFT OUTER JOIN departures d ON (t.id = d.trackable_id AND
           (a1.updated_at < d.updated_at OR a1.updated_at = d.updated_at AND a1.id < d.id))
       INNER JOIN locations as l ON (l.id = a1.location_id)
-      WHERE a2.id IS NULL
+      WHERE a2.id IS NULL AND patient_id = #{@patient.id}
       ORDER BY #{@@sorting_column} #{@@sorting_order};")
   end
 

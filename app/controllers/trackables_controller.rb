@@ -63,6 +63,7 @@ class TrackablesController < ApplicationController
   end
 
   private
+
     # Use callbacks to share common setup or constraints between actions.
     def set_trackable
       if (session[:user_id])
@@ -70,6 +71,7 @@ class TrackablesController < ApplicationController
         hospital_id   = @user.hospital_id
         @hospital     = Hospital.find(hospital_id)
         @trackable    = Trackable.find(params[:id])
+
         set_header()
       else
         redirect_to root_url
@@ -99,8 +101,32 @@ class TrackablesController < ApplicationController
     @header_title = @trackable.drug_name
   end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
-    def trackable_params
-      params.require(:trackable).permit(:patient_id, :admin_dose, :drug_name, :brand_name, :order_id, :med_id, :sig, :admin)
-    end
+  def trackable_params
+    patient_info = permit_patient_params
+    patient_id = Patient.find_or_create_by(mrn: patient_info[:mrn]).id
+    patient = Patient.find(patient_id)
+    patient.name = patient_info[:name]
+    patient.save
+
+    trackable_info = permit_trackable_params
+
+    new_trackable_info = {patient_id: patient_id, admin_dose: trackable_info[:admin_dose],
+                          drug_name: trackable_info[:drug_name], brand_name: trackable_info[:brand_name],
+                          order_id: trackable_info[:order_id], med_id: trackable_info[:med_id],
+                          sig: trackable_info[:sig], admin: trackable_info[:admin]}
+
+    return new_trackable_info
+  end
+
+  # Never trust parameters from the scary internet, only allow the white list through.
+  def permit_trackable_params
+    params.require(:trackable).permit(:patient_id, :admin_dose, :drug_name, :brand_name, :order_id, :med_id, :sig, :admin)
+    return params[:trackable]
+  end
+
+  def permit_patient_params
+    params.require(:patient).permit(:name, :mrn)
+    return params[:patient]
+  end
+
 end

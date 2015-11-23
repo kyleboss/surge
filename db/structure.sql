@@ -111,6 +111,37 @@ ALTER SEQUENCE arrivals_id_seq OWNED BY arrivals.id;
 
 
 --
+-- Name: brands; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE TABLE brands (
+    id integer NOT NULL,
+    name character varying,
+    created_at timestamp without time zone NOT NULL,
+    updated_at timestamp without time zone NOT NULL
+);
+
+
+--
+-- Name: brands_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE brands_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: brands_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE brands_id_seq OWNED BY brands.id;
+
+
+--
 -- Name: departures; Type: TABLE; Schema: public; Owner: -; Tablespace: 
 --
 
@@ -140,6 +171,37 @@ CREATE SEQUENCE departures_id_seq
 --
 
 ALTER SEQUENCE departures_id_seq OWNED BY departures.id;
+
+
+--
+-- Name: drugs; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE TABLE drugs (
+    id integer NOT NULL,
+    name character varying,
+    created_at timestamp without time zone NOT NULL,
+    updated_at timestamp without time zone NOT NULL
+);
+
+
+--
+-- Name: drugs_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE drugs_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: drugs_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE drugs_id_seq OWNED BY drugs.id;
 
 
 --
@@ -238,6 +300,41 @@ CREATE SEQUENCE patients_id_seq
 --
 
 ALTER SEQUENCE patients_id_seq OWNED BY patients.id;
+
+
+--
+-- Name: pills; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE TABLE pills (
+    id integer NOT NULL,
+    drug_id integer,
+    brand_id integer,
+    location_id integer,
+    hospital_id integer,
+    qty integer,
+    created_at timestamp without time zone NOT NULL,
+    updated_at timestamp without time zone NOT NULL
+);
+
+
+--
+-- Name: pills_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE pills_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: pills_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE pills_id_seq OWNED BY pills.id;
 
 
 --
@@ -356,7 +453,21 @@ ALTER TABLE ONLY arrivals ALTER COLUMN id SET DEFAULT nextval('arrivals_id_seq':
 -- Name: id; Type: DEFAULT; Schema: public; Owner: -
 --
 
+ALTER TABLE ONLY brands ALTER COLUMN id SET DEFAULT nextval('brands_id_seq'::regclass);
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: -
+--
+
 ALTER TABLE ONLY departures ALTER COLUMN id SET DEFAULT nextval('departures_id_seq'::regclass);
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY drugs ALTER COLUMN id SET DEFAULT nextval('drugs_id_seq'::regclass);
 
 
 --
@@ -378,6 +489,13 @@ ALTER TABLE ONLY locations ALTER COLUMN id SET DEFAULT nextval('locations_id_seq
 --
 
 ALTER TABLE ONLY patients ALTER COLUMN id SET DEFAULT nextval('patients_id_seq'::regclass);
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY pills ALTER COLUMN id SET DEFAULT nextval('pills_id_seq'::regclass);
 
 
 --
@@ -411,11 +529,27 @@ ALTER TABLE ONLY arrivals
 
 
 --
+-- Name: brands_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+--
+
+ALTER TABLE ONLY brands
+    ADD CONSTRAINT brands_pkey PRIMARY KEY (id);
+
+
+--
 -- Name: departures_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
 --
 
 ALTER TABLE ONLY departures
     ADD CONSTRAINT departures_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: drugs_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+--
+
+ALTER TABLE ONLY drugs
+    ADD CONSTRAINT drugs_pkey PRIMARY KEY (id);
 
 
 --
@@ -440,6 +574,14 @@ ALTER TABLE ONLY locations
 
 ALTER TABLE ONLY patients
     ADD CONSTRAINT patients_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: pills_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+--
+
+ALTER TABLE ONLY pills
+    ADD CONSTRAINT pills_pkey PRIMARY KEY (id);
 
 
 --
@@ -473,6 +615,13 @@ CREATE INDEX index_arrivals_on_trackable_id ON arrivals USING btree (trackable_i
 
 
 --
+-- Name: index_brands_on_name; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE INDEX index_brands_on_name ON brands USING gin (to_tsvector('english'::regconfig, (name)::text));
+
+
+--
 -- Name: index_departures_on_location_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
@@ -484,6 +633,13 @@ CREATE INDEX index_departures_on_location_id ON departures USING btree (location
 --
 
 CREATE INDEX index_departures_on_trackable_id ON departures USING btree (trackable_id);
+
+
+--
+-- Name: index_drugs_on_name; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE INDEX index_drugs_on_name ON drugs USING gin (to_tsvector('english'::regconfig, (name)::text));
 
 
 --
@@ -508,6 +664,13 @@ CREATE INDEX index_locations_on_hospital_id ON locations USING btree (hospital_i
 
 
 --
+-- Name: index_locations_on_name; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE INDEX index_locations_on_name ON locations USING gin (to_tsvector('english'::regconfig, (name)::text));
+
+
+--
 -- Name: index_patients_on_hospital_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
@@ -526,6 +689,34 @@ CREATE INDEX index_patients_on_mrn ON patients USING gin (to_tsvector('english':
 --
 
 CREATE INDEX index_patients_on_name ON patients USING gin (to_tsvector('english'::regconfig, (name)::text));
+
+
+--
+-- Name: index_pills_on_brand_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE INDEX index_pills_on_brand_id ON pills USING btree (brand_id);
+
+
+--
+-- Name: index_pills_on_drug_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE INDEX index_pills_on_drug_id ON pills USING btree (drug_id);
+
+
+--
+-- Name: index_pills_on_hospital_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE INDEX index_pills_on_hospital_id ON pills USING btree (hospital_id);
+
+
+--
+-- Name: index_pills_on_location_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE INDEX index_pills_on_location_id ON pills USING btree (location_id);
 
 
 --
@@ -557,6 +748,22 @@ CREATE UNIQUE INDEX unique_schema_migrations ON schema_migrations USING btree (v
 
 
 --
+-- Name: fk_rails_141d4bec17; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY pills
+    ADD CONSTRAINT fk_rails_141d4bec17 FOREIGN KEY (location_id) REFERENCES locations(id);
+
+
+--
+-- Name: fk_rails_14262c267c; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY pills
+    ADD CONSTRAINT fk_rails_14262c267c FOREIGN KEY (drug_id) REFERENCES drugs(id);
+
+
+--
 -- Name: fk_rails_1673fa1e63; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -570,6 +777,14 @@ ALTER TABLE ONLY hospitals
 
 ALTER TABLE ONLY locations
     ADD CONSTRAINT fk_rails_420b36a74d FOREIGN KEY (hospital_id) REFERENCES hospitals(id);
+
+
+--
+-- Name: fk_rails_4ddc68558e; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY pills
+    ADD CONSTRAINT fk_rails_4ddc68558e FOREIGN KEY (hospital_id) REFERENCES hospitals(id);
 
 
 --
@@ -629,6 +844,14 @@ ALTER TABLE ONLY departures
 
 
 --
+-- Name: fk_rails_d411c8fa68; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY pills
+    ADD CONSTRAINT fk_rails_d411c8fa68 FOREIGN KEY (brand_id) REFERENCES brands(id);
+
+
+--
 -- Name: fk_rails_d7d780c6ca; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -650,6 +873,10 @@ ALTER TABLE ONLY users
 
 SET search_path TO "$user",public;
 
+INSERT INTO schema_migrations (version) VALUES ('20151110230749');
+
+INSERT INTO schema_migrations (version) VALUES ('20151110230758');
+
 INSERT INTO schema_migrations (version) VALUES ('20151110231626');
 
 INSERT INTO schema_migrations (version) VALUES ('20151110233848');
@@ -658,6 +885,10 @@ INSERT INTO schema_migrations (version) VALUES ('20151110233916');
 
 INSERT INTO schema_migrations (version) VALUES ('20151110233943');
 
+INSERT INTO schema_migrations (version) VALUES ('20151110234040');
+
+INSERT INTO schema_migrations (version) VALUES ('20151111013313');
+
 INSERT INTO schema_migrations (version) VALUES ('20151111034228');
 
 INSERT INTO schema_migrations (version) VALUES ('20151111193627');
@@ -665,6 +896,8 @@ INSERT INTO schema_migrations (version) VALUES ('20151111193627');
 INSERT INTO schema_migrations (version) VALUES ('20151111213000');
 
 INSERT INTO schema_migrations (version) VALUES ('20151111213616');
+
+INSERT INTO schema_migrations (version) VALUES ('20151113203908');
 
 INSERT INTO schema_migrations (version) VALUES ('20151120221527');
 
@@ -681,10 +914,6 @@ INSERT INTO schema_migrations (version) VALUES ('20151120225358');
 INSERT INTO schema_migrations (version) VALUES ('20151121001748');
 
 INSERT INTO schema_migrations (version) VALUES ('20151121162015');
-
-INSERT INTO schema_migrations (version) VALUES ('20151121234521');
-
-INSERT INTO schema_migrations (version) VALUES ('20151122015017');
 
 INSERT INTO schema_migrations (version) VALUES ('20151122020710');
 
