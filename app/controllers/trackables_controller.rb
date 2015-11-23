@@ -68,8 +68,8 @@ class TrackablesController < ApplicationController
     def set_trackable
       if (session[:user_id])
         @user         = User.find(session[:user_id])
-        @@hospital_id   = @user.hospital_id
-        @hospital     = Hospital.find(@@hospital_id)
+        hospital_id   = @user.hospital_id
+        @hospital     = Hospital.find(hospital_id)
         @trackable    = Trackable.find(params[:id])
 
         set_header()
@@ -106,7 +106,7 @@ class TrackablesController < ApplicationController
     patient_id = Patient.find_or_create_by(mrn: patient_info[:mrn]).id
     patient = Patient.find(patient_id)
     patient.name = patient_info[:name]
-    patient.hospital_id = @@hospital_id
+    patient.hospital_id = patient_info[:hospital_id]
     patient.save
 
     trackable_info = permit_trackable_params
@@ -126,7 +126,7 @@ class TrackablesController < ApplicationController
   end
 
   def permit_patient_params
-    params.require(:patient).permit(:name, :mrn)
+    params.require(:patient).permit(:name, :mrn, :hospital_id)
     return params[:patient]
   end
 

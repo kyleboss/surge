@@ -7,7 +7,7 @@ class SessionsController < ApplicationController
       session[:user_id]     = user.id
       session[:hospital_id] = user.hospital_id
       session[:user_name]   = user.first_name
-      redirect_to root_url, notice: 'Logged in!'
+      redirect_to "/admin", notice: 'Logged in!'
     else
       render :new
     end
