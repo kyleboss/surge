@@ -106,6 +106,7 @@ class TrackablesController < ApplicationController
     patient_id = Patient.find_or_create_by(mrn: patient_info[:mrn]).id
     patient = Patient.find(patient_id)
     patient.name = patient_info[:name]
+    patient.hospital_id = @user.hospital_id
     patient.save
 
     trackable_info = permit_trackable_params
