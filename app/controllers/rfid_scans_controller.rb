@@ -1,5 +1,6 @@
 class RfidScansController < ApplicationController
   before_action :set_rfid_scan, only: [:show, :edit, :update, :destroy]
+  protect_from_forgery :except => [:scan_rfid]
 
   # GET /rfid_scans
   # GET /rfid_scans.json
@@ -59,6 +60,11 @@ class RfidScansController < ApplicationController
       format.html { redirect_to rfid_scans_url, notice: 'Rfid scan was successfully destroyed.' }
       format.json { head :no_content }
     end
+  end
+
+  def scan_rfid
+    RfidScan.scan(params[:rfid_reader_id], params[:rfid_id])
+    render plain: "Success"
   end
 
   private

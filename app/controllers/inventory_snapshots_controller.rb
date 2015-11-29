@@ -1,5 +1,6 @@
 class InventorySnapshotsController < ApplicationController
   before_action :set_inventory_snapshot, only: [:show, :edit, :update, :destroy]
+  protect_from_forgery :except => [:make_inventory_snapshot]
 
   # GET /inventory_snapshots
   # GET /inventory_snapshots.json
