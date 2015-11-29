@@ -1,0 +1,27 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Listing Barcode Readers</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Reader</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @barcode_readers.each do |barcode_reader| %>
+      <tr>
+        <td><%= barcode_reader.reader_id %></td>
+        <td><%= link_to 'Show', barcode_reader %></td>
+        <td><%= link_to 'Edit', edit_barcode_reader_path(barcode_reader) %></td>
+        <td><%= link_to 'Destroy', barcode_reader, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Barcode reader', new_barcode_reader_path %>

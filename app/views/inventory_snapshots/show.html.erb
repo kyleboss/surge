@@ -1,0 +1,14 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Location:</strong>
+  <%= @inventory_snapshot.location %>
+</p>
+
+<p>
+  <strong>Rfid:</strong>
+  <%= @inventory_snapshot.rfid %>
+</p>
+
+<%= link_to 'Edit', edit_inventory_snapshot_path(@inventory_snapshot) %> |
+<%= link_to 'Back', inventory_snapshots_path %>

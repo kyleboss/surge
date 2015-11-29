@@ -1,4 +1,13 @@
 Rails.application.routes.draw do
+  resources :rfid_scans
+  resources :rfid_reader_barcode_reader_pairings
+  resources :rfid_readers
+  resources :barcode_scans
+  resources :barcode_readers
+  resources :inventory_snapshot_contents
+  resources :rfids
+  resources :inventory_snapshots
+  resources :antennas
   resources :departures
   resources :departures
   resources :arrivals
@@ -18,6 +27,8 @@ Rails.application.routes.draw do
   get 'login', to: 'sessions#new', as: 'login'
   get 'logout', to: 'sessions#destroy', as: 'logout'
   get 'admin', to: 'hospitals#show', as: 'admin'
+  post 'scan_rfid', to: 'rfid_scans#scan_rfid', as: 'scan_rfid'
+  post 'make_inventory_snapshot', to: 'inventory_snapshots#make_inventory_snapshot', as: 'make_inventory_snapshot'
 
   resources :sessions, only: [:new, :create, :destroy]
   resources :locations

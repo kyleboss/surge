@@ -1,0 +1,9 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Uniq:</strong>
+  <%= @rfid.uniq_id %>
+</p>
+
+<%= link_to 'Edit', edit_rfid_path(@rfid) %> |
+<%= link_to 'Back', rfids_path %>

@@ -1,0 +1,14 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Barcode reader:</strong>
+  <%= @rfid_reader_barcode_reader_pairing.barcode_reader %>
+</p>
+
+<p>
+  <strong>Rfid reader:</strong>
+  <%= @rfid_reader_barcode_reader_pairing.rfid_reader %>
+</p>
+
+<%= link_to 'Edit', edit_rfid_reader_barcode_reader_pairing_path(@rfid_reader_barcode_reader_pairing) %> |
+<%= link_to 'Back', rfid_reader_barcode_reader_pairings_path %>

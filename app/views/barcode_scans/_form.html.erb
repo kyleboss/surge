@@ -1,0 +1,57 @@
+<%= form_for(@barcode_scan) do |f| %>
+  <% if @barcode_scan.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@barcode_scan.errors.count, "error") %> prohibited this barcode_scan from being saved:</h2>
+
+      <ul>
+      <% @barcode_scan.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :barcode_reader_id %><br>
+    <%= f.text_field :barcode_reader_id %>
+  </div>
+    <div class="field">
+      <%= f.label :order_id %><br>
+      <input id="barcode_scan_order_id" name="barcode_scan[order_id]" type="text" />
+    </div>
+    <div class="field">
+      <%= f.label :patient_name %><br>
+      <input id="barcode_scan_patient_name" name="barcode_scan[patient_name]" type="text" />
+    </div>
+    <div class="field">
+      <%= f.label :mrn %><br>
+      <input id="barcode_scan_mrn" name="barcode_scan[mrn]" type="text" />
+    </div>
+    <div class="field">
+      <%= f.label :admin_dose %><br>
+      <input id="barcode_scan_admin_dose" name="barcode_scan[admin_dose]" type="text" />
+    </div>
+    <div class="field">
+      <%= f.label :drug_name %><br>
+      <input id="barcode_scan_drug_name" name="barcode_scan[drug_name]" type="text" />
+    </div>
+    <div class="field">
+      <%= f.label :brand_name %><br>
+      <input id="barcode_scan_brand_name" name="barcode_scan[brand_name]" type="text" />
+    </div>
+    <div class="field">
+      <%= f.label :med_id %><br>
+      <input id="barcode_scan_med_id" name="barcode_scan[med_id]" type="text" />
+    </div>
+    <div class="field">
+      <%= f.label :admin %><br>
+      <input id="barcode_scan_admin" name="barcode_scan[admin]" type="text" />
+    </div>
+    <div class="field">
+      <%= f.label :sig %><br>
+      <input id="barcode_scan_sig" name="barcode_scan[sig]" type="text" />
+    </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

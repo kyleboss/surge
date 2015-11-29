@@ -1,0 +1,25 @@
+<%= form_for(@antenna) do |f| %>
+  <% if @antenna.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@antenna.errors.count, "error") %> prohibited this antenna from being saved:</h2>
+
+      <ul>
+      <% @antenna.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :uniq_id %><br>
+    <%= f.text_field :uniq_id %>
+  </div>
+  <div class="field">
+    <%= f.label :location_id %><br>
+    <%= f.text_field :location_id %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

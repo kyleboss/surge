@@ -93,7 +93,6 @@ class UsersController < ApplicationController
       user_info               = permit_user_params()
       encryptedPassword       = PasswordDigester.encrypt(user_info[:password])
       user_info[:address_id]  = find_or_create_by_address_id(user_info)
-      user_info[:hospital_id] = Hospital.first.id
       new_user_info           = {first_name: user_info[:first_name],
                                  middle_initial: user_info[:middle_initial],
                                  last_name: user_info[:last_name],

@@ -1,0 +1,29 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Listing Barcode Scans</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Barcode reader</th>
+      <th>Trackable</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @barcode_scans.each do |barcode_scan| %>
+      <tr>
+        <td><%= barcode_scan.barcode_reader %></td>
+        <td><%= barcode_scan.trackable %></td>
+        <td><%= link_to 'Show', barcode_scan %></td>
+        <td><%= link_to 'Edit', edit_barcode_scan_path(barcode_scan) %></td>
+        <td><%= link_to 'Destroy', barcode_scan, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Barcode scan', new_barcode_scan_path %>

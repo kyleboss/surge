@@ -1,0 +1,14 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Uniq:</strong>
+  <%= @antenna.uniq_id %>
+</p>
+
+<p>
+  <strong>Location:</strong>
+  <%= @antenna.location %>
+</p>
+
+<%= link_to 'Edit', edit_antenna_path(@antenna) %> |
+<%= link_to 'Back', antennas_path %>

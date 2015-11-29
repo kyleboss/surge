@@ -1,0 +1,9 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Reader:</strong>
+  <%= @rfid_reader.reader_id %>
+</p>
+
+<%= link_to 'Edit', edit_rfid_reader_path(@rfid_reader) %> |
+<%= link_to 'Back', rfid_readers_path %>

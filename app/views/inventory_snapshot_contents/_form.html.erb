@@ -1,0 +1,25 @@
+<%= form_for(@inventory_snapshot_content) do |f| %>
+  <% if @inventory_snapshot_content.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@inventory_snapshot_content.errors.count, "error") %> prohibited this inventory_snapshot_content from being saved:</h2>
+
+      <ul>
+      <% @inventory_snapshot_content.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :inventory_snapshot_id %><br>
+    <%= f.text_field :inventory_snapshot_id %>
+  </div>
+  <div class="field">
+    <%= f.label :trackable_id %><br>
+    <%= f.text_field :trackable_id %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

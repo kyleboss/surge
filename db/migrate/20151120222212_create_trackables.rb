@@ -5,7 +5,7 @@ class CreateTrackables < ActiveRecord::Migration
       t.string :admin_dose
       t.string :drug_name
       t.string :brand_name
-      t.string :order_id
+      t.string :order_id, index: true
       t.string :med_id
 
       t.timestamps null: false

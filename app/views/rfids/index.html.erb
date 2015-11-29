@@ -1,0 +1,27 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Listing Rfids</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Uniq</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @rfids.each do |rfid| %>
+      <tr>
+        <td><%= rfid.uniq_id %></td>
+        <td><%= link_to 'Show', rfid %></td>
+        <td><%= link_to 'Edit', edit_rfid_path(rfid) %></td>
+        <td><%= link_to 'Destroy', rfid, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Rfid', new_rfid_path %>

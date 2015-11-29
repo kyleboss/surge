@@ -1,0 +1,27 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Listing Rfid Readers</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Reader</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @rfid_readers.each do |rfid_reader| %>
+      <tr>
+        <td><%= rfid_reader.reader_id %></td>
+        <td><%= link_to 'Show', rfid_reader %></td>
+        <td><%= link_to 'Edit', edit_rfid_reader_path(rfid_reader) %></td>
+        <td><%= link_to 'Destroy', rfid_reader, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Rfid reader', new_rfid_reader_path %>

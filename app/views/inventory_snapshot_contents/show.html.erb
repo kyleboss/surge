@@ -1,0 +1,14 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Inventory snapshot:</strong>
+  <%= @inventory_snapshot_content.inventory_snapshot %>
+</p>
+
+<p>
+  <strong>Trackable:</strong>
+  <%= @inventory_snapshot_content.trackable %>
+</p>
+
+<%= link_to 'Edit', edit_inventory_snapshot_content_path(@inventory_snapshot_content) %> |
+<%= link_to 'Back', inventory_snapshot_contents_path %>

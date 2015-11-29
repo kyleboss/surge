@@ -1,0 +1,21 @@
+<%= form_for(@barcode_reader) do |f| %>
+  <% if @barcode_reader.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@barcode_reader.errors.count, "error") %> prohibited this barcode_reader from being saved:</h2>
+
+      <ul>
+      <% @barcode_reader.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :reader_id %><br>
+    <%= f.text_field :reader_id %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

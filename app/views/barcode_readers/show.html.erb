@@ -1,0 +1,9 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Reader:</strong>
+  <%= @barcode_reader.reader_id %>
+</p>
+
+<%= link_to 'Edit', edit_barcode_reader_path(@barcode_reader) %> |
+<%= link_to 'Back', barcode_readers_path %>
