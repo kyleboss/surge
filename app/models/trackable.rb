@@ -8,6 +8,7 @@ class Trackable < ActiveRecord::Base
   INNER JOIN rfid_reader_barcode_reader_pairings ON rfid_reader_barcode_reader_pairings.barcode_reader_id = barcode_scans.barcode_reader_id
   WHERE rfid_reader_barcode_reader_pairings.rfid_reader_id = " + rfid_reader_id + " AND
   (SELECT COUNT(*) FROM rfid_trackable_pairings WHERE rfid_trackable_pairings.trackable_id = trackables.id) = 0
+  AND barcode_scans.created_at > NOW() - INTERVAL '5 seconds'
   ORDER BY barcode_scans.created_at DESC LIMIT 1")
   end
 end

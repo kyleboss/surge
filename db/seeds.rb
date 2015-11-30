@@ -55,8 +55,8 @@ hospital3.save
   end
   3.times do |reader_id|
     reader_id += 1
-    BarcodeReader.create(reader_id: reader_id, hospital_id: hospital_id)
-    RfidReader.create(reader_id: reader_id, hospital_id: hospital_id)
+    BarcodeReader.create(reader_id: "#{hospital_id}-#{reader_id}", hospital_id: hospital_id)
+    RfidReader.create(reader_id: "#{hospital_id}-#{reader_id}", hospital_id: hospital_id)
   end
   RfidReaderBarcodeReaderPairing.create(barcode_reader_id: 1+hospital_id-1, rfid_reader_id: 1+hospital_id-1)
   RfidReaderBarcodeReaderPairing.create(barcode_reader_id: 2+hospital_id-1, rfid_reader_id: 3+hospital_id-1)
@@ -68,8 +68,9 @@ hospital3.save
     3.times do |trackable_id|
       trackable_unique_identifier = "#{hospital_id}-#{patient_id}-#{trackable_id}"
       Trackable.create(patient_id: new_patient.id, admin_dose: "admin_dose", drug_name: "drug_name",
-                       brand_name: "brand_name", order_id: trackable_unique_identifier, med_id: "med_id")
-      Rfid.create(uniq_id: "#{hospital_id}-#{patient_id}-#{trackable_id*3}")
+                       brand_name: "brand_name", order_id: trackable_unique_identifier, med_id: "med_id", sig: "sig",
+                       admin: "admin")
+      Rfid.create(rfid_id: "#{hospital_id}-#{patient_id}-#{trackable_id*3}")
     end
   end
 end

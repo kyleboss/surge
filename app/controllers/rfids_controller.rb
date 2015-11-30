@@ -69,6 +69,6 @@ class RfidsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def rfid_params
-      params.require(:rfid).permit(:uniq_id)
+      params.require(:rfid).permit(:rfid_id)
     end
 end

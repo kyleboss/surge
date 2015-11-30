@@ -533,7 +533,7 @@ ALTER SEQUENCE rfid_trackable_pairings_id_seq OWNED BY rfid_trackable_pairings.i
 
 CREATE TABLE rfids (
     id integer NOT NULL,
-    uniq_id character varying,
+    rfid_id character varying,
     created_at timestamp without time zone NOT NULL,
     updated_at timestamp without time zone NOT NULL
 );
@@ -1398,4 +1398,6 @@ INSERT INTO schema_migrations (version) VALUES ('20151129045917');
 INSERT INTO schema_migrations (version) VALUES ('20151129050105');
 
 INSERT INTO schema_migrations (version) VALUES ('20151129050138');
+
+INSERT INTO schema_migrations (version) VALUES ('20151130003854');
 
