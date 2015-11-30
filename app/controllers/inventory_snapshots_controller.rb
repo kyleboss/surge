@@ -63,7 +63,11 @@ class InventorySnapshotsController < ApplicationController
   end
 
   def make_inventory_snapshot
-    InventorySnapshot.create_snapshot_with_contents(params[:antenna_id], params[:rfid_ids])
+    print "MAKE INVENTORY SNAPSHOT"
+    print params[:rfid_ids].values
+    inventory_snapshot = InventorySnapshot.create_snapshot_with_contents(params[:antenna_id], params[:rfid_ids].values)
+    InventorySnapshot.get_updates_from_previous_snapshot(inventory_snapshot)
+    render plain: "Success"
   end
 
   private
@@ -74,6 +78,6 @@ class InventorySnapshotsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def inventory_snapshot_params
-      params.require(:inventory_snapshot).permit(:location_id)
+      params.require(:inventory_snapshot).permit(:location_id, :rfid_ids)
     end
 end

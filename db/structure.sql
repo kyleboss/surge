@@ -278,7 +278,7 @@ ALTER SEQUENCE hospitals_id_seq OWNED BY hospitals.id;
 CREATE TABLE inventory_snapshot_contents (
     id integer NOT NULL,
     inventory_snapshot_id integer,
-    trackable_id integer,
+    rfid_id integer,
     created_at timestamp without time zone NOT NULL,
     updated_at timestamp without time zone NOT NULL
 );
@@ -1004,10 +1004,10 @@ CREATE INDEX index_inventory_snapshot_contents_on_inventory_snapshot_id ON inven
 
 
 --
--- Name: index_inventory_snapshot_contents_on_trackable_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+-- Name: index_inventory_snapshot_contents_on_rfid_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
-CREATE INDEX index_inventory_snapshot_contents_on_trackable_id ON inventory_snapshot_contents USING btree (trackable_id);
+CREATE INDEX index_inventory_snapshot_contents_on_rfid_id ON inventory_snapshot_contents USING btree (rfid_id);
 
 
 --
@@ -1262,7 +1262,7 @@ ALTER TABLE ONLY users
 --
 
 ALTER TABLE ONLY inventory_snapshot_contents
-    ADD CONSTRAINT fk_rails_b430d99458 FOREIGN KEY (trackable_id) REFERENCES trackables(id);
+    ADD CONSTRAINT fk_rails_b430d99458 FOREIGN KEY (rfid_id) REFERENCES trackables(id);
 
 
 --
@@ -1400,4 +1400,6 @@ INSERT INTO schema_migrations (version) VALUES ('20151129050105');
 INSERT INTO schema_migrations (version) VALUES ('20151129050138');
 
 INSERT INTO schema_migrations (version) VALUES ('20151130003854');
+
+INSERT INTO schema_migrations (version) VALUES ('20151130084627');
 

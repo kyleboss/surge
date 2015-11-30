@@ -25,12 +25,15 @@ class BarcodeScansController < ApplicationController
   # POST /barcode_scans.json
   def create
     pms = barcode_scan_params
+    print "PARAMS"
+    print barcode_scan_params
+    print pms
     if (pms[:mrn].nil? || pms[:mrn].empty?)
+      BarcodeScan.scan(pms[:barcode_reader_id], pms[:order_id])
+    else
       BarcodeScan.scan_barcode_and_add_trackable(pms[:barcode_reader_id], pms[:order_id], pms[:mrn], pms[:patient_name],
                                                  pms[:admin_dose],pms[:drug_name], pms[:brand_name], pms[:med_id],
                                                  pms[:admin], pms[:sig])
-    else
-      BarcodeScan.scan(pms[:barcode_reader_id], pms[:order_id])
     end
     respond_to do |format|
       format.html { redirect_to "/barcode_scans", notice: 'Barcode scan was successfully created.' }

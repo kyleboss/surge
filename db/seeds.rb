@@ -58,9 +58,9 @@ hospital3.save
     BarcodeReader.create(reader_id: "#{hospital_id}-#{reader_id}", hospital_id: hospital_id)
     RfidReader.create(reader_id: "#{hospital_id}-#{reader_id}", hospital_id: hospital_id)
   end
-  RfidReaderBarcodeReaderPairing.create(barcode_reader_id: 1+hospital_id-1, rfid_reader_id: 1+hospital_id-1)
-  RfidReaderBarcodeReaderPairing.create(barcode_reader_id: 2+hospital_id-1, rfid_reader_id: 3+hospital_id-1)
-  RfidReaderBarcodeReaderPairing.create(barcode_reader_id: 3+hospital_id-1, rfid_reader_id: 2+hospital_id-1)
+  RfidReaderBarcodeReaderPairing.create(barcode_reader_id: 1+(hospital_id-1)*3, rfid_reader_id: 1+(hospital_id-1)*3)
+  RfidReaderBarcodeReaderPairing.create(barcode_reader_id: 2+(hospital_id-1)*3, rfid_reader_id: 3+(hospital_id-1)*3)
+  RfidReaderBarcodeReaderPairing.create(barcode_reader_id: 3+(hospital_id-1)*3, rfid_reader_id: 2+(hospital_id-1)*3)
   3.times do |patient_id|
     patient_id += 1
     mrn_identifier = "#{hospital_id}-#{patient_id}"

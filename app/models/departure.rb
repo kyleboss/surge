@@ -13,8 +13,8 @@ class Departure < ActiveRecord::Base
 
   def self.create_many_given_rfids_and_location(rfid_ids, location_id)
     rfid_ids.each do |rfid_id|
-      order_id          = RfidTrackablePairing.get_order_given_rfid(rfid_id)
-      departure_params  = {order_id: order_id, location_id: location_id}
+      trackable         = RfidTrackablePairing.get_order_given_rfid(rfid_id)
+      departure_params  = {trackable_id: trackable.first.trackable_id, location_id: location_id}
       self.create(departure_params)
     end
   end

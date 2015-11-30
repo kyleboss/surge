@@ -4,7 +4,8 @@ class InventorySnapshotContent < ActiveRecord::Base
 
   def self.create_many_given_rfids(inventory_snapshot_id, rfid_ids)
     rfid_ids.each do |rfid_id|
-      new_inventory_snapshot_content_params = {inventory_snapshot_id: inventory_snapshot_id, rfid_id: rfid_id}
+      rfid = Rfid.find_by(rfid_id: rfid_id)
+      new_inventory_snapshot_content_params = {inventory_snapshot_id: inventory_snapshot_id, rfid_id: rfid.id}
       InventorySnapshotContent.create(new_inventory_snapshot_content_params)
     end
   end
