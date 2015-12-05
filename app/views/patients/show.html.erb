@@ -48,7 +48,12 @@
               <%= trackable.location_name %>
             </div>
             <div class="col-md-2 col-sm-2 col-xs-2 trackable-cell">
-              <%= trackable.last_update_time.strftime('%m/%d/%y %l:%M %p') %>
+              <%= if (trackable.last_update_time < Time.now - 59.minutes)
+                    trackable.last_update_time.in_time_zone("Pacific Time (US & Canada)").strftime('%m/%d/%y %l:%M %p')
+                  else
+                    time_ago_in_words(trackable.last_update_time) + " ago"
+                  end
+              %>
             </div>
           </div>
         </a>

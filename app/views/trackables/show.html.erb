@@ -25,7 +25,12 @@
             <%= update.location_name %>
           </div>
           <div class="update-cell update-time">
-            <%= update.update_time.strftime('%m/%d/%y %l:%M %p') %>
+            <%= if (update.update_time < Time.now - 59.minutes)
+                 update.update_time.in_time_zone("Pacific Time (US & Canada)").strftime('%m/%d/%y %l:%M %p')
+               else
+                  time_ago_in_words(update.update_time) + " ago"
+               end
+            %>
           </div>
         </div>
     <% end %>

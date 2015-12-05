@@ -82,13 +82,13 @@ class TrackablesController < ApplicationController
     @trackable_updates = Arrival.find_by_sql("SELECT * FROM
       (
           SELECT 'is_arrival' AS update_type, arrivals.*, locations.name AS location_name,
-          arrivals.updated_at AS update_time
+          arrivals.created_at AS update_time
           FROM arrivals
           INNER JOIN locations ON arrivals.location_id = locations.id
           WHERE arrivals.trackable_id = #{@trackable.id}
           UNION ALL
           SELECT 'is_departure' AS update_type, departures.*, locations.name AS location_name,
-          departures.updated_at AS update_time
+          departures.created_at AS update_time
           FROM departures
           INNER JOIN locations ON departures.location_id = locations.id
           WHERE departures.trackable_id = #{@trackable.id}

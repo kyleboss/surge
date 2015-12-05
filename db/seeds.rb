@@ -74,3 +74,81 @@ hospital3.save
     end
   end
 end
+
+new_patient = Patient.create(name: "John Mayfield", mrn: "23332502", hospital_id: 1)
+trackable_0 = Trackable.create(patient_id: new_patient.id, admin_dose: "5mg", drug_name: "Oxycodone",
+                 brand_name: "Oxycontin", order_id: "000", med_id: "3245342523", sig: "5342523",
+                 admin: "Must take OXYCONTIN tablets whole, with enough water to ensure complete swallowing
+immediately after placing in the mouth. Must take OXYCONTIN tablets one tablet at a time and must not
+pre-soak, lick or otherwise wet the tablet prior to placing in the mouth")
+trackable_1 = Trackable.create(patient_id: new_patient.id, admin_dose: "30mg", drug_name: "Nifedipine",
+                 brand_name: "Adalat", order_id: "001", med_id: "4523452345", sig: "74567",
+                 admin: "Take on empty stomach")
+trackable_2 = Trackable.create(patient_id: new_patient.id, admin_dose: "5mg", drug_name: "Cholestyramine",
+                 brand_name: "Questran", order_id: "002", med_id: "89234057", sig: "3245",
+                 admin: "The suggested time of administration is at mealtime but may be modified to avoid
+interference with absorption of other medications. Although the recommended dosing schedule is twice
+daily, QUESTRAN may be administered in 1–6 doses per day. QUESTRAN should not be taken in its dry form.
+Always mix QUESTRAN with water or other fluids before ingesting.")
+
+
+rfid_0 = Rfid.create(rfid_id: "000")
+rfid_1 = Rfid.create(rfid_id: "001")
+rfid_2 = Rfid.create(rfid_id: "002")
+
+RfidTrackablePairing.create(rfid_id: rfid_0.id, trackable_id: trackable_0.id)
+RfidTrackablePairing.create(rfid_id: rfid_1.id, trackable_id: trackable_1.id)
+RfidTrackablePairing.create(rfid_id: rfid_2.id, trackable_id: trackable_2.id)
+
+main_pharmacy       = Location.create(name: "Main Pharmacy", hospital_id: 1)
+east_wing_pharmacy  = Location.create(name: "East Wing Pharmacy", hospital_id: 1)
+west_wing_pharmacy  = Location.create(name: "West Wing Pharmacy", hospital_id: 1)
+
+
+arrival_0   = Arrival.create(location_id: main_pharmacy.id, trackable_id: trackable_0.id)
+departure_0 = Departure.create(location_id: main_pharmacy.id, trackable_id: trackable_0.id)
+arrival_1   = Arrival.create(location_id: east_wing_pharmacy.id, trackable_id: trackable_0.id)
+departure_1 = Departure.create(location_id: east_wing_pharmacy.id, trackable_id: trackable_0.id)
+arrival_2   = Arrival.create(location_id: west_wing_pharmacy.id, trackable_id: trackable_0.id)
+departure_2 = Departure.create(location_id: west_wing_pharmacy.id, trackable_id: trackable_0.id)
+
+arrival_3   = Arrival.create(location_id: main_pharmacy.id, trackable_id: trackable_1.id)
+departure_3 = Departure.create(location_id: main_pharmacy.id, trackable_id: trackable_1.id)
+arrival_4   = Arrival.create(location_id: east_wing_pharmacy.id, trackable_id: trackable_1.id)
+
+arrival_5   = Arrival.create(location_id: main_pharmacy.id, trackable_id: trackable_2.id)
+departure_4 = Departure.create(location_id: main_pharmacy.id, trackable_id: trackable_2.id)
+arrival_6   = Arrival.create(location_id: west_wing_pharmacy.id, trackable_id: trackable_2.id)
+departure_5 = Departure.create(location_id: west_wing_pharmacy.id, trackable_id: trackable_2.id)
+
+arrival_0.created_at    = 19.minutes.ago
+departure_0.created_at  = 11.minutes.ago
+arrival_1.created_at    = 11.minutes.ago
+departure_1.created_at  = 9.minutes.ago
+arrival_2.created_at    = 6.minutes.ago
+departure_2.created_at  = 2.minutes.ago
+
+arrival_3.created_at    = 12.minutes.ago
+departure_3.created_at  = 5.minutes.ago
+arrival_4.created_at    = 5.minutes.ago
+
+arrival_5.created_at    = 44.minutes.ago
+departure_4.created_at  = 31.minutes.ago
+arrival_6.created_at    = 29.minutes.ago
+departure_5.created_at  = 28.minutes.ago
+
+arrival_0.save
+departure_0.save
+arrival_1.save
+departure_1.save
+arrival_2.save
+departure_2.save
+
+arrival_3.save
+departure_3.save
+arrival_4.save
+
+arrival_5.save
+departure_4.save
+arrival_6.save
+departure_5.save

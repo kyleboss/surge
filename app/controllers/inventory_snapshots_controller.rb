@@ -63,8 +63,6 @@ class InventorySnapshotsController < ApplicationController
   end
 
   def make_inventory_snapshot
-    print "MAKE INVENTORY SNAPSHOT"
-    print params[:rfid_ids].values
     inventory_snapshot = InventorySnapshot.create_snapshot_with_contents(params[:antenna_id], params[:rfid_ids].values)
     InventorySnapshot.get_updates_from_previous_snapshot(inventory_snapshot)
     render plain: "Success"

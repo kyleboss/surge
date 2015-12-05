@@ -13,8 +13,8 @@ class Arrival < ActiveRecord::Base
 
   def self.create_many_given_rfids_and_location(rfid_ids, location_id)
     rfid_ids.each do |rfid_id|
-      trackable    = RfidTrackablePairing.get_order_given_rfid(rfid_id)
-      arrival_params  = {trackable_id: trackable.first.trackable.id, location_id: location_id}
+      trackable_rfid_pairing    = RfidTrackablePairing.get_order_given_rfid(rfid_id)
+      arrival_params            = {trackable_id: trackable_rfid_pairing.first.trackable_id, location_id: location_id}
       self.create(arrival_params)
     end
   end
