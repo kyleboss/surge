@@ -11,4 +11,4 @@ vendor/*
 /idea/*
 *server.pid*
 .gitignore~
-
+app/assets/images/.DS_Store
