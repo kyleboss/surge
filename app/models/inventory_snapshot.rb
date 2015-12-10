@@ -19,18 +19,13 @@ class InventorySnapshot < ActiveRecord::Base
   def self.get_updates_from_previous_snapshot(inventory_snapshot)
     prev_snapshot     = self.get_previous_snapshot(inventory_snapshot)
     current_rfid_ids  = InventorySnapshotContent.where(:inventory_snapshot_id => inventory_snapshot.id).pluck(:rfid_id)
-    if (prev_snapshot.present?)
+    if (prev_snapshot.present?) # If there is a snapshot from this antenna, create arrivals & departures.
       prev_rfid_ids   = InventorySnapshotContent.where(:inventory_snapshot_id => prev_snapshot.first.id).pluck(:rfid_id)
-      print "I AM IN HERE"
       arrival_rfids   = current_rfid_ids - prev_rfid_ids
-      print "CURRENT RFID"
-      print current_rfid_ids
-      print "PREV RFID"
-      print prev_rfid_ids
       departure_rfids = prev_rfid_ids - current_rfid_ids
       Arrival.create_many_given_rfids_and_location(arrival_rfids, inventory_snapshot.location_id)
       Departure.create_many_given_rfids_and_location(departure_rfids, inventory_snapshot.location_id)
-    else
+    else # If this is the first update from the antenna, make all rfids detected as arrivals.
       Arrival.create_many_given_rfids_and_location(current_rfid_ids, inventory_snapshot.location_id)
     end
   end

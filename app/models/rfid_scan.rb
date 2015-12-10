@@ -4,7 +4,7 @@ class RfidScan < ActiveRecord::Base
 
   def self.scan(rfid_reader_id, rfid_id)
     rfid = Rfid.find_by(rfid_id: rfid_id)
-    if (rfid.nil?)
+    if (rfid.nil?) # If the RFID that has been scanned doesn't exist yet, create a new one.
       rfid_params = {rfid_id: rfid_id}
       rfid        = Rfid.create(rfid_params)
     end
