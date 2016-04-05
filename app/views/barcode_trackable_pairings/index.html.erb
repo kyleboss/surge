@@ -1,0 +1,29 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Listing Barcode Trackable Pairings</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Barcode</th>
+      <th>Trackable</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @barcode_trackable_pairings.each do |barcode_trackable_pairing| %>
+      <tr>
+        <td><%= barcode_trackable_pairing.barcode %></td>
+        <td><%= barcode_trackable_pairing.trackable %></td>
+        <td><%= link_to 'Show', barcode_trackable_pairing %></td>
+        <td><%= link_to 'Edit', edit_barcode_trackable_pairing_path(barcode_trackable_pairing) %></td>
+        <td><%= link_to 'Destroy', barcode_trackable_pairing, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Barcode trackable pairing', new_barcode_trackable_pairing_path %>

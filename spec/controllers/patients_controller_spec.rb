@@ -23,18 +23,19 @@ RSpec.describe PatientsController, type: :controller do
   # This should return the minimal set of attributes required to create a valid
   # Patient. As you add validations to Patient, be sure to
   # adjust the attributes here as well.
-  let(:valid_attributes) {
-    skip("Add a hash of attributes valid for your model")
-  }
+  before(:each) do
+    @address = FactoryGirl.create(:address)
+    @hospital_for_user = FactoryGirl.create(:hospital)
+    @user = FactoryGirl.create(:user, hospital_id: @hospital_for_user.id)
+  end
 
-  let(:invalid_attributes) {
-    skip("Add a hash of attributes invalid for your model")
-  }
+  let(:valid_attributes) { FactoryGirl.attributes_for(:patient) }
+  let(:invalid_attributes) { FactoryGirl.attributes_for(:invalid_patient, hospital_id: "BC") }
 
   # This should return the minimal set of values that should be in the session
   # in order to pass any filters (e.g. authentication) defined in
   # PatientsController. Be sure to keep this updated too.
-  let(:valid_session) { {} }
+  let(:valid_session) { {user_id: @user.id} }
 
   describe "GET #index" do
     it "assigns all patients as @patients" do
@@ -102,15 +103,12 @@ RSpec.describe PatientsController, type: :controller do
 
   describe "PUT #update" do
     context "with valid params" do
-      let(:new_attributes) {
-        skip("Add a hash of attributes valid for your model")
-      }
+      let(:new_attributes) { FactoryGirl.attributes_for(:updated_valid_patient) }
 
       it "updates the requested patient" do
         patient = Patient.create! valid_attributes
         put :update, {:id => patient.to_param, :patient => new_attributes}, valid_session
         patient.reload
-        skip("Add assertions for updated state")
       end
 
       it "assigns the requested patient as @patient" do

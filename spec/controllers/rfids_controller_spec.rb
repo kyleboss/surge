@@ -23,13 +23,8 @@ RSpec.describe RfidsController, type: :controller do
   # This should return the minimal set of attributes required to create a valid
   # Rfid. As you add validations to Rfid, be sure to
   # adjust the attributes here as well.
-  let(:valid_attributes) {
-    skip("Add a hash of attributes valid for your model")
-  }
-
-  let(:invalid_attributes) {
-    skip("Add a hash of attributes invalid for your model")
-  }
+  let(:valid_attributes) { FactoryGirl.attributes_for(:rfid) }
+  let(:invalid_attributes) { FactoryGirl.attributes_for(:invalid_rfid) }
 
   # This should return the minimal set of values that should be in the session
   # in order to pass any filters (e.g. authentication) defined in
@@ -102,15 +97,13 @@ RSpec.describe RfidsController, type: :controller do
 
   describe "PUT #update" do
     context "with valid params" do
-      let(:new_attributes) {
-        skip("Add a hash of attributes valid for your model")
-      }
+      let(:new_attributes) { FactoryGirl.attributes_for(:updated_valid_rfid) }
+
 
       it "updates the requested rfid" do
         rfid = Rfid.create! valid_attributes
         put :update, {:id => rfid.to_param, :rfid => new_attributes}, valid_session
         rfid.reload
-        skip("Add assertions for updated state")
       end
 
       it "assigns the requested rfid as @rfid" do

@@ -1,0 +1,2 @@
+class RfidTrackablePairingsController < ApplicationController
+end

@@ -2,7 +2,7 @@ source 'https://rubygems.org'
 
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', '4.2.4'
+gem 'rails', '4.2.5'
 # Postgres for database management.
 gem 'pg'
 # Use SCSS for stylesheets
@@ -41,11 +41,33 @@ gem 'bootstrap-sass'
 # Simple Ruby encryption module
 gem 'gibberish'
 
+# Turns any Ruby object into a DSL. Especially useful with the Builder pattern.
+gem 'docile', '~> 1.1', '>= 1.1.5'
+
 # Use Unicorn as the app server
 # gem 'unicorn'
 
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
+
+# A code coverage analysis tool
+gem 'simplecov', :require => false, :group => :test
+
+# Strategies for cleaning databases. Can be used to ensure a clean state for testing.
+gem 'database_cleaner', group: :test
+
+# Bundler manages an application's dependencies through its entire life, across many machines, systematically and
+# repeatably
+gem 'bundler'
+
+# A modern web server and application server for Ruby, Python and Node.js, optimized for performance, low memory usage and ease of use.
+gem "passenger"
+
+# Wrapper for pusher.com REST api
+gem 'pusher'
+
+# This gem provides D3 for Rails Asset Pipeline.
+gem "d3-rails"
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
@@ -53,6 +75,11 @@ group :development, :test do
 
   # RSpec allows for specs to be easily written
   gem 'rspec-rails', '~> 3.0'
+
+  # A fixtures replacement with a straightforward definition syntax, support for multiple build strategies (saved
+  # instances, unsaved instances, attribute hashes, and stubbed objects), and support for multiple factories for the
+  # same class (user, admin_user, and so on), including factory inheritance.
+  gem 'factory_girl_rails'
 end
 
 group :development do

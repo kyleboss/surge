@@ -13,7 +13,7 @@
   <tbody>
     <% @rfids.each do |rfid| %>
       <tr>
-        <td><%= rfid.rfid_id %></td>
+        <td><%= rfid.hardware_id %></td>
         <td><%= link_to 'Show', rfid %></td>
         <td><%= link_to 'Edit', edit_rfid_path(rfid) %></td>
         <td><%= link_to 'Destroy', rfid, method: :delete, data: { confirm: 'Are you sure?' } %></td>

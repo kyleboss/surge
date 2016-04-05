@@ -70,6 +70,6 @@ class InventorySnapshotContentsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def inventory_snapshot_content_params
-      params.require(:inventory_snapshot_content).permit(:inventory_snapshot_id, :rfid_id)
+      params.require(:inventory_snapshot_content).permit(:inventory_snapshot_id, :rfid_hardware_id, :trackable_id)
     end
 end

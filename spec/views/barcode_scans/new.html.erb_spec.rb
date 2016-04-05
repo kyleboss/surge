@@ -13,7 +13,7 @@ RSpec.describe "barcode_scans/new", type: :view do
 
     assert_select "form[action=?][method=?]", barcode_scans_path, "post" do
 
-      assert_select "input#barcode_scan_barcode_reader_id[name=?]", "barcode_scan[barcode_reader_id]"
+      assert_select "input#barcode_scan_barcode_reader_hardware_id[name=?]", "barcode_scan[barcode_reader_hardware_id]"
 
       assert_select "input#barcode_scan_trackable_id[name=?]", "barcode_scan[trackable_id]"
     end

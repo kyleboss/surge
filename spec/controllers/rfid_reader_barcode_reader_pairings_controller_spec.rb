@@ -23,13 +23,22 @@ RSpec.describe RfidReaderBarcodeReaderPairingsController, type: :controller do
   # This should return the minimal set of attributes required to create a valid
   # RfidReaderBarcodeReaderPairing. As you add validations to RfidReaderBarcodeReaderPairing, be sure to
   # adjust the attributes here as well.
-  let(:valid_attributes) {
-    skip("Add a hash of attributes valid for your model")
-  }
+  before(:each) do
+    address = FactoryGirl.create(:address)
+    @hospital = FactoryGirl.create(:hospital, address_id: address.id)
+    @rfid_reader = FactoryGirl.create(:rfid_reader, hospital_id: @hospital.id)
+    @barcode_reader = FactoryGirl.create(:barcode_reader, hospital_id: @hospital.id)
+    @updated_barcode_reader = FactoryGirl.create(:updated_valid_barcode_reader, hospital_id: @hospital.id)
+  end
 
-  let(:invalid_attributes) {
-    skip("Add a hash of attributes invalid for your model")
+  let(:valid_attributes) {
+    FactoryGirl.attributes_for(:rfid_reader_barcode_reader_pairing,
+                               rfid_reader_id:    @rfid_reader.id,
+                               barcode_reader_id: @barcode_reader.id)
   }
+  let(:invalid_attributes) { FactoryGirl.attributes_for(:invalid_rfid_reader,
+                                                        barcode_reader_id:  nil,
+                                                        rfid_reader_id:     @rfid_reader.id) }
 
   # This should return the minimal set of values that should be in the session
   # in order to pass any filters (e.g. authentication) defined in
@@ -103,14 +112,16 @@ RSpec.describe RfidReaderBarcodeReaderPairingsController, type: :controller do
   describe "PUT #update" do
     context "with valid params" do
       let(:new_attributes) {
-        skip("Add a hash of attributes valid for your model")
+        FactoryGirl.attributes_for(:updated_valid_rfid_reader_barcode_reader_pairing,
+                                   rfid_reader_id:    @rfid_reader.id,
+                                   barcode_reader_id: @barcode_reader.id)
       }
+
 
       it "updates the requested rfid_reader_barcode_reader_pairing" do
         rfid_reader_barcode_reader_pairing = RfidReaderBarcodeReaderPairing.create! valid_attributes
         put :update, {:id => rfid_reader_barcode_reader_pairing.to_param, :rfid_reader_barcode_reader_pairing => new_attributes}, valid_session
         rfid_reader_barcode_reader_pairing.reload
-        skip("Add assertions for updated state")
       end
 
       it "assigns the requested rfid_reader_barcode_reader_pairing as @rfid_reader_barcode_reader_pairing" do

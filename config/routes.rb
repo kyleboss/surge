@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  resources :barcode_trackable_pairings
+  resources :barcodes
   resources :rfid_scans
   resources :rfid_reader_barcode_reader_pairings
   resources :rfid_readers
@@ -8,7 +10,6 @@ Rails.application.routes.draw do
   resources :rfids
   resources :inventory_snapshots
   resources :antennas
-  resources :departures
   resources :departures
   resources :arrivals
   resources :trackables
@@ -27,7 +28,10 @@ Rails.application.routes.draw do
   get 'login', to: 'sessions#new', as: 'login'
   get 'logout', to: 'sessions#destroy', as: 'logout'
   get 'admin', to: 'hospitals#show', as: 'admin'
+  get 'trackables/refresh-timeline/:id', to: 'trackables#refresh_timeline'
+  post 'pusher/auth'
   post 'scan_rfid', to: 'rfid_scans#scan_rfid', as: 'scan_rfid'
+  post 'scan_barcode', to: 'barcode_scans#scan_barcode', as: 'scan_barcode'
   post 'make_inventory_snapshot', to: 'inventory_snapshots#make_inventory_snapshot', as: 'make_inventory_snapshot'
 
   resources :sessions, only: [:new, :create, :destroy]

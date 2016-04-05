@@ -1,0 +1,7 @@
+<h4 class="centered-header currently-at">
+  <%= latest_update trackable_updates %>
+</h4>
+<div class="update-timeline" id="update_timeline">
+  <%= render partial: "tracking_history", locals: {trackable_updates: trackable_updates} %>
+  <div class="go-back-button"><%= link_to 'Go back', url_for(:back) %></div>
+</div>

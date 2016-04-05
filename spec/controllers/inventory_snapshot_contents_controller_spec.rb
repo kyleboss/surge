@@ -23,13 +23,23 @@ RSpec.describe InventorySnapshotContentsController, type: :controller do
   # This should return the minimal set of attributes required to create a valid
   # InventorySnapshotContent. As you add validations to InventorySnapshotContent, be sure to
   # adjust the attributes here as well.
+  before(:each) do
+    address = FactoryGirl.create(:address)
+    hospital = FactoryGirl.create(:hospital, address_id: address.id)
+    location = FactoryGirl.create(:location, hospital_id: hospital.id)
+    patient = FactoryGirl.create(:patient, hospital_id: hospital.id)
+    @trackable = FactoryGirl.create(:trackable, patient_id: patient.id)
+    @second_trackable = FactoryGirl.create(:trackable, patient_id: patient.id)
+    @inventory_snapshot = FactoryGirl.create(:inventory_snapshot, location_id: location.id)
+  end
+
   let(:valid_attributes) {
-    skip("Add a hash of attributes valid for your model")
+    FactoryGirl.attributes_for(:inventory_snapshot,
+                               inventory_snapshot_id: @inventory_snapshot.id,
+                               trackable_id:          @trackable.id)
   }
 
-  let(:invalid_attributes) {
-    skip("Add a hash of attributes invalid for your model")
-  }
+  let(:invalid_attributes) { FactoryGirl.attributes_for(:invalid_inventory_snapshot, inventory_snapshot_id: nil) }
 
   # This should return the minimal set of values that should be in the session
   # in order to pass any filters (e.g. authentication) defined in
@@ -103,14 +113,15 @@ RSpec.describe InventorySnapshotContentsController, type: :controller do
   describe "PUT #update" do
     context "with valid params" do
       let(:new_attributes) {
-        skip("Add a hash of attributes valid for your model")
+        FactoryGirl.attributes_for(:updated_valid_inventory_snapshot_content,
+                                   trackable_id:          @second_trackable.id,
+                                   inventory_snapshot_id: @inventory_snapshot.id)
       }
 
       it "updates the requested inventory_snapshot_content" do
         inventory_snapshot_content = InventorySnapshotContent.create! valid_attributes
         put :update, {:id => inventory_snapshot_content.to_param, :inventory_snapshot_content => new_attributes}, valid_session
         inventory_snapshot_content.reload
-        skip("Add assertions for updated state")
       end
 
       it "assigns the requested inventory_snapshot_content as @inventory_snapshot_content" do

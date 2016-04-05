@@ -4,10 +4,10 @@ RSpec.describe "rfids/index", type: :view do
   before(:each) do
     assign(:rfids, [
       Rfid.create!(
-        :uniq_id => "Uniq"
+        :hardware_id => "Uniq"
       ),
       Rfid.create!(
-        :uniq_id => "Uniq"
+        :hardware_id => "Uniq"
       )
     ])
   end

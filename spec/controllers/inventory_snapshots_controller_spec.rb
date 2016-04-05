@@ -23,13 +23,16 @@ RSpec.describe InventorySnapshotsController, type: :controller do
   # This should return the minimal set of attributes required to create a valid
   # InventorySnapshot. As you add validations to InventorySnapshot, be sure to
   # adjust the attributes here as well.
-  let(:valid_attributes) {
-    skip("Add a hash of attributes valid for your model")
-  }
+  before(:each) do
+    address = FactoryGirl.create(:address)
+    @hospital = FactoryGirl.create(:hospital, address_id: address.id)
+    @location = FactoryGirl.create(:location, hospital_id: @hospital.id)
+    @second_location = FactoryGirl.create(:location, hospital_id: @hospital.id)
+  end
 
-  let(:invalid_attributes) {
-    skip("Add a hash of attributes invalid for your model")
-  }
+  let(:valid_attributes) { FactoryGirl.attributes_for(:inventory_snapshot, location_id: @location.id) }
+
+  let(:invalid_attributes) { FactoryGirl.attributes_for(:invalid_inventory_snapshot, location_id: nil) }
 
   # This should return the minimal set of values that should be in the session
   # in order to pass any filters (e.g. authentication) defined in
@@ -100,17 +103,88 @@ RSpec.describe InventorySnapshotsController, type: :controller do
     end
   end
 
+  describe "POST #make_inventory_snapshot" do
+    context "with valid params" do
+      before(:each) do
+        @trackable1 = FactoryGirl.create(:updated_valid_trackable)
+        @trackable2 = FactoryGirl.create(:updated_valid_trackable)
+        @trackable3 = FactoryGirl.create(:updated_valid_trackable)
+        @rfid1 = FactoryGirl.create(:rfid, hardware_identifier: "abc1")
+        @rfid2 = FactoryGirl.create(:rfid, hardware_identifier: "abc2")
+        @rfid3 = FactoryGirl.create(:rfid, hardware_identifier: "abc3")
+        puts "@rfid1: #{@rfid1.id}, @rfid2: #{@rfid2.id}, @rfid3: #{@rfid3.id}"
+        FactoryGirl.create(:rfid_trackable_pairing, rfid_id: @rfid1.id, trackable_id: @trackable1.id)
+        FactoryGirl.create(:rfid_trackable_pairing, rfid_id: @rfid2.id, trackable_id: @trackable2.id)
+        FactoryGirl.create(:rfid_trackable_pairing, rfid_id: @rfid3.id, trackable_id: @trackable3.id)
+        @location1 = FactoryGirl.create(:location, hospital_id: @hospital.id, name: "1a")
+        @location2 = FactoryGirl.create(:location, hospital_id: @hospital.id, name: "2b")
+        @antenna1 = FactoryGirl.create(:antenna, hardware_identifier: "123a", location_id: @location1.id)
+        @antenna2 = FactoryGirl.create(:antenna, hardware_identifier: "123b", location_id: @location2.id)
+      end
+
+      let(:valid_attributes_with_rfids) {
+        {antenna_hardware_identifier: @antenna1.hardware_identifier,
+         rfid_hardware_identifiers: [@rfid1.hardware_identifier, @rfid2.hardware_identifier]}
+      }
+
+      let(:valid_attributes_with_rfid) {
+        {antenna_hardware_identifier: @antenna1.hardware_identifier,
+         rfid_hardware_identifiers: [@rfid1.hardware_identifier]}
+      }
+
+      it "should create an inventory snapshot" do
+        expect {
+          post :make_inventory_snapshot, {:inventory_snapshot => valid_attributes_with_rfids}, valid_session
+        }.to change(InventorySnapshot, :count).by(1)
+      end
+
+      it "should create inventory snapshot content entries" do
+        expect {
+          post :make_inventory_snapshot, {:inventory_snapshot => valid_attributes_with_rfids}, valid_session
+        }.to change(InventorySnapshotContent, :count).by(2)
+      end
+      context "when drugs are once detected but then not in a specific location" do
+        it "should create arrival entries" do
+          expect {
+            post :make_inventory_snapshot, {:inventory_snapshot => valid_attributes_with_rfids}, valid_session
+          }.to change(Arrival, :count).by(2)
+        end
+
+        it "should not create departure entries" do
+          expect {
+            post :make_inventory_snapshot, {:inventory_snapshot => valid_attributes_with_rfids}, valid_session
+          }.to change(Departure, :count).by(0)
+        end
+      end
+
+      context "when drugs are once detected but then not in a specific location" do
+        it "should create appropriate departure entries" do
+          post :make_inventory_snapshot, {:inventory_snapshot => valid_attributes_with_rfids}, valid_session
+          expect {
+            post :make_inventory_snapshot, {:inventory_snapshot => valid_attributes_with_rfid}, valid_session
+          }.to change(Departure, :count).by(1)
+        end
+
+        it "should not create new arrival entries" do
+          post :make_inventory_snapshot, {:inventory_snapshot => valid_attributes_with_rfids}, valid_session
+          expect {
+            post :make_inventory_snapshot, {:inventory_snapshot => valid_attributes_with_rfid}, valid_session
+          }.to change(Arrival, :count).by(0)
+        end
+      end
+    end
+  end
+
   describe "PUT #update" do
     context "with valid params" do
       let(:new_attributes) {
-        skip("Add a hash of attributes valid for your model")
+        FactoryGirl.attributes_for(:updated_valid_inventory_snapshot, location_id: @second_location.id)
       }
 
       it "updates the requested inventory_snapshot" do
         inventory_snapshot = InventorySnapshot.create! valid_attributes
         put :update, {:id => inventory_snapshot.to_param, :inventory_snapshot => new_attributes}, valid_session
         inventory_snapshot.reload
-        skip("Add assertions for updated state")
       end
 
       it "assigns the requested inventory_snapshot as @inventory_snapshot" do

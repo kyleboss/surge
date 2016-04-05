@@ -1,0 +1,14 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Barcode:</strong>
+  <%= @barcode_trackable_pairing.barcode %>
+</p>
+
+<p>
+  <strong>Trackable:</strong>
+  <%= @barcode_trackable_pairing.trackable %>
+</p>
+
+<%= link_to 'Edit', edit_barcode_trackable_pairing_path(@barcode_trackable_pairing) %> |
+<%= link_to 'Back', barcode_trackable_pairings_path %>

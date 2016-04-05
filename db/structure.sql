@@ -2,12 +2,16 @@
 -- PostgreSQL database dump
 --
 
+-- Dumped from database version 9.5.0
+-- Dumped by pg_dump version 9.5.0
+
 SET statement_timeout = 0;
 SET lock_timeout = 0;
 SET client_encoding = 'UTF8';
 SET standard_conforming_strings = on;
 SET check_function_bodies = false;
 SET client_min_messages = warning;
+SET row_security = off;
 
 --
 -- Name: plpgsql; Type: EXTENSION; Schema: -; Owner: -
@@ -44,16 +48,16 @@ SET default_tablespace = '';
 SET default_with_oids = false;
 
 --
--- Name: addresses; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+-- Name: addresses; Type: TABLE; Schema: public; Owner: -
 --
 
 CREATE TABLE addresses (
     id integer NOT NULL,
-    street_address character varying,
-    city character varying,
-    state character varying,
-    zip_code integer,
-    country character varying,
+    street_address character varying NOT NULL,
+    city character varying NOT NULL,
+    state character varying NOT NULL,
+    zip_code integer NOT NULL,
+    country character varying NOT NULL,
     created_at timestamp without time zone NOT NULL,
     updated_at timestamp without time zone NOT NULL
 );
@@ -79,12 +83,12 @@ ALTER SEQUENCE addresses_id_seq OWNED BY addresses.id;
 
 
 --
--- Name: antennas; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+-- Name: antennas; Type: TABLE; Schema: public; Owner: -
 --
 
 CREATE TABLE antennas (
     id integer NOT NULL,
-    uniq_id character varying,
+    hardware_identifier character varying,
     location_id integer,
     created_at timestamp without time zone NOT NULL,
     updated_at timestamp without time zone NOT NULL
@@ -111,13 +115,13 @@ ALTER SEQUENCE antennas_id_seq OWNED BY antennas.id;
 
 
 --
--- Name: arrivals; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+-- Name: arrivals; Type: TABLE; Schema: public; Owner: -
 --
 
 CREATE TABLE arrivals (
     id integer NOT NULL,
-    location_id integer,
-    trackable_id integer,
+    location_id integer NOT NULL,
+    trackable_id integer NOT NULL,
     created_at timestamp without time zone NOT NULL,
     updated_at timestamp without time zone NOT NULL
 );
@@ -143,15 +147,15 @@ ALTER SEQUENCE arrivals_id_seq OWNED BY arrivals.id;
 
 
 --
--- Name: barcode_readers; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+-- Name: barcode_readers; Type: TABLE; Schema: public; Owner: -
 --
 
 CREATE TABLE barcode_readers (
     id integer NOT NULL,
-    reader_id character varying,
+    hardware_identifier character varying NOT NULL,
     created_at timestamp without time zone NOT NULL,
     updated_at timestamp without time zone NOT NULL,
-    hospital_id integer
+    hospital_id integer NOT NULL
 );
 
 
@@ -175,15 +179,15 @@ ALTER SEQUENCE barcode_readers_id_seq OWNED BY barcode_readers.id;
 
 
 --
--- Name: barcode_scans; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+-- Name: barcode_scans; Type: TABLE; Schema: public; Owner: -
 --
 
 CREATE TABLE barcode_scans (
     id integer NOT NULL,
-    barcode_reader_id integer,
-    trackable_id integer,
+    barcode_reader_id integer NOT NULL,
     created_at timestamp without time zone NOT NULL,
-    updated_at timestamp without time zone NOT NULL
+    updated_at timestamp without time zone NOT NULL,
+    barcode_id integer NOT NULL
 );
 
 
@@ -207,13 +211,76 @@ ALTER SEQUENCE barcode_scans_id_seq OWNED BY barcode_scans.id;
 
 
 --
--- Name: departures; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+-- Name: barcode_trackable_pairings; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE barcode_trackable_pairings (
+    id integer NOT NULL,
+    barcode_id integer NOT NULL,
+    trackable_id integer NOT NULL,
+    created_at timestamp without time zone NOT NULL,
+    updated_at timestamp without time zone NOT NULL
+);
+
+
+--
+-- Name: barcode_trackable_pairings_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE barcode_trackable_pairings_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: barcode_trackable_pairings_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE barcode_trackable_pairings_id_seq OWNED BY barcode_trackable_pairings.id;
+
+
+--
+-- Name: barcodes; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE barcodes (
+    id integer NOT NULL,
+    code character varying NOT NULL,
+    created_at timestamp without time zone NOT NULL,
+    updated_at timestamp without time zone NOT NULL
+);
+
+
+--
+-- Name: barcodes_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE barcodes_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: barcodes_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE barcodes_id_seq OWNED BY barcodes.id;
+
+
+--
+-- Name: departures; Type: TABLE; Schema: public; Owner: -
 --
 
 CREATE TABLE departures (
     id integer NOT NULL,
-    location_id integer,
-    trackable_id integer,
+    location_id integer NOT NULL,
+    trackable_id integer NOT NULL,
     created_at timestamp without time zone NOT NULL,
     updated_at timestamp without time zone NOT NULL
 );
@@ -239,14 +306,13 @@ ALTER SEQUENCE departures_id_seq OWNED BY departures.id;
 
 
 --
--- Name: hospitals; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+-- Name: hospitals; Type: TABLE; Schema: public; Owner: -
 --
 
 CREATE TABLE hospitals (
     id integer NOT NULL,
-    name character varying,
+    name character varying NOT NULL,
     address_id integer,
-    administrator_id integer,
     created_at timestamp without time zone NOT NULL,
     updated_at timestamp without time zone NOT NULL
 );
@@ -272,15 +338,15 @@ ALTER SEQUENCE hospitals_id_seq OWNED BY hospitals.id;
 
 
 --
--- Name: inventory_snapshot_contents; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+-- Name: inventory_snapshot_contents; Type: TABLE; Schema: public; Owner: -
 --
 
 CREATE TABLE inventory_snapshot_contents (
     id integer NOT NULL,
-    inventory_snapshot_id integer,
-    rfid_id integer,
+    inventory_snapshot_id integer NOT NULL,
     created_at timestamp without time zone NOT NULL,
-    updated_at timestamp without time zone NOT NULL
+    updated_at timestamp without time zone NOT NULL,
+    trackable_id integer NOT NULL
 );
 
 
@@ -304,12 +370,12 @@ ALTER SEQUENCE inventory_snapshot_contents_id_seq OWNED BY inventory_snapshot_co
 
 
 --
--- Name: inventory_snapshots; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+-- Name: inventory_snapshots; Type: TABLE; Schema: public; Owner: -
 --
 
 CREATE TABLE inventory_snapshots (
     id integer NOT NULL,
-    location_id integer,
+    location_id integer NOT NULL,
     created_at timestamp without time zone NOT NULL,
     updated_at timestamp without time zone NOT NULL
 );
@@ -335,13 +401,13 @@ ALTER SEQUENCE inventory_snapshots_id_seq OWNED BY inventory_snapshots.id;
 
 
 --
--- Name: locations; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+-- Name: locations; Type: TABLE; Schema: public; Owner: -
 --
 
 CREATE TABLE locations (
     id integer NOT NULL,
-    name character varying,
-    hospital_id integer,
+    name character varying NOT NULL,
+    hospital_id integer NOT NULL,
     created_at timestamp without time zone NOT NULL,
     updated_at timestamp without time zone NOT NULL
 );
@@ -367,13 +433,13 @@ ALTER SEQUENCE locations_id_seq OWNED BY locations.id;
 
 
 --
--- Name: patients; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+-- Name: patients; Type: TABLE; Schema: public; Owner: -
 --
 
 CREATE TABLE patients (
     id integer NOT NULL,
-    mrn character varying,
-    name character varying,
+    mrn character varying NOT NULL,
+    name character varying NOT NULL,
     hospital_id integer,
     created_at timestamp without time zone NOT NULL,
     updated_at timestamp without time zone NOT NULL
@@ -400,13 +466,13 @@ ALTER SEQUENCE patients_id_seq OWNED BY patients.id;
 
 
 --
--- Name: rfid_reader_barcode_reader_pairings; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+-- Name: rfid_reader_barcode_reader_pairings; Type: TABLE; Schema: public; Owner: -
 --
 
 CREATE TABLE rfid_reader_barcode_reader_pairings (
     id integer NOT NULL,
-    barcode_reader_id integer,
-    rfid_reader_id integer,
+    barcode_reader_id integer NOT NULL,
+    rfid_reader_id integer NOT NULL,
     created_at timestamp without time zone NOT NULL,
     updated_at timestamp without time zone NOT NULL
 );
@@ -432,15 +498,15 @@ ALTER SEQUENCE rfid_reader_barcode_reader_pairings_id_seq OWNED BY rfid_reader_b
 
 
 --
--- Name: rfid_readers; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+-- Name: rfid_readers; Type: TABLE; Schema: public; Owner: -
 --
 
 CREATE TABLE rfid_readers (
     id integer NOT NULL,
-    reader_id character varying,
+    hardware_identifier character varying NOT NULL,
     created_at timestamp without time zone NOT NULL,
     updated_at timestamp without time zone NOT NULL,
-    hospital_id integer
+    hospital_id integer NOT NULL
 );
 
 
@@ -464,13 +530,13 @@ ALTER SEQUENCE rfid_readers_id_seq OWNED BY rfid_readers.id;
 
 
 --
--- Name: rfid_scans; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+-- Name: rfid_scans; Type: TABLE; Schema: public; Owner: -
 --
 
 CREATE TABLE rfid_scans (
     id integer NOT NULL,
-    rfid_reader_id integer,
-    rfid_id integer,
+    rfid_reader_id integer NOT NULL,
+    rfid_id integer NOT NULL,
     created_at timestamp without time zone NOT NULL,
     updated_at timestamp without time zone NOT NULL
 );
@@ -496,13 +562,13 @@ ALTER SEQUENCE rfid_scans_id_seq OWNED BY rfid_scans.id;
 
 
 --
--- Name: rfid_trackable_pairings; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+-- Name: rfid_trackable_pairings; Type: TABLE; Schema: public; Owner: -
 --
 
 CREATE TABLE rfid_trackable_pairings (
     id integer NOT NULL,
-    rfid_id integer,
-    trackable_id integer,
+    rfid_id integer NOT NULL,
+    trackable_id integer NOT NULL,
     created_at timestamp without time zone NOT NULL,
     updated_at timestamp without time zone NOT NULL
 );
@@ -528,12 +594,12 @@ ALTER SEQUENCE rfid_trackable_pairings_id_seq OWNED BY rfid_trackable_pairings.i
 
 
 --
--- Name: rfids; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+-- Name: rfids; Type: TABLE; Schema: public; Owner: -
 --
 
 CREATE TABLE rfids (
     id integer NOT NULL,
-    rfid_id character varying,
+    hardware_identifier character varying NOT NULL,
     created_at timestamp without time zone NOT NULL,
     updated_at timestamp without time zone NOT NULL
 );
@@ -559,7 +625,7 @@ ALTER SEQUENCE rfids_id_seq OWNED BY rfids.id;
 
 
 --
--- Name: schema_migrations; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+-- Name: schema_migrations; Type: TABLE; Schema: public; Owner: -
 --
 
 CREATE TABLE schema_migrations (
@@ -581,7 +647,7 @@ CREATE VIEW searches AS
 
 
 --
--- Name: trackables; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+-- Name: trackables; Type: TABLE; Schema: public; Owner: -
 --
 
 CREATE TABLE trackables (
@@ -590,8 +656,8 @@ CREATE TABLE trackables (
     admin_dose character varying,
     drug_name character varying,
     brand_name character varying,
-    order_id character varying,
-    med_id character varying,
+    order_identifier character varying,
+    med_identifier character varying,
     created_at timestamp without time zone NOT NULL,
     updated_at timestamp without time zone NOT NULL,
     sig character varying,
@@ -619,7 +685,7 @@ ALTER SEQUENCE trackables_id_seq OWNED BY trackables.id;
 
 
 --
--- Name: users; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+-- Name: users; Type: TABLE; Schema: public; Owner: -
 --
 
 CREATE TABLE users (
@@ -628,12 +694,13 @@ CREATE TABLE users (
     last_name character varying,
     phone character varying,
     address_id integer,
-    email character varying,
-    password character varying,
+    email character varying NOT NULL,
+    password character varying NOT NULL,
     created_at timestamp without time zone NOT NULL,
     updated_at timestamp without time zone NOT NULL,
     middle_initial character varying,
-    hospital_id integer
+    hospital_id integer NOT NULL,
+    is_admin boolean DEFAULT false NOT NULL
 );
 
 
@@ -689,6 +756,20 @@ ALTER TABLE ONLY barcode_readers ALTER COLUMN id SET DEFAULT nextval('barcode_re
 --
 
 ALTER TABLE ONLY barcode_scans ALTER COLUMN id SET DEFAULT nextval('barcode_scans_id_seq'::regclass);
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY barcode_trackable_pairings ALTER COLUMN id SET DEFAULT nextval('barcode_trackable_pairings_id_seq'::regclass);
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY barcodes ALTER COLUMN id SET DEFAULT nextval('barcodes_id_seq'::regclass);
 
 
 --
@@ -783,7 +864,7 @@ ALTER TABLE ONLY users ALTER COLUMN id SET DEFAULT nextval('users_id_seq'::regcl
 
 
 --
--- Name: addresses_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+-- Name: addresses_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY addresses
@@ -791,7 +872,7 @@ ALTER TABLE ONLY addresses
 
 
 --
--- Name: antennas_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+-- Name: antennas_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY antennas
@@ -799,7 +880,7 @@ ALTER TABLE ONLY antennas
 
 
 --
--- Name: arrivals_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+-- Name: arrivals_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY arrivals
@@ -807,7 +888,7 @@ ALTER TABLE ONLY arrivals
 
 
 --
--- Name: barcode_readers_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+-- Name: barcode_readers_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY barcode_readers
@@ -815,7 +896,7 @@ ALTER TABLE ONLY barcode_readers
 
 
 --
--- Name: barcode_scans_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+-- Name: barcode_scans_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY barcode_scans
@@ -823,7 +904,23 @@ ALTER TABLE ONLY barcode_scans
 
 
 --
--- Name: departures_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+-- Name: barcode_trackable_pairings_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY barcode_trackable_pairings
+    ADD CONSTRAINT barcode_trackable_pairings_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: barcodes_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY barcodes
+    ADD CONSTRAINT barcodes_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: departures_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY departures
@@ -831,7 +928,7 @@ ALTER TABLE ONLY departures
 
 
 --
--- Name: hospitals_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+-- Name: hospitals_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY hospitals
@@ -839,7 +936,7 @@ ALTER TABLE ONLY hospitals
 
 
 --
--- Name: inventory_snapshot_contents_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+-- Name: inventory_snapshot_contents_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY inventory_snapshot_contents
@@ -847,7 +944,7 @@ ALTER TABLE ONLY inventory_snapshot_contents
 
 
 --
--- Name: inventory_snapshots_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+-- Name: inventory_snapshots_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY inventory_snapshots
@@ -855,7 +952,7 @@ ALTER TABLE ONLY inventory_snapshots
 
 
 --
--- Name: locations_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+-- Name: locations_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY locations
@@ -863,7 +960,7 @@ ALTER TABLE ONLY locations
 
 
 --
--- Name: patients_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+-- Name: patients_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY patients
@@ -871,7 +968,7 @@ ALTER TABLE ONLY patients
 
 
 --
--- Name: rfid_reader_barcode_reader_pairings_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+-- Name: rfid_reader_barcode_reader_pairings_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY rfid_reader_barcode_reader_pairings
@@ -879,7 +976,7 @@ ALTER TABLE ONLY rfid_reader_barcode_reader_pairings
 
 
 --
--- Name: rfid_readers_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+-- Name: rfid_readers_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY rfid_readers
@@ -887,7 +984,7 @@ ALTER TABLE ONLY rfid_readers
 
 
 --
--- Name: rfid_scans_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+-- Name: rfid_scans_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY rfid_scans
@@ -895,7 +992,7 @@ ALTER TABLE ONLY rfid_scans
 
 
 --
--- Name: rfid_trackable_pairings_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+-- Name: rfid_trackable_pairings_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY rfid_trackable_pairings
@@ -903,7 +1000,7 @@ ALTER TABLE ONLY rfid_trackable_pairings
 
 
 --
--- Name: rfids_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+-- Name: rfids_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY rfids
@@ -911,7 +1008,7 @@ ALTER TABLE ONLY rfids
 
 
 --
--- Name: trackables_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+-- Name: trackables_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY trackables
@@ -919,7 +1016,7 @@ ALTER TABLE ONLY trackables
 
 
 --
--- Name: users_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+-- Name: users_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY users
@@ -927,206 +1024,214 @@ ALTER TABLE ONLY users
 
 
 --
--- Name: index_antennas_on_location_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+-- Name: index_antennas_on_location_id; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX index_antennas_on_location_id ON antennas USING btree (location_id);
 
 
 --
--- Name: index_arrivals_on_location_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+-- Name: index_arrivals_on_location_id; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX index_arrivals_on_location_id ON arrivals USING btree (location_id);
 
 
 --
--- Name: index_arrivals_on_trackable_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+-- Name: index_arrivals_on_trackable_id; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX index_arrivals_on_trackable_id ON arrivals USING btree (trackable_id);
 
 
 --
--- Name: index_barcode_readers_on_hospital_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+-- Name: index_barcode_readers_on_hospital_id; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX index_barcode_readers_on_hospital_id ON barcode_readers USING btree (hospital_id);
 
 
 --
--- Name: index_barcode_scans_on_barcode_reader_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+-- Name: index_barcode_scans_on_barcode_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_barcode_scans_on_barcode_id ON barcode_scans USING btree (barcode_id);
+
+
+--
+-- Name: index_barcode_scans_on_barcode_reader_id; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX index_barcode_scans_on_barcode_reader_id ON barcode_scans USING btree (barcode_reader_id);
 
 
 --
--- Name: index_barcode_scans_on_trackable_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+-- Name: index_barcode_trackable_pairings_on_barcode_id; Type: INDEX; Schema: public; Owner: -
 --
 
-CREATE INDEX index_barcode_scans_on_trackable_id ON barcode_scans USING btree (trackable_id);
+CREATE INDEX index_barcode_trackable_pairings_on_barcode_id ON barcode_trackable_pairings USING btree (barcode_id);
 
 
 --
--- Name: index_departures_on_location_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+-- Name: index_barcode_trackable_pairings_on_trackable_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_barcode_trackable_pairings_on_trackable_id ON barcode_trackable_pairings USING btree (trackable_id);
+
+
+--
+-- Name: index_departures_on_location_id; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX index_departures_on_location_id ON departures USING btree (location_id);
 
 
 --
--- Name: index_departures_on_trackable_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+-- Name: index_departures_on_trackable_id; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX index_departures_on_trackable_id ON departures USING btree (trackable_id);
 
 
 --
--- Name: index_hospitals_on_address_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+-- Name: index_hospitals_on_address_id; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX index_hospitals_on_address_id ON hospitals USING btree (address_id);
 
 
 --
--- Name: index_hospitals_on_administrator_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
---
-
-CREATE INDEX index_hospitals_on_administrator_id ON hospitals USING btree (administrator_id);
-
-
---
--- Name: index_inventory_snapshot_contents_on_inventory_snapshot_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+-- Name: index_inventory_snapshot_contents_on_inventory_snapshot_id; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX index_inventory_snapshot_contents_on_inventory_snapshot_id ON inventory_snapshot_contents USING btree (inventory_snapshot_id);
 
 
 --
--- Name: index_inventory_snapshot_contents_on_rfid_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
---
-
-CREATE INDEX index_inventory_snapshot_contents_on_rfid_id ON inventory_snapshot_contents USING btree (rfid_id);
-
-
---
--- Name: index_inventory_snapshots_on_location_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+-- Name: index_inventory_snapshots_on_location_id; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX index_inventory_snapshots_on_location_id ON inventory_snapshots USING btree (location_id);
 
 
 --
--- Name: index_locations_on_hospital_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+-- Name: index_locations_on_hospital_id; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX index_locations_on_hospital_id ON locations USING btree (hospital_id);
 
 
 --
--- Name: index_patients_on_hospital_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+-- Name: index_patients_on_hospital_id; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX index_patients_on_hospital_id ON patients USING btree (hospital_id);
 
 
 --
--- Name: index_patients_on_mrn; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+-- Name: index_patients_on_mrn; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX index_patients_on_mrn ON patients USING gin (to_tsvector('english'::regconfig, (mrn)::text));
 
 
 --
--- Name: index_patients_on_name; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+-- Name: index_patients_on_name; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX index_patients_on_name ON patients USING gin (to_tsvector('english'::regconfig, (name)::text));
 
 
 --
--- Name: index_rfid_reader_barcode_reader_pairings_on_barcode_reader_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+-- Name: index_rfid_reader_barcode_reader_pairings_on_barcode_reader_id; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX index_rfid_reader_barcode_reader_pairings_on_barcode_reader_id ON rfid_reader_barcode_reader_pairings USING btree (barcode_reader_id);
 
 
 --
--- Name: index_rfid_reader_barcode_reader_pairings_on_rfid_reader_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+-- Name: index_rfid_reader_barcode_reader_pairings_on_rfid_reader_id; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX index_rfid_reader_barcode_reader_pairings_on_rfid_reader_id ON rfid_reader_barcode_reader_pairings USING btree (rfid_reader_id);
 
 
 --
--- Name: index_rfid_readers_on_hospital_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+-- Name: index_rfid_readers_on_hospital_id; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX index_rfid_readers_on_hospital_id ON rfid_readers USING btree (hospital_id);
 
 
 --
--- Name: index_rfid_scans_on_rfid_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+-- Name: index_rfid_scans_on_rfid_id; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX index_rfid_scans_on_rfid_id ON rfid_scans USING btree (rfid_id);
 
 
 --
--- Name: index_rfid_scans_on_rfid_reader_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+-- Name: index_rfid_scans_on_rfid_reader_id; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX index_rfid_scans_on_rfid_reader_id ON rfid_scans USING btree (rfid_reader_id);
 
 
 --
--- Name: index_rfid_trackable_pairings_on_rfid_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+-- Name: index_rfid_trackable_pairings_on_rfid_id; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX index_rfid_trackable_pairings_on_rfid_id ON rfid_trackable_pairings USING btree (rfid_id);
 
 
 --
--- Name: index_rfid_trackable_pairings_on_trackable_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+-- Name: index_rfid_trackable_pairings_on_trackable_id; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX index_rfid_trackable_pairings_on_trackable_id ON rfid_trackable_pairings USING btree (trackable_id);
 
 
 --
--- Name: index_trackables_on_order_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+-- Name: index_trackables_on_order_identifier; Type: INDEX; Schema: public; Owner: -
 --
 
-CREATE INDEX index_trackables_on_order_id ON trackables USING btree (order_id);
+CREATE INDEX index_trackables_on_order_identifier ON trackables USING btree (order_identifier);
 
 
 --
--- Name: index_trackables_on_patient_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+-- Name: index_trackables_on_patient_id; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX index_trackables_on_patient_id ON trackables USING btree (patient_id);
 
 
 --
--- Name: index_users_on_address_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+-- Name: index_users_on_address_id; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX index_users_on_address_id ON users USING btree (address_id);
 
 
 --
--- Name: index_users_on_hospital_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+-- Name: index_users_on_hospital_id; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX index_users_on_hospital_id ON users USING btree (hospital_id);
 
 
 --
--- Name: unique_schema_migrations; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+-- Name: unique_schema_migrations; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE UNIQUE INDEX unique_schema_migrations ON schema_migrations USING btree (version);
+
+
+--
+-- Name: fk_rails_03dcd638f9; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY barcode_scans
+    ADD CONSTRAINT fk_rails_03dcd638f9 FOREIGN KEY (barcode_id) REFERENCES barcodes(id);
 
 
 --
@@ -1210,6 +1315,14 @@ ALTER TABLE ONLY rfid_scans
 
 
 --
+-- Name: fk_rails_6de0f0ab37; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY barcode_trackable_pairings
+    ADD CONSTRAINT fk_rails_6de0f0ab37 FOREIGN KEY (trackable_id) REFERENCES trackables(id);
+
+
+--
 -- Name: fk_rails_84cca00414; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -1234,14 +1347,6 @@ ALTER TABLE ONLY rfid_scans
 
 
 --
--- Name: fk_rails_9db738fe8b; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY barcode_scans
-    ADD CONSTRAINT fk_rails_9db738fe8b FOREIGN KEY (trackable_id) REFERENCES trackables(id);
-
-
---
 -- Name: fk_rails_a18fed308b; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -1255,14 +1360,6 @@ ALTER TABLE ONLY barcode_scans
 
 ALTER TABLE ONLY users
     ADD CONSTRAINT fk_rails_a8ceccb51e FOREIGN KEY (hospital_id) REFERENCES hospitals(id);
-
-
---
--- Name: fk_rails_b430d99458; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY inventory_snapshot_contents
-    ADD CONSTRAINT fk_rails_b430d99458 FOREIGN KEY (rfid_id) REFERENCES trackables(id);
 
 
 --
@@ -1306,11 +1403,11 @@ ALTER TABLE ONLY antennas
 
 
 --
--- Name: fk_rails_d7d780c6ca; Type: FK CONSTRAINT; Schema: public; Owner: -
+-- Name: fk_rails_dc3a99cfd6; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY hospitals
-    ADD CONSTRAINT fk_rails_d7d780c6ca FOREIGN KEY (administrator_id) REFERENCES users(id);
+ALTER TABLE ONLY barcode_trackable_pairings
+    ADD CONSTRAINT fk_rails_dc3a99cfd6 FOREIGN KEY (barcode_id) REFERENCES barcodes(id);
 
 
 --
@@ -1333,7 +1430,7 @@ ALTER TABLE ONLY users
 -- PostgreSQL database dump complete
 --
 
-SET search_path TO "$user",public;
+SET search_path TO "$user", public;
 
 INSERT INTO schema_migrations (version) VALUES ('20151110231626');
 
@@ -1402,4 +1499,74 @@ INSERT INTO schema_migrations (version) VALUES ('20151129050138');
 INSERT INTO schema_migrations (version) VALUES ('20151130003854');
 
 INSERT INTO schema_migrations (version) VALUES ('20151130084627');
+
+INSERT INTO schema_migrations (version) VALUES ('20160131225313');
+
+INSERT INTO schema_migrations (version) VALUES ('20160203194957');
+
+INSERT INTO schema_migrations (version) VALUES ('20160203195929');
+
+INSERT INTO schema_migrations (version) VALUES ('20160203203555');
+
+INSERT INTO schema_migrations (version) VALUES ('20160203204059');
+
+INSERT INTO schema_migrations (version) VALUES ('20160204041736');
+
+INSERT INTO schema_migrations (version) VALUES ('20160204041910');
+
+INSERT INTO schema_migrations (version) VALUES ('20160205171946');
+
+INSERT INTO schema_migrations (version) VALUES ('20160205223412');
+
+INSERT INTO schema_migrations (version) VALUES ('20160205225000');
+
+INSERT INTO schema_migrations (version) VALUES ('20160205232839');
+
+INSERT INTO schema_migrations (version) VALUES ('20160205233958');
+
+INSERT INTO schema_migrations (version) VALUES ('20160205234230');
+
+INSERT INTO schema_migrations (version) VALUES ('20160205234750');
+
+INSERT INTO schema_migrations (version) VALUES ('20160206000301');
+
+INSERT INTO schema_migrations (version) VALUES ('20160206000349');
+
+INSERT INTO schema_migrations (version) VALUES ('20160206000649');
+
+INSERT INTO schema_migrations (version) VALUES ('20160206001122');
+
+INSERT INTO schema_migrations (version) VALUES ('20160206001609');
+
+INSERT INTO schema_migrations (version) VALUES ('20160206001932');
+
+INSERT INTO schema_migrations (version) VALUES ('20160206002227');
+
+INSERT INTO schema_migrations (version) VALUES ('20160206003410');
+
+INSERT INTO schema_migrations (version) VALUES ('20160206003520');
+
+INSERT INTO schema_migrations (version) VALUES ('20160206031428');
+
+INSERT INTO schema_migrations (version) VALUES ('20160206032706');
+
+INSERT INTO schema_migrations (version) VALUES ('20160206033602');
+
+INSERT INTO schema_migrations (version) VALUES ('20160206034046');
+
+INSERT INTO schema_migrations (version) VALUES ('20160206034936');
+
+INSERT INTO schema_migrations (version) VALUES ('20160206035517');
+
+INSERT INTO schema_migrations (version) VALUES ('20160206041421');
+
+INSERT INTO schema_migrations (version) VALUES ('20160206041458');
+
+INSERT INTO schema_migrations (version) VALUES ('20160206041612');
+
+INSERT INTO schema_migrations (version) VALUES ('20160208175407');
+
+INSERT INTO schema_migrations (version) VALUES ('20160208183731');
+
+INSERT INTO schema_migrations (version) VALUES ('20160208191939');
 

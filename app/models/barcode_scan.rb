@@ -1,40 +1,28 @@
 class BarcodeScan < ActiveRecord::Base
   belongs_to :barcode_reader
-  belongs_to :trackable
+  belongs_to :barcode
+  validates_presence_of :barcode_reader, :barcode
+  validates_associated :barcode, :barcode_reader
 
-  def self.scan_barcode_and_add_trackable(barcode_reader_id, order_id, mrn, patient_name, admin_dose, drug_name, brand_name, med_id, admin, sig)
-    trackable       = Trackable.find_by(order_id: order_id)
-    barcode_reader  = BarcodeReader.find_by(reader_id: barcode_reader_id)
-    if (trackable.nil?)
-      patient = Patient.find_by(mrn: mrn)
-      if (patient.nil?)
-        hospital  = barcode_reader.hospital_id
-        patient   = Patient.create({mrn: mrn, name: patient_name, hospital_id: hospital})
-      end
-      trackable_params = {order_id: order_id, patient_id: patient.id, admin_dose: admin_dose, drug_name: drug_name,
-                           brand_name: brand_name, med_id: med_id, admin: admin, sig: sig}
-      trackable = Trackable.create(trackable_params)
-    end
-    BarcodeScan.create_barcode_with_trackable_and_pair(barcode_reader.id, trackable.id)
-  end
-
-  def self.scan(barcode_reader_id, order_id)
-    trackable       = Trackable.find_by(order_id: order_id)
-    barcode_reader  = BarcodeReader.find_by(reader_id: barcode_reader_id)
-    if (trackable.present?)
-      BarcodeScan.create_barcode_with_trackable_and_pair(barcode_reader.id, trackable.id)
+  def self.scan(barcode_reader_hardware_identifier, barcode_code)
+    return if (barcode_code.nil? || barcode_reader_hardware_identifier.nil?)
+    barcode = Barcode.find_by(code: barcode_code)
+    return if barcode.nil?
+    barcode_reader = BarcodeReader.find_by(hardware_identifier: barcode_reader_hardware_identifier)
+    return if barcode_reader.nil? || barcode.nil?
+    barcode_scan = BarcodeScan.new({barcode_id: barcode.id, barcode_reader_id: barcode_reader.id})
+    if barcode_scan.save()
+      trackable = Barcode.trackable(barcode.id)
+      return nil if (trackable.nil?)
+      BarcodeScan.connect_with_rfid_scan(barcode_reader.id, trackable)
     end
   end
 
-  def self.create_barcode_with_trackable_and_pair(barcode_reader_id, trackable_id)
-    BarcodeScan.create({barcode_reader_id: barcode_reader_id, trackable_id: trackable_id})
-    self.pair_with_rfid(barcode_reader_id, trackable_id)
-  end
-
-  def self.pair_with_rfid(barcode_reader_id, trackable_id)
-    rfid = Rfid.get_new_unpaired_rfids_given_barcode_reader(barcode_reader_id)
-    if (rfid.any?)
-      RfidTrackablePairing.create(rfid_id: rfid.first.id, trackable_id: trackable_id)
+  def self.connect_with_rfid_scan(barcode_reader_id, trackable_id)
+    puts "trackable_id #{trackable_id}"
+    rfid = Rfid.new_unpaired_compatible_rfids(barcode_reader_id)
+    if (rfid.present?)
+      RfidTrackablePairing.create!(rfid_id: rfid.first.rfid_id, trackable_id: trackable_id)
     end
   end
 end

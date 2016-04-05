@@ -14,7 +14,7 @@
   <tbody>
     <% @antennas.each do |antenna| %>
       <tr>
-        <td><%= antenna.uniq_id %></td>
+        <td><%= antenna.hardware_id %></td>
         <td><%= antenna.location %></td>
         <td><%= link_to 'Show', antenna %></td>
         <td><%= link_to 'Edit', edit_antenna_path(antenna) %></td>

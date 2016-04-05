@@ -1,0 +1,2 @@
+module BarcodeTrackablePairingsHelper
+end

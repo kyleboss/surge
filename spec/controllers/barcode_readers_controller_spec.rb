@@ -23,13 +23,14 @@ RSpec.describe BarcodeReadersController, type: :controller do
   # This should return the minimal set of attributes required to create a valid
   # BarcodeReader. As you add validations to BarcodeReader, be sure to
   # adjust the attributes here as well.
-  let(:valid_attributes) {
-    skip("Add a hash of attributes valid for your model")
-  }
+  before(:each) do
+    address = FactoryGirl.create(:address)
+    @hospital = FactoryGirl.create(:hospital, address_id: address.id)
+  end
 
-  let(:invalid_attributes) {
-    skip("Add a hash of attributes invalid for your model")
-  }
+  let(:valid_attributes) { FactoryGirl.attributes_for(:barcode_reader, hospital_id: @hospital.id)}
+  let(:invalid_attributes) { FactoryGirl.attributes_for(:invalid_barcode_reader, hospital_id: nil) }
+
 
   # This should return the minimal set of values that should be in the session
   # in order to pass any filters (e.g. authentication) defined in
@@ -102,15 +103,12 @@ RSpec.describe BarcodeReadersController, type: :controller do
 
   describe "PUT #update" do
     context "with valid params" do
-      let(:new_attributes) {
-        skip("Add a hash of attributes valid for your model")
-      }
+      let(:new_attributes) { FactoryGirl.attributes_for(:updated_valid_barcode_reader, hospital_id: @hospital.id) }
 
       it "updates the requested barcode_reader" do
         barcode_reader = BarcodeReader.create! valid_attributes
         put :update, {:id => barcode_reader.to_param, :barcode_reader => new_attributes}, valid_session
         barcode_reader.reload
-        skip("Add assertions for updated state")
       end
 
       it "assigns the requested barcode_reader as @barcode_reader" do

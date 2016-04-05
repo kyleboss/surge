@@ -1,41 +1,12 @@
+<%= javascript_tag do %>
+    window.hospital_id = <%= @hospital.id %>
+    window.trackable_id = <%= @trackable.id %>
+    window.controller = "trackable"
+<% end %>
 <div class="trackables-container">
+  <div class="alert" id="alert"></div>
   <h2 class="centered-header">Tracking Record</h2>
-  <h4 class="centered-header currently-at">
-    <% if @trackable_updates.length > 0 %>
-      Last update:
-      <% if @trackable_updates.first.update_type == "is_arrival" %>
-          Arrived at
-      <% elsif @trackable_updates.first.update_type == "is_departure" %>
-          Departed
-      <% end %>
-      <%= @trackable_updates.first.location_name %>
-    <% else %>
-      No updates yet.
-    <% end %>
-  </h4>
-  <div class="update-timeline">
-    <% @trackable_updates.each do |update| %>
-        <div class="update-bubble">
-          <div class="update-cell">
-            <% if update.update_type == "is_arrival" %>
-                Arrived at
-            <% elsif update.update_type == "is_departure" %>
-                Departed
-            <% end %>
-            <%= update.location_name %>
-          </div>
-          <div class="update-cell update-time">
-            <%= if (update.update_time < Time.now - 59.minutes)
-                 update.update_time.in_time_zone("Pacific Time (US & Canada)").strftime('%m/%d/%y %l:%M %p')
-               else
-                  time_ago_in_words(update.update_time) + " ago"
-               end
-            %>
-          </div>
-        </div>
-    <% end %>
-    <% if @trackable_updates.length > 0 %>
-      <div class="go-back-button"><%= link_to 'Go back', url_for(:back) %></div>
-    <% end %>
+  <div id="trackable-history-table">
+    <%= render partial: "tracking_history_table", locals: {trackable_updates: @trackable_updates} %>
   </div>
 </div>

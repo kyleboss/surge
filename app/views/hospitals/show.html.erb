@@ -1,69 +1,17 @@
 <div class="hospitals-container">
-  <p id="notice"><%= notice %></p>
-  <div class="location-section">
-    <h2 class="centered-header">Locations</h2>
-    <div class="location-list">
-      <div class="row location-header-row">
-        <div class="col-md-8 location-cell">
-          Location
+  <div class="stats-dashboard" id="stats-dashboard">
+    <p id="notice"><%= notice %></p>
+    <div class="graphical-date-range-chooser" id="graphical-date-range-chooser">
+      <div class="selected-box" id="selected-box"></div>
+      <div class="handles" id="handles">
+        <div class="handle left">
+          <div class="dot"></div>
         </div>
-        <div class="col-md-2 location-cell">
-          # medications
+        <div class="handle right">
+          <div class="dot"></div>
         </div>
-      </div>
-      <!--<% @locations.each do |location| %>-->
-          <!--<a href="/locations/<%=location.id%>" class="location-link">-->
-            <!--<div class="row location-row">-->
-              <!--<div class="col-md-8 location-cell">-->
-                <!--<%= location.name %>-->
-              <!--</div>-->
-              <!--<div class="col-md-2 location-cell">-->
-                <!--<%= 5 %>-->
-              <!--</div>-->
-            <!--</div>-->
-          <!--</a>-->
-      <!--<% end %>-->
-
-
-
-      <a href="/locations" class="location-link">
-        <div class="row location-row">
-          <div class="col-md-8 location-cell">Main Pharmacy</div>
-          <div class="col-md-2 location-cell">920</div>
-        </div>
-      </a>
-      <a href="#" class="location-link">
-        <div class="row location-row">
-          <div class="col-md-8 location-cell">East Wing Pharmacy</div>
-          <div class="col-md-2 location-cell">128</div>
-        </div>
-      </a>
-      <a href="#" class="location-link">
-        <div class="row location-row">
-          <div class="col-md-8 location-cell">West Wing Pharmacy</div>
-          <div class="col-md-2 location-cell">442</div>
-        </div>
-      </a>
-
-
-
       </div>
     </div>
+    <div class="bipartite-graph" id="bipartite-graph"></div>
   </div>
-    <!--<p>-->
-      <!--<strong>Name:</strong>-->
-      <!--<%= @hospital.name %>-->
-    <!--</p>-->
-
-    <!--<p>-->
-      <!--<strong>Address:</strong>-->
-      <!--<%= @hospital.address %>-->
-    <!--</p>-->
-
-    <!--<p>-->
-      <!--<strong>User:</strong>-->
-      <!--<%= @hospital.user %>-->
-    <!--</p>-->
-
-    <!--<%= link_to 'Back', hospitals_path %>-->
 </div>

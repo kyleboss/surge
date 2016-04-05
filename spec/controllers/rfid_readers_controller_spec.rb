@@ -23,13 +23,14 @@ RSpec.describe RfidReadersController, type: :controller do
   # This should return the minimal set of attributes required to create a valid
   # RfidReader. As you add validations to RfidReader, be sure to
   # adjust the attributes here as well.
-  let(:valid_attributes) {
-    skip("Add a hash of attributes valid for your model")
-  }
+  before(:each) do
+    address = FactoryGirl.create(:address)
+    @hospital = FactoryGirl.create(:hospital, address_id: address.id)
+    rfid_reader = FactoryGirl.build(:rfid_reader, hospital_id: @hospital.id)
+  end
 
-  let(:invalid_attributes) {
-    skip("Add a hash of attributes invalid for your model")
-  }
+  let(:valid_attributes) { FactoryGirl.attributes_for(:rfid_reader, hospital_id: @hospital.id)}
+  let(:invalid_attributes) { FactoryGirl.attributes_for(:invalid_rfid_reader, hospital_id: nil) }
 
   # This should return the minimal set of values that should be in the session
   # in order to pass any filters (e.g. authentication) defined in
@@ -102,15 +103,13 @@ RSpec.describe RfidReadersController, type: :controller do
 
   describe "PUT #update" do
     context "with valid params" do
-      let(:new_attributes) {
-        skip("Add a hash of attributes valid for your model")
-      }
+      let(:new_attributes) { FactoryGirl.attributes_for(:updated_valid_rfid_reader, hospital_id: @hospital.id) }
+
 
       it "updates the requested rfid_reader" do
         rfid_reader = RfidReader.create! valid_attributes
         put :update, {:id => rfid_reader.to_param, :rfid_reader => new_attributes}, valid_session
         rfid_reader.reload
-        skip("Add assertions for updated state")
       end
 
       it "assigns the requested rfid_reader as @rfid_reader" do

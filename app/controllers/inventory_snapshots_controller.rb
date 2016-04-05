@@ -26,7 +26,6 @@ class InventorySnapshotsController < ApplicationController
   # POST /inventory_snapshots.json
   def create
     @inventory_snapshot = InventorySnapshot.new(inventory_snapshot_params)
-
     respond_to do |format|
       if @inventory_snapshot.save
         format.html { redirect_to @inventory_snapshot, notice: 'Inventory snapshot was successfully created.' }
@@ -63,7 +62,8 @@ class InventorySnapshotsController < ApplicationController
   end
 
   def make_inventory_snapshot
-    inventory_snapshot = InventorySnapshot.create_snapshot_with_contents(params[:antenna_id], params[:rfid_ids].values)
+    inventory_snapshot = InventorySnapshot.create_snapshot_with_contents(params[:antenna_hardware_identifier],
+                                                                         params[:rfid_hardware_identifiers])
     InventorySnapshot.get_updates_from_previous_snapshot(inventory_snapshot)
     render plain: "Success"
   end
@@ -76,6 +76,6 @@ class InventorySnapshotsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def inventory_snapshot_params
-      params.require(:inventory_snapshot).permit(:location_id, :rfid_ids)
+      params.require(:inventory_snapshot).permit(:location_id, :antenna_hardware_identifier, :rfid_hardware_identifiers)
     end
 end

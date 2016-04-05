@@ -1,13 +1,17 @@
 class InventorySnapshot < ActiveRecord::Base
   belongs_to :location
-  belongs_to :rfid
+  has_many :inventory_snapshot_contents
+  has_many :trackables, through: :inventory_snapshot_contents
+  validates_presence_of :location_id
+  validates_associated :location
 
-  def self.create_snapshot_with_contents(antenna_id, rfid_ids)
-    new_inventory_snapshot_location = Antenna.find(antenna_id).location
-    new_inventory_snapshot_params   = {location_id: new_inventory_snapshot_location.id}
-    inventory_snapshot              = InventorySnapshot.create(new_inventory_snapshot_params)
-    inventory_snapshot_id           = inventory_snapshot.id
-    InventorySnapshotContent.create_many_given_rfids(inventory_snapshot_id, rfid_ids)
+  def self.create_snapshot_with_contents(antenna_hardware_identifier, rfid_hardware_identifiers)
+    antenna = Antenna.where(hardware_identifier: antenna_hardware_identifier)
+    return if antenna.empty?
+    new_inventory_snapshot_params   = {location_id: antenna.first.location_id}
+    inventory_snapshot              = InventorySnapshot.create!(new_inventory_snapshot_params)
+    puts "rfid_hardware_identifiers #{rfid_hardware_identifiers}"
+    InventorySnapshotContent.create_many_given_rfids(inventory_snapshot.id, rfid_hardware_identifiers)
     return inventory_snapshot
   end
 
@@ -17,16 +21,21 @@ class InventorySnapshot < ActiveRecord::Base
   end
 
   def self.get_updates_from_previous_snapshot(inventory_snapshot)
-    prev_snapshot     = self.get_previous_snapshot(inventory_snapshot)
-    current_rfid_ids  = InventorySnapshotContent.where(:inventory_snapshot_id => inventory_snapshot.id).pluck(:rfid_id)
+    prev_snapshot = self.get_previous_snapshot(inventory_snapshot)
+    current_trackable_ids = InventorySnapshotContent.where(inventory_snapshot_id: inventory_snapshot.id).uniq
+                                 .pluck(:trackable_id)
+    puts "current_trackable_ids #{current_trackable_ids}"
     if (prev_snapshot.present?) # If there is a snapshot from this antenna, create arrivals & departures.
-      prev_rfid_ids   = InventorySnapshotContent.where(:inventory_snapshot_id => prev_snapshot.first.id).pluck(:rfid_id)
-      arrival_rfids   = current_rfid_ids - prev_rfid_ids
-      departure_rfids = prev_rfid_ids - current_rfid_ids
-      Arrival.create_many_given_rfids_and_location(arrival_rfids, inventory_snapshot.location_id)
-      Departure.create_many_given_rfids_and_location(departure_rfids, inventory_snapshot.location_id)
+      prev_trackable_ids = InventorySnapshotContent.where(inventory_snapshot_id: prev_snapshot.first.id).uniq
+                               .pluck(:trackable_id)
+      puts "prev_trackable_ids #{prev_trackable_ids}"
+      arrival_trackable_ids = current_trackable_ids - prev_trackable_ids
+      departure_trackable_ids = prev_trackable_ids - current_trackable_ids
+      puts "arrival_trackable_ids: #{arrival_trackable_ids}"
+      Arrival.create_given_trackables_and_location(arrival_trackable_ids, inventory_snapshot.location_id)
+      Departure.create_given_trackables_and_location(departure_trackable_ids, inventory_snapshot.location_id)
     else # If this is the first update from the antenna, make all rfids detected as arrivals.
-      Arrival.create_many_given_rfids_and_location(current_rfid_ids, inventory_snapshot.location_id)
+      Arrival.create_given_trackables_and_location(current_trackable_ids, inventory_snapshot.location_id)
     end
   end
 end

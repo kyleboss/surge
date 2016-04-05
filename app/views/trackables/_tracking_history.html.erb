@@ -1,0 +1,10 @@
+<% trackable_updates.each do |update| %>
+    <div class="update-bubble">
+      <div class="update-cell">
+        <%= tracking_timeline_moment_label(update.update_type, update.location_name) %>
+      </div>
+      <div class="update-cell update-time">
+        <%= tracking_timeline_moment_time(update.update_time) %>
+      </div>
+    </div>
+<% end %>

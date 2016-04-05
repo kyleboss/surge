@@ -13,7 +13,7 @@ RSpec.describe "rfid_reader_barcode_reader_pairings/edit", type: :view do
 
     assert_select "form[action=?][method=?]", rfid_reader_barcode_reader_pairing_path(@rfid_reader_barcode_reader_pairing), "post" do
 
-      assert_select "input#rfid_reader_barcode_reader_pairing_barcode_reader_id[name=?]", "rfid_reader_barcode_reader_pairing[barcode_reader_id]"
+      assert_select "input#rfid_reader_barcode_reader_pairing_barcode_reader_hardware_id[name=?]", "rfid_reader_barcode_reader_pairing[barcode_reader_hardware_id]"
 
       assert_select "input#rfid_reader_barcode_reader_pairing_rfid_reader_id[name=?]", "rfid_reader_barcode_reader_pairing[rfid_reader_id]"
     end

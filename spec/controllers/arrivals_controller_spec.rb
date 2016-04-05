@@ -23,13 +23,18 @@ RSpec.describe ArrivalsController, type: :controller do
   # This should return the minimal set of attributes required to create a valid
   # Arrival. As you add validations to Arrival, be sure to
   # adjust the attributes here as well.
-  let(:valid_attributes) {
-    skip("Add a hash of attributes valid for your model")
-  }
+  before(:each) do
+    address = FactoryGirl.create(:address)
+    hospital = FactoryGirl.create(:hospital, address_id: address.id)
+    @location = FactoryGirl.create(:location, hospital_id: hospital.id)
+    patient = FactoryGirl.create(:patient, hospital_id: hospital.id)
+    @trackable = FactoryGirl.create(:trackable, patient_id: patient.id)
+    @updated_trackable = FactoryGirl.create(:updated_valid_trackable)
+  end
 
-  let(:invalid_attributes) {
-    skip("Add a hash of attributes invalid for your model")
-  }
+  let(:valid_attributes) { FactoryGirl.attributes_for(:arrival, location_id: @location.id, trackable_id: @trackable.id)}
+  let(:new_attributes) { FactoryGirl.attributes_for(:updated_valid_arrival, trackable_id: @updated_trackable.id) }
+  let(:invalid_attributes) {FactoryGirl.attributes_for(:invalid_arrival, location_id: nil, trackable_id: @trackable.id)}
 
   # This should return the minimal set of values that should be in the session
   # in order to pass any filters (e.g. authentication) defined in
@@ -102,15 +107,11 @@ RSpec.describe ArrivalsController, type: :controller do
 
   describe "PUT #update" do
     context "with valid params" do
-      let(:new_attributes) {
-        skip("Add a hash of attributes valid for your model")
-      }
 
       it "updates the requested arrival" do
         arrival = Arrival.create! valid_attributes
         put :update, {:id => arrival.to_param, :arrival => new_attributes}, valid_session
         arrival.reload
-        skip("Add assertions for updated state")
       end
 
       it "assigns the requested arrival as @arrival" do

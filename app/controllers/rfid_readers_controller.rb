@@ -69,6 +69,6 @@ class RfidReadersController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def rfid_reader_params
-      params.require(:rfid_reader).permit(:reader_id)
+      params.require(:rfid_reader).permit(:hardware_identifier, :hospital_id)
     end
 end

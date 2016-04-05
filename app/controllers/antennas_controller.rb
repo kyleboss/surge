@@ -69,6 +69,6 @@ class AntennasController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def antenna_params
-      params.require(:antenna).permit(:uniq_id, :location_id)
+      params.require(:antenna).permit(:hardware_identifier, :location_id)
     end
 end

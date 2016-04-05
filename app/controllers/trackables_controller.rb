@@ -10,7 +10,8 @@ class TrackablesController < ApplicationController
   # GET /trackables/1
   # GET /trackables/1.json
   def show
-    get_all_arrivals_of_trackable()
+    @trackable_updates = get_all_arrivals_of_trackable()
+    locals trackable_updates: @trackable_updates
   end
 
   # GET /trackables/new
@@ -62,7 +63,19 @@ class TrackablesController < ApplicationController
     end
   end
 
+  def refresh_timeline
+    @trackable = Trackable.find(params[:id])
+    @trackable_updates = get_all_arrivals_of_trackable()
+    respond_to do |format|
+      format.html { render partial: "trackables/tracking_history_table", locals: {trackable_updates: @trackable_updates} }
+    end
+  end
+
   private
+
+  def locals(values)
+    render locals: values
+  end
 
     # Use callbacks to share common setup or constraints between actions.
     def set_trackable
@@ -79,7 +92,7 @@ class TrackablesController < ApplicationController
     end
 
   def get_all_arrivals_of_trackable()
-    @trackable_updates = Arrival.find_by_sql("SELECT * FROM
+    Arrival.find_by_sql("SELECT * FROM
       (
           SELECT 'is_arrival' AS update_type, arrivals.*, locations.name AS location_name,
           arrivals.created_at AS update_time
@@ -102,18 +115,21 @@ class TrackablesController < ApplicationController
   end
 
   def trackable_params
-    patient_info = permit_patient_params
-    patient_id = Patient.find_or_create_by(mrn: patient_info[:mrn]).id
-    patient = Patient.find(patient_id)
-    patient.name = patient_info[:name]
-    patient.hospital_id = patient_info[:hospital_id]
-    patient.save
+    if (params[:patient] != nil)
+      patient_info = permit_patient_params
+      patient_id = Patient.find_or_create_by(mrn: patient_info[:mrn]).id
+      patient = Patient.find(patient_id)
+      patient.name = patient_info[:name]
+      patient.hospital_id = patient_info[:hospital_id]
+      patient.save
+    end
 
     trackable_info = permit_trackable_params
+    patient_id ||= permit_trackable_params[:patient_id]
 
     new_trackable_info = {patient_id: patient_id, admin_dose: trackable_info[:admin_dose],
                           drug_name: trackable_info[:drug_name], brand_name: trackable_info[:brand_name],
-                          order_id: trackable_info[:order_id], med_id: trackable_info[:med_id],
+                          order_identifier: trackable_info[:order_identifier], med_identifier: trackable_info[:med_identifier],
                           sig: trackable_info[:sig], admin: trackable_info[:admin]}
 
     return new_trackable_info
@@ -121,7 +137,7 @@ class TrackablesController < ApplicationController
 
   # Never trust parameters from the scary internet, only allow the white list through.
   def permit_trackable_params
-    params.require(:trackable).permit(:patient_id, :admin_dose, :drug_name, :brand_name, :order_id, :med_id, :sig, :admin)
+    params.require(:trackable).permit(:patient_id, :admin_dose, :drug_name, :brand_name, :order_identifier, :med_identifier, :sig, :admin)
     return params[:trackable]
   end
 

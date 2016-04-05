@@ -69,6 +69,6 @@ class BarcodeReadersController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def barcode_reader_params
-      params.require(:barcode_reader).permit(:reader_id)
+      params.require(:barcode_reader).permit(:hardware_identifier, :hospital_id)
     end
 end

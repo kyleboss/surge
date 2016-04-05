@@ -3,7 +3,7 @@ require 'rails_helper'
 RSpec.describe "rfids/show", type: :view do
   before(:each) do
     @rfid = assign(:rfid, Rfid.create!(
-      :uniq_id => "Uniq"
+      :hardware_id => "Uniq"
     ))
   end
 

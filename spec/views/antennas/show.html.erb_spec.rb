@@ -3,7 +3,7 @@ require 'rails_helper'
 RSpec.describe "antennas/show", type: :view do
   before(:each) do
     @antenna = assign(:antenna, Antenna.create!(
-      :uniq_id => "Uniq",
+      :hardware_id => "Uniq",
       :location => nil
     ))
   end

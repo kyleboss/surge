@@ -1,0 +1,25 @@
+<%= form_for(@barcode_trackable_pairing) do |f| %>
+  <% if @barcode_trackable_pairing.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@barcode_trackable_pairing.errors.count, "error") %> prohibited this barcode_trackable_pairing from being saved:</h2>
+
+      <ul>
+      <% @barcode_trackable_pairing.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :barcode_id %><br>
+    <%= f.text_field :barcode_id %>
+  </div>
+  <div class="field">
+    <%= f.label :trackable_id %><br>
+    <%= f.text_field :trackable_id %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

@@ -23,32 +23,33 @@ RSpec.describe HospitalsController, type: :controller do
   # This should return the minimal set of attributes required to create a valid
   # Hospital. As you add validations to Hospital, be sure to
   # adjust the attributes here as well.
-  let(:valid_attributes) {
-    skip("Add a hash of attributes valid for your model")
-  }
+  before(:each) do
+    @address = FactoryGirl.create(:address)
+    @hospital_for_user = FactoryGirl.create(:hospital)
+    @user = FactoryGirl.create(:user, hospital_id: @hospital_for_user.id)
+  end
 
-  let(:invalid_attributes) {
-    skip("Add a hash of attributes invalid for your model")
-  }
+  let(:valid_attributes) { FactoryGirl.attributes_for(:hospital, address_id: @address.id) }
+
+  let(:invalid_attributes) { FactoryGirl.attributes_for(:invalid_hospital) }
 
   # This should return the minimal set of values that should be in the session
   # in order to pass any filters (e.g. authentication) defined in
   # HospitalsController. Be sure to keep this updated too.
-  let(:valid_session) { {} }
+  let(:valid_session) { {user_id: @user.id} }
 
   describe "GET #index" do
     it "assigns all hospitals as @hospitals" do
       hospital = Hospital.create! valid_attributes
       get :index, {}, valid_session
-      expect(assigns(:hospitals)).to eq([hospital])
+      expect(assigns(:hospitals)).to eq([@hospital_for_user, hospital])
     end
   end
 
   describe "GET #show" do
     it "assigns the requested hospital as @hospital" do
-      hospital = Hospital.create! valid_attributes
-      get :show, {:id => hospital.to_param}, valid_session
-      expect(assigns(:hospital)).to eq(hospital)
+      get :show, {:id => @hospital_for_user.to_param}, valid_session
+      expect(assigns(:hospital)).to eq(@hospital_for_user)
     end
   end
 
@@ -61,9 +62,8 @@ RSpec.describe HospitalsController, type: :controller do
 
   describe "GET #edit" do
     it "assigns the requested hospital as @hospital" do
-      hospital = Hospital.create! valid_attributes
-      get :edit, {:id => hospital.to_param}, valid_session
-      expect(assigns(:hospital)).to eq(hospital)
+      get :edit, {:id => @hospital_for_user.to_param}, valid_session
+      expect(assigns(:hospital)).to eq(@hospital_for_user)
     end
   end
 
@@ -102,40 +102,33 @@ RSpec.describe HospitalsController, type: :controller do
 
   describe "PUT #update" do
     context "with valid params" do
-      let(:new_attributes) {
-        skip("Add a hash of attributes valid for your model")
-      }
+      let(:new_attributes) { FactoryGirl.attributes_for(:updated_valid_hospital) }
 
       it "updates the requested hospital" do
         hospital = Hospital.create! valid_attributes
         put :update, {:id => hospital.to_param, :hospital => new_attributes}, valid_session
         hospital.reload
-        skip("Add assertions for updated state")
       end
 
       it "assigns the requested hospital as @hospital" do
-        hospital = Hospital.create! valid_attributes
-        put :update, {:id => hospital.to_param, :hospital => valid_attributes}, valid_session
-        expect(assigns(:hospital)).to eq(hospital)
+        put :update, {:id => @hospital_for_user.to_param, :hospital => valid_attributes}, valid_session
+        expect(assigns(:hospital)).to eq(@hospital_for_user)
       end
 
       it "redirects to the hospital" do
-        hospital = Hospital.create! valid_attributes
-        put :update, {:id => hospital.to_param, :hospital => valid_attributes}, valid_session
-        expect(response).to redirect_to(hospital)
+        put :update, {:id => @hospital_for_user.to_param, :hospital => valid_attributes}, valid_session
+        expect(response).to redirect_to(@hospital_for_user)
       end
     end
 
     context "with invalid params" do
       it "assigns the hospital as @hospital" do
-        hospital = Hospital.create! valid_attributes
-        put :update, {:id => hospital.to_param, :hospital => invalid_attributes}, valid_session
-        expect(assigns(:hospital)).to eq(hospital)
+        put :update, {:id => @hospital_for_user.to_param, :hospital => invalid_attributes}, valid_session
+        expect(assigns(:hospital)).to eq(@hospital_for_user)
       end
 
       it "re-renders the 'edit' template" do
-        hospital = Hospital.create! valid_attributes
-        put :update, {:id => hospital.to_param, :hospital => invalid_attributes}, valid_session
+        put :update, {:id => @hospital_for_user.to_param, :hospital => invalid_attributes}, valid_session
         expect(response).to render_template("edit")
       end
     end

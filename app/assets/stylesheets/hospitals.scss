@@ -44,4 +44,88 @@
       }
     }
   }
+
+  .stats-dashboard {
+    width: 100%;
+    padding: 0 30px 30px 30px;
+
+    .bipartite-graph {
+      width: 100%;
+    }
+
+    .graphical-date-range-chooser {
+      .axis path,
+      .axis line {
+        fill: none;
+        stroke: none;
+        shape-rendering: crispEdges;
+
+      }
+
+      position: relative;
+      -webkit-transform: rotate(0deg);
+      -moz-transform: rotate(0deg);
+      -ms-transform: rotate(0deg);
+      -o-transform: rotate(0deg);
+      transform: rotate(0deg);
+
+      .selected-box {
+        position: absolute;
+        right: 0;
+        top: 0;
+        clip: rect(auto, auto, auto, auto);
+
+        .area {
+          fill: #80B3FF;
+        }
+      }
+
+      .handles {
+        position: absolute;
+        right: 0;
+        top: 0;
+
+        .handle {
+          position: absolute;
+          border-radius: 1000px;
+          background-color: #C2E9F7;
+          padding: 4px;
+          border: 2px solid #C2E9F7;
+          bottom: 0;
+          z-index: 1;
+          cursor: pointer;
+
+          .dot {
+            display: block;
+            content: "";
+            border: 3px solid #aaa;
+            height: 100%;
+            width: 100%;
+            border-radius: 100%;
+            border-color: #33B5E5;
+            background-color: #33B5E5;
+          }
+
+          &.left {
+            left: 0;
+            margin: auto auto -7px -7px;
+          }
+
+          &.right {
+            right: 0;
+            margin: auto -7px -7px auto;
+          }
+        }
+      }
+
+      .tick {
+        stroke: lightgray;
+        fill: lightgray;
+      }
+
+      .area {
+        fill: lightgrey;
+      }
+    }
+  }
 }

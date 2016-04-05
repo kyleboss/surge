@@ -4,11 +4,11 @@ RSpec.describe "antennas/index", type: :view do
   before(:each) do
     assign(:antennas, [
       Antenna.create!(
-        :uniq_id => "Uniq",
+        :hardware_id => "Uniq",
         :location => nil
       ),
       Antenna.create!(
-        :uniq_id => "Uniq",
+        :hardware_id => "Uniq",
         :location => nil
       )
     ])

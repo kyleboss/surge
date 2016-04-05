@@ -20,21 +20,14 @@ require 'rails_helper'
 
 RSpec.describe AddressesController, type: :controller do
 
-  # This should return the minimal set of attributes required to create a valid
-  # Address. As you add validations to Address, be sure to
-  # adjust the attributes here as well.
-  let(:valid_attributes) {
-    skip("Add a hash of attributes valid for your model")
-  }
-
-  let(:invalid_attributes) {
-    skip("Add a hash of attributes invalid for your model")
-  }
-
   # This should return the minimal set of values that should be in the session
   # in order to pass any filters (e.g. authentication) defined in
   # AddressesController. Be sure to keep this updated too.
   let(:valid_session) { {} }
+
+  let(:valid_attributes) { FactoryGirl.attributes_for(:address) }
+  let(:new_attributes) { FactoryGirl.attributes_for(:updated_valid_address) }
+  let(:invalid_attributes) { FactoryGirl.attributes_for(:invalid_address) }
 
   describe "GET #index" do
     it "assigns all addresses as @addresses" do
@@ -102,15 +95,12 @@ RSpec.describe AddressesController, type: :controller do
 
   describe "PUT #update" do
     context "with valid params" do
-      let(:new_attributes) {
-        skip("Add a hash of attributes valid for your model")
-      }
 
       it "updates the requested address" do
         address = Address.create! valid_attributes
         put :update, {:id => address.to_param, :address => new_attributes}, valid_session
         address.reload
-        skip("Add assertions for updated state")
+        expect(address.attributes).to include( { "street_address" => new_attributes[:street_address] } )
       end
 
       it "assigns the requested address as @address" do

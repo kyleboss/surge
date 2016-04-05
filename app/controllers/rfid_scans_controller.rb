@@ -25,16 +25,10 @@ class RfidScansController < ApplicationController
   # POST /rfid_scans
   # POST /rfid_scans.json
   def create
-    @rfid_scan = RfidScan.new(rfid_scan_params)
-
+    RfidScan.scan(rfid_scan_params[:rfid_reader_hardware_identifier], rfid_scan_params[:rfid_hardware_identifier])
     respond_to do |format|
-      if @rfid_scan.save
-        format.html { redirect_to @rfid_scan, notice: 'Rfid scan was successfully created.' }
-        format.json { render :show, status: :created, location: @rfid_scan }
-      else
-        format.html { render :new }
-        format.json { render json: @rfid_scan.errors, status: :unprocessable_entity }
-      end
+      format.html { redirect_to "/rfid_scans", notice: 'Rfid scan was successfully created.' }
+      format.json { render :index }
     end
   end
 
@@ -63,7 +57,7 @@ class RfidScansController < ApplicationController
   end
 
   def scan_rfid
-    RfidScan.scan(params[:rfid_reader_id], params[:rfid_id])
+    RfidScan.scan(params[:rfid_reader_hardware_identifier], params[:rfid_hardware_identifier])
     render plain: "Success"
   end
 
@@ -75,6 +69,6 @@ class RfidScansController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def rfid_scan_params
-      params.require(:rfid_scan).permit(:rfid_reader_id, :rfid_id)
+      params.require(:rfid_scan).permit(:rfid_reader_hardware_identifier, :rfid_hardware_identifier)
     end
 end

@@ -23,12 +23,32 @@ RSpec.describe BarcodeScansController, type: :controller do
   # This should return the minimal set of attributes required to create a valid
   # BarcodeScan. As you add validations to BarcodeScan, be sure to
   # adjust the attributes here as well.
-  let(:valid_attributes) {
-    skip("Add a hash of attributes valid for your model")
+  before(:each) do
+    address = FactoryGirl.create(:address)
+    @hospital = FactoryGirl.create(:hospital, address_id: address.id)
+    @updated_trackable = FactoryGirl.create(:updated_valid_trackable)
+    @barcode_reader = FactoryGirl.create(:barcode_reader, hospital_id: @hospital.id)
+    @barcode = FactoryGirl.create(:barcode)
+    FactoryGirl.create(:barcode_trackable_pairing, barcode_id: @barcode.id, trackable_id: @updated_trackable.id)
+  end
+
+  let(:valid_transient_attributes) {
+    { barcode_reader_hardware_identifier: @barcode_reader.hardware_identifier, barcode_code: @barcode.code }
   }
 
+  let(:invalid_transient_attributes) { { barcode_reader_hardware_identifier: nil, barcode_code: nil } }
+
+  let(:valid_attributes) {
+    FactoryGirl.attributes_for(:barcode_scan, barcode_reader_id: @barcode_reader.id, barcode_id: @barcode.id)
+  }
+
+  let(:new_attributes) {
+    FactoryGirl.attributes_for(:updated_valid_barcode_scan,
+                               barcode_reader_id: @barcode_reader.id,
+                               barcode_id:      @updated_barcode_id)
+  }
   let(:invalid_attributes) {
-    skip("Add a hash of attributes invalid for your model")
+    FactoryGirl.attributes_for(:invalid_barcode_scan, barcode_reader_id: nil, barcode_id: @barcode.id)
   }
 
   # This should return the minimal set of values that should be in the session
@@ -69,48 +89,93 @@ RSpec.describe BarcodeScansController, type: :controller do
 
   describe "POST #create" do
     context "with valid params" do
+      before(:each) do
+        @rfid_reader = FactoryGirl.create(:rfid_reader, hospital_id: @hospital.id)
+      end
+
       it "creates a new BarcodeScan" do
         expect {
-          post :create, {:barcode_scan => valid_attributes}, valid_session
+          post :create, {:barcode_scan => valid_transient_attributes}, valid_session
         }.to change(BarcodeScan, :count).by(1)
       end
 
-      it "assigns a newly created barcode_scan as @barcode_scan" do
-        post :create, {:barcode_scan => valid_attributes}, valid_session
-        expect(assigns(:barcode_scan)).to be_a(BarcodeScan)
-        expect(assigns(:barcode_scan)).to be_persisted
+      it "creates a new RfidTrackablePairing" do
+
+        FactoryGirl.create(:rfid_reader_barcode_reader_pairing,
+                           rfid_reader_id:    @rfid_reader.id,
+                           barcode_reader_id: @barcode_reader.id)
+        rfid = FactoryGirl.create(:rfid)
+        valid_rfid_scan_attributes = FactoryGirl.attributes_for(:rfid_scan,
+                                                                rfid_reader_id:  @rfid_reader.id,
+                                                                rfid_id:         rfid.id)
+        RfidScan.create! valid_rfid_scan_attributes
+        expect {
+          post :create, {:barcode_scan => valid_transient_attributes}, valid_session
+        }.to change(RfidTrackablePairing, :count).by(1)
       end
 
-      it "redirects to the created barcode_scan" do
-        post :create, {:barcode_scan => valid_attributes}, valid_session
-        expect(response).to redirect_to(BarcodeScan.last)
+      it "doesn't create a new RfidTrackablePairing if longer than 5 seconds" do
+        FactoryGirl.create(:rfid_reader_barcode_reader_pairing,
+                           rfid_reader_id:    @rfid_reader.id,
+                           barcode_reader_id: @barcode_reader.id)
+        rfid = FactoryGirl.create(:rfid)
+        early_rfid_scan_attributes = FactoryGirl.attributes_for(:rfid_scan,
+                                                                rfid_reader_id:  @rfid_reader.id,
+                                                                rfid_id:         rfid.id,
+                                                                created_at:      Time.now - 6.minutes)
+        RfidScan.create! early_rfid_scan_attributes
+        expect {
+          post :create, {:barcode_scan => valid_transient_attributes}, valid_session
+        }.to change(RfidTrackablePairing, :count).by(0)
+      end
+
+      it "doesn't create a new RfidTrackablePairing if rfid already paired" do
+        FactoryGirl.create(:rfid_reader_barcode_reader_pairing,
+                           rfid_reader_id:    @rfid_reader.id,
+                           barcode_reader_id: @barcode_reader.id)
+        rfid = FactoryGirl.create(:rfid)
+        FactoryGirl.create(:rfid_trackable_pairing, rfid_id: rfid.id, trackable_id: @updated_trackable.id)
+        valid_rfid_scan_attributes = FactoryGirl.attributes_for(:rfid_scan,
+                                                                rfid_reader_id:  @rfid_reader.id,
+                                                                rfid_id:         rfid.id)
+        RfidScan.create! valid_rfid_scan_attributes
+        expect {
+          post :create, {:barcode_scan => valid_transient_attributes}, valid_session
+        }.to change(RfidTrackablePairing, :count).by(0)
+      end
+
+      it "doesn't create a new RfidTrackablePairing if readers not compatible" do
+        second_barcode_reader = FactoryGirl.create(:barcode_reader, hospital_id: @hospital.id)
+        FactoryGirl.create(:rfid_reader_barcode_reader_pairing,
+                           rfid_reader_id:    @rfid_reader.id,
+                           barcode_reader_id: second_barcode_reader.id)
+        rfid = FactoryGirl.create(:rfid)
+        valid_rfid_scan_attributes = FactoryGirl.attributes_for(:rfid_scan,
+                                                                rfid_reader_id:  @rfid_reader.id,
+                                                                rfid_id:         rfid.id)
+        RfidScan.create! valid_rfid_scan_attributes
+        expect {
+          post :create, {:barcode_scan => valid_transient_attributes}, valid_session
+        }.to change(RfidTrackablePairing, :count).by(0)
       end
     end
 
     context "with invalid params" do
       it "assigns a newly created but unsaved barcode_scan as @barcode_scan" do
-        post :create, {:barcode_scan => invalid_attributes}, valid_session
-        expect(assigns(:barcode_scan)).to be_a_new(BarcodeScan)
-      end
-
-      it "re-renders the 'new' template" do
-        post :create, {:barcode_scan => invalid_attributes}, valid_session
-        expect(response).to render_template("new")
+        expect {
+          post :create, {:barcode_scan => invalid_transient_attributes}, valid_session
+        }.to change(BarcodeScan, :count).by(0)
       end
     end
   end
 
   describe "PUT #update" do
     context "with valid params" do
-      let(:new_attributes) {
-        skip("Add a hash of attributes valid for your model")
-      }
 
       it "updates the requested barcode_scan" do
         barcode_scan = BarcodeScan.create! valid_attributes
         put :update, {:id => barcode_scan.to_param, :barcode_scan => new_attributes}, valid_session
         barcode_scan.reload
-        skip("Add assertions for updated state")
       end
 
       it "assigns the requested barcode_scan as @barcode_scan" do
@@ -131,12 +196,6 @@ RSpec.describe BarcodeScansController, type: :controller do
         barcode_scan = BarcodeScan.create! valid_attributes
         put :update, {:id => barcode_scan.to_param, :barcode_scan => invalid_attributes}, valid_session
         expect(assigns(:barcode_scan)).to eq(barcode_scan)
-      end
-
-      it "re-renders the 'edit' template" do
-        barcode_scan = BarcodeScan.create! valid_attributes
-        put :update, {:id => barcode_scan.to_param, :barcode_scan => invalid_attributes}, valid_session
-        expect(response).to render_template("edit")
       end
     end
   end

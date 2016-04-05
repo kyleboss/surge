@@ -1,21 +1,20 @@
 class Arrival < ActiveRecord::Base
+  include PusherModule
   belongs_to :location
   belongs_to :trackable
+  validates_presence_of :location, :trackable
+  validates_associated :location, :trackable
 
-  def self.create_given_order_and_antenna(order_id, antenna_id)
-    trackable_id  = Trackable.where(:order_id => order_id).select(:id).first
-    if (trackable.present?)
-      location_id         = Antenna.find(antenna_id).select(:location_id)
-      new_arrival_params  = {location_id: location_id, trackable_id: trackable_id}
-      self.create(new_arrival_params)
-    end
-  end
+  def self.create_given_trackables_and_location(trackable_ids, location_id)
+    location = Location.find(location_id)
+    hospital_id = location.hospital_id
+    location_name = location.name
 
-  def self.create_many_given_rfids_and_location(rfid_ids, location_id)
-    rfid_ids.each do |rfid_id|
-      trackable_rfid_pairing    = RfidTrackablePairing.get_order_given_rfid(rfid_id)
-      arrival_params            = {trackable_id: trackable_rfid_pairing.first.trackable_id, location_id: location_id}
+    trackable_ids.each do |trackable_id|
+      arrival_params = {trackable_id: trackable_id, location_id: location_id}
       self.create(arrival_params)
+      PusherModule.pusher_pub(hospital_id, trackable_id, location_name, :arrival)
     end
   end
+
 end
